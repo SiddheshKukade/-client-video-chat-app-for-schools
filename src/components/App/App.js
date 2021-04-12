@@ -1,8 +1,10 @@
 import React from "react";
-import Login from '../Login/Login'
+import Login from "../Login/Login";
+import Sid from "./../Sid";
 const App = () => {
   return (
-    <Login/>
+    // <Login/>
+    <Sid />
     // <h1 className="text-indigo-200  bg-red-500   ">
     //   Jai Aai Jai Baba
     //   <hr />
