@@ -124,7 +124,6 @@ const Login = () => {
           />
         </div>
       </div>
-      {console.log(u)}
     </div>
   );
 };
