@@ -1,0 +1,94 @@
+.sidebar__container {
+  flex: 0.18;
+  display: flex;
+  padding: 1rem;
+  background-color: #4f46e5;
+}
+
+.sidebar-head {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.profile-name {
+  font-size: 0.9rem;
+  font-weight: 100;
+}
+
+.channels {
+  padding-top: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.channels:hover {
+  color: white;
+}
+
+.direct-message {
+  padding-top: 2rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.direct-message:hover {
+  color: white;
+}
+
+span {
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+ul {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 100;
+  list-style-type: none;
+}
+
+li,
+.list-title {
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+.list-title {
+  margin-top: 1rem;
+}
+
+li.icon-favorite {
+  list-style-type: none;
+  list-style-position: inside;
+}
+
+li.icon-online {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+li.icon-offline {
+  list-style-type: circle;
+  list-style-position: inside;
+}
+
+li:hover {
+  background-color: rgba(62, 49, 60, 1);
+  border-radius: 0.2rem;
+  width: 14rem;
+}
+
+li:active {
+  background-color: rgba(75, 150, 137, 1);
+  border-radius: 0.2rem;
+  width: 14rem;
+}
+
+.profile-name,
+.channels,
+ul,
+.channel-name,
+.direct-message {
+  color: rgba(255, 255, 255, 0.7);
+}
