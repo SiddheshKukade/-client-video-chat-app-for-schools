@@ -5,7 +5,7 @@ import Sid from "./../Sid";
 const App = () => {
   return (
     <>
-      <Home />
+      {/* <Home /> */}
       <Login />
     </>
     // <Sid />

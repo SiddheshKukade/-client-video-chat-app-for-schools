@@ -1,0 +1,6 @@
+.button-login:disabled {
+  background-color: grey;
+}
+.button-login:disabled:hover {
+  background-color: darkgray;
+}
