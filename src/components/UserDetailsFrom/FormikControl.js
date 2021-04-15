@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../FormElements/Input";
-import Select from "../FormElements/Select";
+import Select from "../FormElements/SelectCompo";
 import TextArea from "../FormElements/TextArea";
 import RadioButtons from "../FormElements/RadioButtons";
 import CheckBox from "../FormElements/CheckBox";

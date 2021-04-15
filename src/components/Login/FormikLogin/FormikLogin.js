@@ -1,4 +1,5 @@
 import React from "react";
+import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
@@ -15,6 +16,7 @@ function FormikLogin() {
   });
   const onSubmit = (values) => {
     console.log("form data sumit", values);
+    console.log(values);
   };
   return (
     <Formik
@@ -24,6 +26,8 @@ function FormikLogin() {
       validationSchema={validationSchema}
     >
       {(formik) => {
+        console.log(formik.values);
+        const { errors, touched } = formik;
         return (
           <Form>
             <div className="rounded-md shadow-sm -space-y-px">
@@ -39,6 +43,8 @@ function FormikLogin() {
                   label="Enter your email Address"
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  errMsg={errors.email}
+                  isTouched={touched.email}
                 />
               </div>
               <div>
@@ -53,6 +59,8 @@ function FormikLogin() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                   autocomplete="current-password"
+                  errMsg={errors.password}
+                  isTouched={touched.password}
                 />
               </div>
             </div>

@@ -2,11 +2,13 @@ import React from "react";
 import Home from "../Home/Home";
 import Login from "../Login/Login";
 import Sid from "./../Sid";
+import Sample from "./Sample";
 const App = () => {
   return (
     <>
       {/* <Home /> */}
-      <Login />
+      {/* <Login /> */}
+      {/* <Sample /> */}
     </>
     // <Sid />
 
