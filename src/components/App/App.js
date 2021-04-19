@@ -3,9 +3,11 @@ import Home from "../Home/Home";
 import Login from "../Login/Login";
 import Sid from "./../Sid";
 import Sample from "./Sample";
+import ClassDashBoard from "./../ClassDashBoard/ClassDashBoard";
 const App = () => {
   return (
     <>
+      <ClassDashBoard />
       {/* <Home /> */}
       {/* <Login /> */}
       {/* <Sample /> */}

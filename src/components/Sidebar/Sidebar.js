@@ -2,35 +2,42 @@ import React from "react";
 import "./Sidebar.css";
 const Sidebar = () => {
   return (
-    <div className="sidebar__container   ml-0 flex-col items-start justify-start w-full h-screen  ">
-      <h1 class="list-title sidebar-head text-2xl ">Video Chat App</h1>
+    <div className="sidebar__container">
+      <h1 class=" sidebar-head">Video Chat App</h1>
       <h2 class="list-title profile-name">Siddhesh B. Kukade</h2>
 
-      <div class="list-title channels font-extrabold text-lg py-2">
-        TEACHERS
-      </div>
+      <div class="list-title  font-extrabold text-lg py-2">TEACHERS</div>
 
       <ul>
-        <li className="font-bold">Mr. P. B Mali</li>
-        <li className="font-bold">Mr. P. B Mali</li>
+        <li className="list-entry">Mr. P. B Mali</li>
+        <li className="list-entry">Mr. P. B Mali</li>
       </ul>
-      <div class="list-title channels font-extrabold text-lg py-2">
+      <div class="list-title   ">
         SUBJECTS <span>(121)</span>
       </div>
 
       <ul>
-        <li className="font-bold"># Marathi</li>
-        <li className="font-bold"># English</li>
-        <li className="font-bold"># Science</li>
-        <li className="font-bold"># Algebra</li>
+        <li className="list-entry channels-list ">
+          <span>#</span>Marathi
+        </li>
+
+        <li className="list-entry channels-list">
+          <span>#</span>English
+        </li>
+
+        <li className="list-entry channels-list">
+          <span>#</span>Science
+        </li>
+
+        <li className="list-entry channels-list">
+          <span>#</span>Algebra
+        </li>
       </ul>
 
-      <div class="list-title direct-message font-extrabold text-lg py-2">
-        OTHER
-      </div>
+      <div class="list-title direct-message">OTHER</div>
       <ul>
-        <li class="icon-favorite font-bold">ANNOUNCEMENTS</li>
-        <li class=" font-bold">ATTENDANCE</li>
+        <li class="list-entry">ANNOUNCEMENTS</li>
+        <li class=" list-entry">ATTENDANCE</li>
       </ul>
       <div class="list-title direct-message font-extrabold text-lg py-2">
         DIRECT MESSAGES <span>(12)</span>
