@@ -1,13 +1,16 @@
 import React from "react";
 import "./ClassDashBoard.css";
 import Sidebar from "./../Sidebar/Sidebar";
-// import { Paper, Tab, Tabs } from "@material-ui/core";
-// import { makeStyles } from "@material-ui/core/styles";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import VideoMetting from "./DashBoardComponents/VideoMetting/VideoMetting";
 import HomeWork from "./DashBoardComponents/HomeWork/HomeWork";
 import StudyMaterial from "./DashBoardComponents/StudyMaterial/StudyMaterial";
 import { Helmet } from "react-helmet";
+import VideoCallOutlinedIcon from "@material-ui/icons/VideoCallOutlined";
+import SchoolOutlinedIcon from "@material-ui/icons/SchoolOutlined";
+import AssignmentLateOutlinedIcon from "@material-ui/icons/AssignmentLateOutlined";
+import AddStudyMaterialPanel from "./AddStudyMaterialPanel/AddStudyMaterialPanel";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -41,35 +44,60 @@ function ClassDashBoard() {
               <Tab
                 className="nav-tabs"
                 _selected={{
-                  color: "white",
-                  bg: "blue.100",
-                  borderWidth: "3px",
-                  borderColor: "red.200",
+                  color: "black",
+                  fontWeight: "semibold",
+                  borderWidth: "1px",
+                  borderColor: "gray.500",
+                  borderBottom: "0px",
                 }}
-                _focus={{ borderWidth: "3px", borderColor: "green.200" }}
+                _focus={{
+                  borderBottom: "0px",
+                }}
               >
+                <VideoCallOutlinedIcon />
                 Video Metting
               </Tab>
             </Link>
             <Link to={`${match.url}/home-work`}>
               <Tab
                 _selected={{
-                  borderWidth: "3px",
-                  borderColor: "red.200",
+                  color: "black",
+                  fontWeight: "semibold",
+                  borderWidth: "1px",
+                  borderColor: "gray.500",
+                  borderBottom: "0px",
+                }}
+                _focus={{
                   borderBottom: "0px",
                 }}
                 className="nav-tabs"
               >
+                <AssignmentLateOutlinedIcon />
                 Home Work
               </Tab>
             </Link>
             <Link to={`${match.url}/study-material`}>
-              <Tab className="nav-tabs">Study Material</Tab>
+              <Tab
+                className="nav-tabs"
+                _selected={{
+                  color: "black",
+                  fontWeight: "semibold",
+                  borderWidth: "1px",
+                  borderColor: "gray.500",
+                  borderBottom: "0px",
+                }}
+                _focus={{
+                  borderBottom: "0px",
+                }}
+              >
+                <SchoolOutlinedIcon /> Study Material
+              </Tab>
             </Link>
           </div>
         </TabList>
-
-        <TabPanels>
+        <br />
+        <br />
+        {/* <TabPanels>
           <TabPanel>
             <Route path="/dashboard/video-meeting">
               <VideoMetting />
@@ -85,8 +113,18 @@ function ClassDashBoard() {
               <StudyMaterial />
             </Route>
           </TabPanel>
-        </TabPanels>
+        </TabPanels> */}
+        <Route path="/dashboard/video-meeting">
+          <VideoMetting />
+        </Route>{" "}
+        <Route path="/dashboard/home-work">
+          <HomeWork />
+        </Route>
+        <Route path="/dashboard/study-material">
+          <StudyMaterial />
+        </Route>
       </Tabs>
+      {/* <AddStudyMaterialPanel /> */}
     </div>
   );
 }

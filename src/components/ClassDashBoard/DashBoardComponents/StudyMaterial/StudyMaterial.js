@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { TitleComponent } from "../../../Title/TitleComponent";
-import "./StudyMaterial";
+import "./StudyMaterial.css";
 import StudyMaterialPost from "./StudyMaterialPost/StudyMaterialPost";
 import { Helmet } from "react-helmet";
 

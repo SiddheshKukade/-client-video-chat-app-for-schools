@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { TitleComponent } from "../../../Title/TitleComponent";
+import React from "react";
 import HomeWorkPost from "./HomeWorkPost/HomeWorkPost";
 import { Helmet } from "react-helmet";
 

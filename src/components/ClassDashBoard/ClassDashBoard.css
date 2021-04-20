@@ -6,6 +6,7 @@
   margin-right: 0;
   height: 10vh;
   width: 100% !important;
+  border-bottom: 1px solid #808080;
 }
 .dash__header {
   display: flex;
@@ -21,6 +22,15 @@
 .nav-tabs {
   border: 3px solid darkgray !important;
 } */
+.nav-tabs {
+  width: 20vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-tabs > .MuiSvgIcon-root {
+  margin-right: 15px;
+}
 .dash__header > .header__left {
 }
 .dash__header > .header__middle {
