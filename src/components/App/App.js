@@ -4,14 +4,26 @@ import Login from "../Login/Login";
 import Sid from "./../Sid";
 import Sample from "./Sample";
 import ClassDashBoard from "./../ClassDashBoard/ClassDashBoard";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 const App = () => {
   return (
-    <>
-      <ClassDashBoard />
+    <Router>
+      <Switch>
+        <Route path="/dashboard">
+          <ClassDashBoard />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/home">
+          <Home />
+        </Route>
+      </Switch>
       {/* <Home /> */}
       {/* <Login /> */}
       {/* <Sample /> */}
-    </>
+    </Router>
     // <Sid />
 
     // <h1 className="text-indigo-200  bg-red-500   ">
