@@ -4,21 +4,31 @@ import Login from "../Login/Login";
 import Sid from "./../Sid";
 import Sample from "./Sample";
 import ClassDashBoard from "./../ClassDashBoard/ClassDashBoard";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import FormikLogin from "./../Login/FormikLogin/FormikLogin";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  Redirect,
+} from "react-router-dom";
 
 const App = () => {
+  // const [redirect, setRedirect] = React.useState("/dashboard");
   return (
     <Router>
+      <Route path="/" exact>
+        <Redirect
+          to={{
+            pathname: "/dashboard",
+          }}
+        />
+      </Route>
       <Switch>
-        <Route path="/dashboard">
-          <ClassDashBoard />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/home">
-          <Home />
-        </Route>
+        <Route path="/dashboard" component={ClassDashBoard} />
+        <Route path="/login" component={FormikLogin} />
+        <Route path="/home" component={Home} />
       </Switch>
       {/* <Home /> */}
       {/* <Login /> */}

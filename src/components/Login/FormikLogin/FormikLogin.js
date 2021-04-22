@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import { Form } from "formik";
-import "./FormikLogin.css";
+import styles from "./FormikLogin.module.css";
+
+import GoogleLogin from "react-google-login";
+import UserDetailsFrom from "./../../UserDetailsFrom/UserDetailsFrom";
+import { Helmet } from "react-helmet";
+
 function FormikLogin() {
+  const [loadNextForm, setLoadNextForm] = useState(false);
+  const [u, sU] = useState({});
+  console.log(u);
+  const responseG = (res) => {
+    console.log(res);
+    console.log(res.profileObject);
+  };
+  const handleSubmit = () => {
+    setLoadNextForm(true);
+  };
   const initialValues = {
     email: "",
     password: "",
@@ -19,106 +34,109 @@ function FormikLogin() {
     console.log(values);
   };
   return (
-    <Formik
-      className="mt-8 space-y-6"
-      initialValues={initialValues}
-      onSubmit={onSubmit}
-      validationSchema={validationSchema}
-    >
-      {(formik) => {
-        console.log(formik.values);
-        const { errors, touched } = formik;
-        return (
-          <Form>
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label for="email-address" className="sr-only" htmlFor="email">
-                  Email address
-                </label>
-                <FormikControl
-                  name="email"
-                  control="input"
-                  type="email"
-                  autocomplete="email"
-                  label="Enter your email Address"
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                  errMsg={errors.email}
-                  isTouched={touched.email}
-                />
-              </div>
-              <div>
-                <label for="password" className="sr-only">
-                  Password
-                </label>
-                <FormikControl
-                  control="input"
-                  type="password"
-                  label="Enter your Password here"
-                  name="password"
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                  autocomplete="current-password"
-                  errMsg={errors.password}
-                  isTouched={touched.password}
-                />
-              </div>
+    <>
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
+      {false ? (
+        <UserDetailsFrom />
+      ) : (
+        <div className={styles.mainContainer}>
+          <div className={styles.container}>
+            <div className={styles.inner1}>
+              <img
+                src="https://image.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg"
+                alt="login"
+                srcset=""
+                className={styles.image}
+              />
             </div>
+            <div className={styles.inner2}>
+              <h1 className={styles.h1L}>Login to App</h1>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember_me"
-                  name="remember_me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  for="remember_me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                disabled={!formik.isValid}
-                className="group relative w-full flex justify-center py-2 px-4 my-6 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 button-login"
+              <Formik
+                className={styles.formContainer}
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}
               >
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <svg
-                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </span>
-                Sign in
-              </button>
+                {(formik) => {
+                  console.log(formik.values);
+                  const { errors, touched } = formik;
+                  return (
+                    <Form class={styles.form1}>
+                      <div className={styles.formMain}>
+                        <div className={styles.formInputs}>
+                          {/* <label
+                            for="email-address"
+                            className="sr-only"
+                            htmlFor="email"
+                          >
+                            Email address
+                          </label> */}
+                          <FormikControl
+                            name="email"
+                            control="input"
+                            type="email"
+                            autocomplete="email"
+                            label="Enter your email Address"
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Email address"
+                            errMsg={errors.email}
+                            isTouched={touched.email}
+                            fullWidth="true"
+                          />
+                        </div>
+                        <div className={styles.formInputs}>
+                          {/* <label for="password" className="sr-only">
+                            Password
+                          </label> */}
+                          <FormikControl
+                            control="input"
+                            type="password"
+                            label="Enter your Password here"
+                            name="password"
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            errMsg={errors.password}
+                            isTouched={touched.password}
+                            fullWidth="true"
+                          />
+                        </div>
+                      </div>
+
+                      <div className={styles.formInputsBtn}>
+                        <button
+                          type="submit"
+                          disabled={!formik.isValid}
+                          className={styles.button}
+                        >
+                          <span className="absolute left-0 inset-y-0 flex items-center pl-3"></span>
+                          Continue to App
+                        </button>
+                      </div>
+                      <h6 className={styles.opt}>Or</h6>
+                    </Form>
+                  );
+                }}
+              </Formik>
+
+              <div className={styles.formInputsGgl}>
+                <GoogleLogin
+                  clientId="204884301404-mt7viu03jv87ivlvu45qo41sv6cqg26v.apps.googleusercontent.com"
+                  buttonText="Sign-up / Login  with Google Account"
+                  onSuccess={(res) => sU(res)}
+                  onFailure={responseG}
+                  cookiePolicy={"single_host_origin"}
+                  className={styles.google}
+                />
+              </div>
             </div>
-          </Form>
-        );
-      }}
-    </Formik>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

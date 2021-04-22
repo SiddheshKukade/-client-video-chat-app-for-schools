@@ -6,6 +6,9 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { makeStyles } from "@material-ui/core/styles";
+import { Formik, Form } from "formik";
+import FormikControl from "./../../UserDetailsFrom/FormikControl";
+import * as Yup from "yup";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -20,6 +23,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function AddStudyMaterialPanel() {
+  const initialValues = {
+    name: "",
+  };
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .required("Name field is needed")
+      .min(4, "Name is too Short"),
+  });
+  const onSubmit = (values) => {
+    console.log("form data ss sumit", values);
+    console.log(values);
+  };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -55,35 +70,53 @@ function AddStudyMaterialPanel() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <form
-              class="box"
-              method="post"
-              action=""
-              enctype="multipart/form-data"
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
             >
-              <div class="box__input">
-                <input
-                  class="box__file"
-                  type="file"
-                  name="files[]"
-                  id="file"
-                  data-multiple-caption="{count} files selected"
-                  multiple
-                />
-                <label for="file">
-                  <strong>Choose a file</strong>
-                  <span class="box__dragndrop"> or drag it here</span>.
-                </label>
-                <button class="box__button" type="submit">
-                  Upload
-                </button>
-              </div>
-              <div class="box__uploading">Uploading…</div>
-              <div class="box__success">Done!</div>
-              <div class="box__error">
-                Error! <span></span>.
-              </div>
-            </form>
+              {(formik) => {
+                console.log(formik.values);
+                const { errors, touched } = formik;
+                return (
+                  <Form>
+                    <div className="rounded-md shadow-sm -space-y-px">
+                      <label
+                        for="email-address"
+                        className="sr-only"
+                        htmlFor="email"
+                      >
+                        Email address
+                      </label>
+                      <FormikControl
+                        name="name"
+                        control="input"
+                        type="text"
+                        label="Enter Name of Material"
+                        placeholder="Name"
+                        errMsg={errors.name}
+                        isTouched={touched.email}
+                      />
+                    </div>
+                    <button type="submit" disabled={!formik.isValid}>
+                      Upload Study Material
+                    </button>
+                    <input
+                      class="box__file"
+                      type="file"
+                      name="file"
+                      id="file"
+                      data-multiple-caption="{count} files selected"
+                      multiple
+                    />
+                    <label for="file">
+                      <strong>Choose a file</strong>
+                      <span class="box__dragndrop"> or drag it here</span>.
+                    </label>
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
         </Fade>
       </Modal>

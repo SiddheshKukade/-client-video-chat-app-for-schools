@@ -116,7 +116,7 @@ function ClassDashBoard() {
         </TabPanels> */}
         <Route path="/dashboard/video-meeting">
           <VideoMetting />
-        </Route>{" "}
+        </Route>
         <Route path="/dashboard/home-work">
           <HomeWork />
         </Route>
@@ -124,7 +124,7 @@ function ClassDashBoard() {
           <StudyMaterial />
         </Route>
       </Tabs>
-      {/* <AddStudyMaterialPanel /> */}
+      <AddStudyMaterialPanel />
     </div>
   );
 }
