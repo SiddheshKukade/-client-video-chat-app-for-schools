@@ -90,7 +90,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin: 1.2rem;
+  margin: 0.5rem;
 }
 .form1 {
   width: 100%;
@@ -99,7 +99,6 @@
   border: 1px solid var(--complementary);
   padding: 0.5rem 3.5rem;
   border-radius: 5px;
-  transition: background 0.3s ease-in;
   color: var(--complementary);
   width: 60%;
 }

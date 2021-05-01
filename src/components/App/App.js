@@ -29,12 +29,9 @@ const App = () => {
         <Route path="/dashboard" component={ClassDashBoard} />
         <Route path="/login" component={FormikLogin} />
         <Route path="/home" component={Home} />
+        {/* <Route path="/user-details" component={UserDetailsFrom} /> */}
       </Switch>
-      {/* <Home /> */}
-      {/* <Login /> */}
-      {/* <Sample /> */}
     </Router>
-    // <Sid />
 
     // <h1 className="text-indigo-200  bg-red-500   ">
     //   Jai Aai Jai Baba

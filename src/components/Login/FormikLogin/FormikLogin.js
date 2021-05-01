@@ -7,8 +7,9 @@ import { Form } from "formik";
 import styles from "./FormikLogin.module.css";
 
 import GoogleLogin from "react-google-login";
-import UserDetailsFrom from "./../../UserDetailsFrom/UserDetailsFrom";
 import { Helmet } from "react-helmet";
+import UserDetailsFrom from "./../../UserDetailsFrom/UserDetailsFrom";
+import RegistrationForm from "./../RegistrationForm/RegistrationForm";
 
 function FormikLogin() {
   const [loadNextForm, setLoadNextForm] = useState(false);
@@ -32,14 +33,17 @@ function FormikLogin() {
   const onSubmit = (values) => {
     console.log("form data sumit", values);
     console.log(values);
+    setLoadNextForm(true);
   };
   return (
     <>
       <Helmet>
         <title>Login</title>
       </Helmet>
-      {false ? (
-        <UserDetailsFrom />
+      {loadNextForm ? (
+        <>
+          <RegistrationForm />
+        </>
       ) : (
         <div className={styles.mainContainer}>
           <div className={styles.container}>
@@ -61,7 +65,6 @@ function FormikLogin() {
                 validationSchema={validationSchema}
               >
                 {(formik) => {
-                  console.log(formik.values);
                   const { errors, touched } = formik;
                   return (
                     <Form class={styles.form1}>
@@ -80,7 +83,7 @@ function FormikLogin() {
                             type="email"
                             autocomplete="email"
                             label="Enter your email Address"
-                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            className=""
                             placeholder="Email address"
                             errMsg={errors.email}
                             isTouched={touched.email}
@@ -96,7 +99,7 @@ function FormikLogin() {
                             type="password"
                             label="Enter your Password here"
                             name="password"
-                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            className=""
                             placeholder="Password"
                             autocomplete="current-password"
                             errMsg={errors.password}
@@ -112,7 +115,7 @@ function FormikLogin() {
                           disabled={!formik.isValid}
                           className={styles.button}
                         >
-                          <span className="absolute left-0 inset-y-0 flex items-center pl-3"></span>
+                          <span className=" "></span>
                           Continue to App
                         </button>
                       </div>

@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormikControl from "./FormikControl";
 import TextArea from "../FormElements/TextArea";
+import { Link } from "react-router-dom";
 function UserDetailsFrom() {
   const dropdownOptions = [
     { key: "1", value: "Select an option" },
@@ -49,12 +50,12 @@ function UserDetailsFrom() {
       onSubmit={onSubmit}
     >
       {(formik) => (
-        <Form className="p-4 flex flex-col items-center justify-center gap-5">
+        <Form className=" ">
           <FormikControl
             control="input"
             type="email"
             name="email"
-            className="bg-pink-300 text-pink-900"
+            className=" "
             label="E-mail"
           />
 
@@ -63,14 +64,14 @@ function UserDetailsFrom() {
             name="description"
             label="Enter Description here"
             type="textarea"
-            className="bg-blue-200 text-blue-900 w-96 h-96"
+            className=" "
           />
           <FormikControl
             control="select"
             label="select game"
             name="selectGame"
             options={dropdownOptions}
-            className="w-28 bg-green-400 text-green-900 "
+            className="  "
           />
           <FormikControl
             control="radio"
