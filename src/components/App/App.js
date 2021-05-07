@@ -4,7 +4,8 @@ import Login from "../Login/Login";
 import Sid from "./../Sid";
 import Sample from "./Sample";
 import ClassDashBoard from "./../ClassDashBoard/ClassDashBoard";
-import FormikLogin from "./../Login/FormikLogin/FormikLogin";
+import EmailLogin from "./../Login/MainLogin/EmailLogin";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -27,7 +28,7 @@ const App = () => {
       </Route>
       <Switch>
         <Route path="/dashboard" component={ClassDashBoard} />
-        <Route path="/login" component={FormikLogin} />
+        <Route path="/login" component={EmailLogin} />
         <Route path="/home" component={Home} />
         {/* <Route path="/user-details" component={UserDetailsFrom} /> */}
       </Switch>

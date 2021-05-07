@@ -4,6 +4,8 @@ import { Formik } from "formik";
 import { Form } from "formik";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 
+import styles from "./RegistrationForm.module.css";
+
 function RegistrationForm() {
   // const radioOptions = [
   //   { key: "Email", value: "emailmoc" },

@@ -4,14 +4,14 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import { Form } from "formik";
-import styles from "./FormikLogin.module.css";
+import styles from "./EmailLogin.module.css";
 
 import GoogleLogin from "react-google-login";
 import { Helmet } from "react-helmet";
-import UserDetailsFrom from "./../../UserDetailsFrom/UserDetailsFrom";
-import RegistrationForm from "./../RegistrationForm/RegistrationForm";
+import UserDetailsFrom from "../../UserDetailsFrom/UserDetailsFrom";
+import RegistrationForm from "../RegistrationForm/RegistrationForm";
 
-function FormikLogin() {
+function EmailLogin() {
   const [loadNextForm, setLoadNextForm] = useState(false);
   const [u, sU] = useState({});
   console.log(u);
@@ -115,8 +115,11 @@ function FormikLogin() {
                           disabled={!formik.isValid}
                           className={styles.button}
                         >
-                          <span className=" "></span>
-                          Continue to App
+                          <span className={styles.shortText}>Continue</span>
+                          <span className={styles.fullText}>
+                            {" "}
+                            Continue to App
+                          </span>
                         </button>
                       </div>
                       <h6 className={styles.opt}>Or</h6>
@@ -143,4 +146,4 @@ function FormikLogin() {
   );
 }
 
-export default FormikLogin;
+export default EmailLogin;

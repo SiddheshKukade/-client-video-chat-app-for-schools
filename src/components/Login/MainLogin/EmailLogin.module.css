@@ -144,3 +144,47 @@
 .formInputsGgl {
   composes: formInputs;
 }
+.shortText {
+  display: none;
+}
+.fullText {
+  display: inline-block;
+}
+/* MOBILE RESPONSIVENESS  */
+@media only screen and (max-width: 600px) {
+  .h1L {
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
+  }
+  .mainContainer {
+    background-image: none;
+  }
+  .container {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .inner1 {
+    display: none;
+  }
+  .inner2 {
+    flex: 1;
+    padding-top: 2.938rem;
+    padding-bottom: 0;
+    justify-content: flex-start;
+    row-gap: 0.5rem;
+  }
+  .formInputs {
+    margin-bottom: 1.5rem;
+  }
+  .formInputsBtn {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+  .shortText {
+    display: inline-block;
+  }
+  .fullText {
+    display: none;
+  }
+}

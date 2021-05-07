@@ -4,7 +4,7 @@ import UserDetailsForm from "../UserDetailsFrom/UserDetailsFrom";
 
 import "./Login.css";
 
-import FormikLogin from "./FormikLogin/FormikLogin";
+// import FormikLogin from "./FormikLogin/FormikLogin";
 import RegistrationForm from "./RegistrationForm/RegistrationForm";
 
 const Login = () => {
