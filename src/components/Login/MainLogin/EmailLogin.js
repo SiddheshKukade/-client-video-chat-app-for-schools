@@ -131,7 +131,7 @@ function EmailLogin() {
               <div className={styles.formInputsGgl}>
                 <GoogleLogin
                   clientId="204884301404-mt7viu03jv87ivlvu45qo41sv6cqg26v.apps.googleusercontent.com"
-                  buttonText="Sign-up / Login  with Google Account"
+                  buttonText="Sign-up / Login  with Google "
                   onSuccess={(res) => sU(res)}
                   onFailure={responseG}
                   cookiePolicy={"single_host_origin"}
