@@ -1,12 +1,10 @@
 .dashboard__container {
   display: flex;
+  position: relative;
 }
 .dash__header__container {
   flex: 0.82;
   margin-right: 0;
-  height: 10vh;
-  width: 100% !important;
-  border-bottom: 1px solid #808080;
 }
 .dash__header {
   display: flex;
@@ -28,7 +26,7 @@
   align-items: center;
   justify-content: space-between;
 }
-.nav-tabs > .MuiSvgIcon-root {
+.navtabs > .MuiSvgIcon-root {
   margin-right: 15px;
 }
 .dash__header > .header__left {
@@ -36,4 +34,9 @@
 .dash__header > .header__middle {
 }
 .dash__header > .header__right {
+}
+.addSM {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
 }

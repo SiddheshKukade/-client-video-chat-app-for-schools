@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ClassDashBoardMobile.module.css";
 import TopNavMobile from "./TopNavMobile";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
@@ -8,12 +8,12 @@ import VideocamIcon from "@material-ui/icons/Videocam";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 
-import BatteryCharging30Icon from "@material-ui/icons/BatteryCharging30";
-import AutorenewIcon from "@material-ui/icons/Autorenew";
-import BackupIcon from "@material-ui/icons/Backup";
+import VideoMeetingMobile from "./../ClassDashBoardComponents/VideoMeetingMobile/VideoMeetingMobile";
+import StudyMaterialMobile from "./../ClassDashBoardComponents/StudyMaterialMobile/StudyMaterialMobile";
+import HomeWorkMobile from "./../ClassDashBoardComponents/HomeWorkMobile/HomeWorkMobile";
 
 const ClassDashBoardMobile = () => {
-  const [value, setValue] = React.useState("recents");
+  const [value, setValue] = useState("recents");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -25,14 +25,12 @@ const ClassDashBoardMobile = () => {
       {/* MIDDLE UI */}
       <div className={styles.middle_container}>
         <pre>{value}</pre>
+
+        {value === "recents" ? <h1>AAi Baba</h1> : null}
+        {value === "Lectures" ? <VideoMeetingMobile /> : null}
+        {value === "Study Material" ? <StudyMaterialMobile /> : null}
+        {value === "Homework" ? <HomeWorkMobile /> : null}
       </div>
-
-      {/* 
-      {value === "recents" ? <h1>AAi Baba</h1> : null}
-      {value === "Lectures" ? <AutorenewIcon /> : null}
-      {value === "Study Material" ? <BackupIcon /> : null}
-      {value === "Homework" ? <BatteryCharging30Icon /> : null} */}
-
       {/* BOTTOM NAVIGATION  */}
       <div className={styles.navContainer}>
         <BottomNavigation

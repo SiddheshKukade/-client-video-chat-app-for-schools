@@ -4,7 +4,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif !important;
   box-sizing: border-box;
   --primary: #ebebeb;
   --secondary: #3a4b69;
@@ -16,4 +16,15 @@ body {
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.25rem;
+}
+.MuiTab-wrapper {
+  font-weight: 600;
+  font-size: large;
+}
+.MuiTab-fullWidth {
+  flex-grow: 1;
+  max-width: none;
+  flex-basis: 0;
+  flex-shrink: 1;
+  height: 10vh !important;
 }

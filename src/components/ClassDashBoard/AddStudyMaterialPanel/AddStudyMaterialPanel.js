@@ -32,7 +32,7 @@ function AddStudyMaterialPanel() {
       .min(4, "Name is too Short"),
   });
   const onSubmit = (values) => {
-    console.log("form data ss sumit", values);
+    console.log("form data Add Study material sumit", values);
     console.log(values);
   };
   const classes = useStyles();
