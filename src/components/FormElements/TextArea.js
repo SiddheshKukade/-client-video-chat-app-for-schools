@@ -1,6 +1,6 @@
 import React from "react";
 import { ErrorMessage, Field } from "formik";
-import TextErr from './TextErr';
+import TextErr from "./TextErr";
 
 function TextArea(props) {
   const { label, name, ...rest } = props;

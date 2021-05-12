@@ -1,0 +1,16 @@
+.react-datepicker__input-container input {
+  padding: 1rem;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  width: 40vw;
+}
+.MuiNativeSelect-select.MuiNativeSelect-select {
+  padding-right: 24px;
+  width: 37vw;
+  padding-left: 0.4rem;
+}
+#txtareaUserReg {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  width: 285%;
+}
