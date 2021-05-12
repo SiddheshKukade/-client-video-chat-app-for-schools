@@ -111,6 +111,8 @@
   display: flex;
   flex-direction: row;
   width: 100%;
+  margin-top: 2.5rem !important;
+
   color: gray;
 }
 .opt:before,
@@ -138,11 +140,16 @@
 .formInputsBtn {
   display: flex;
   justify-content: center;
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
   margin-bottom: 1rem;
 }
 .formInputsGgl {
-  composes: formInputs;
+  display: flex;
+  width: 80%;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0.5rem;
 }
 .shortText {
   display: none;
@@ -150,6 +157,7 @@
 .fullText {
   display: inline-block;
 }
+
 /* MOBILE RESPONSIVENESS  */
 @media only screen and (max-width: 600px) {
   .h1L {
