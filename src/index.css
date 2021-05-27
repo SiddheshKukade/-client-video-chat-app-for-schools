@@ -6,13 +6,24 @@
   padding: 0;
   font-family: "Poppins", sans-serif !important;
   box-sizing: border-box;
+
   --primary: #ebebeb;
+  --primary-back: #ffffff;
+  --primary-hover: #ffffff;
+  --primary-border: #ffffff;
+  --primary-box_shadow: #ffffff;
+
   --secondary: #3a4b69;
+  --secondary-border: #ffffff;
+  --secondary-hover: #ffffff;
+
   --complementary: #2431e5;
+  --complementary-back: #ffffff;
+  --complementary-hover: #ffffff;
+  --complementary-border: #ffffff;
 }
 body {
   color: rgba(0, 0, 0, 0.87);
-
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.25rem;

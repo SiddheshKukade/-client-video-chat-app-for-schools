@@ -221,7 +221,7 @@ function ClassDashBoard() {
                     <AssignmentIcon
                       style={{ verticalAlign: "middle", marginRight: "1rem" }}
                     />
-                    Video Meeting
+                    Homework
                   </div>
                 }
               />

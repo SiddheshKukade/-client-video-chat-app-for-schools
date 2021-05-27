@@ -3,11 +3,11 @@ import styles from "./LoginAs.module.css";
 import Teacherimg from "./images/teacher-clipart-transparent-15.png";
 import Studentimg from "./images/student.jpg";
 import Principalimg from "./images/principal.jpg";
-import EmailLogin from "./../MainLogin/EmailLogin";
+import Signup from "./../../Signup/Signup";
 const LoginAs = () => {
   const [selectRole, setSelectRole] = useState("");
   if (selectRole !== "") {
-    return <EmailLogin />;
+    return <Signup role={selectRole} />;
   } else {
     return (
       <div className={styles.main_container}>

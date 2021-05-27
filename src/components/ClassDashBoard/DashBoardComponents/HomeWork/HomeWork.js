@@ -7,10 +7,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import styles from "./Homework.module.css";
+import AddHomeWorkPanel from "../../AddHomeWorkPanel/AddHomeworkPanel";
 const title = "Homework - Sid";
 function HomeWork() {
   return (
-    <>
+    <div className={styles.mainContainer}>
       <Helmet>
         <title>Home Work</title>
         <meta name="description" content="App Description" />
@@ -18,12 +19,9 @@ function HomeWork() {
       </Helmet>
       {/* <TitleComponent title={title} /> */}
       <HomeWorkPost />
-      <Tooltip title="Add" aria-label="add">
-        <Fab color="primary" className={styles.fab}>
-          <AddIcon />
-        </Fab>
-      </Tooltip>
-    </>
+
+      <AddHomeWorkPanel />
+    </div>
   );
 }
 

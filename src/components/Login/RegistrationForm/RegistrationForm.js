@@ -43,6 +43,7 @@ function RegistrationForm() {
   };
   return (
     <div className={styles.container}>
+      <div className={styles.headerContainer}>Fill in the Below Details</div>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

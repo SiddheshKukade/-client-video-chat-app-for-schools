@@ -29,13 +29,77 @@ Name of StudyMaterial
 Sended By TecherName
 --Ability to Download the StudyMaterial
 
+---
+
 ### Video Meeting Component :
 
     # Modes :
         --Teaching Mode
-        --Meeting Mode
-        [I will go into it's details Later]
+            www-->> JUST LIKE A LIVESTREAM <<----
+            In teaching mode only teacher can livestream
+            other can only watch and comment answers
+            they will have a option to '<==TALK-TO-TEACHER==>'
 
+        --Meeting Mode :
+        works just like other meeting apps anyone can share camera and turn on mic .
+        But teacher still holds the control to turn off camera or mic of any of the participants.        [I will go into it's details Later]
+
+---
+
+<!--
 ### Sign-in as Techer - Student - Principal Component
 
 Create this Component
+
+---
+
+# <<---->> DONE <<---->> -->
+
+OG Lingatures
+!== www \*\*\* -> --> <==> ------------>>=>->->
+
+---
+
+<!-- # <-- DONE --> Apply Material UI Lists to the Sidebar and make the Sidebar mobile responsive -->
+
+[www->>TOMMOROW<<--www]
+
+## CREATE A REGISTER FORM
+
+## MAKE CHANGES IN SERVER SO THAT THEY CAN SUPPORT BOTH GOOGLE SSO AND OUR DB LOGIN.
+
+## CREATE A PRICIPAL FORM AND THEN CONNECT THEM ALL TO DB AND SERVER
+
+[www->>TOMMOROW<<--www]
+
+## CREATE A MODAL FOR SUBMITING THE FILE OF THE STUDY MATERTIAL AND STORE THE FILES ON <<--SERVER-->>.
+
+## CREATE A MODAL FOR CREATING A HOMEWORK <--->DONE<--->
+
+[www->>TOMMOROW<<--www]
+
+## WORK QUICKLY ON THE CHAT COMPONENTS
+
+## CREATE VIDEO CHAT ROOMS OR CAN CREATE LIVESTREAM TYPE OG
+
+## LET'S GO
+
+###### >>----www---------www--->> THINGS TO DO AFTER ALL OTHER STUFF IS DONE <<----www---------www---<<
+
+        www TRY TO INSRET CODESANDBOX API www
+
+----www----www------www-------www------www----------www-----------www------------www------www----------www----
+
+# TEACHER FORM
+
+REFERAL CODE FOR SCHOOL
+AUTOMATICALLY DISPLAY TEACHER'S SUBJECT IF EXISTS ON DB OTHERWISE SAY YOU ARE NOT ALLOWED AS A TEACHER
+CONFIRM AND CONTINUE
+
+# PRINCIPAL FORM
+
+NAME OF SCHOOL
+TEACHER AND SUBJECT FOR EACH TEACHER [PRINCIPAL CAN ADD HIMSELF AS A TEACHER TOO]
+YOUR SCHOOL CAPACITY EX. 5 TH TO 10 TH
+REFERAL CODE FOR SCHOOL
+CONFIRM

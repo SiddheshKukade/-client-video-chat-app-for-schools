@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import React from "react";
-import styles from "./AddStudyMaterialPanel.module.css";
+import styles from "../AddStudyMaterialPanel/AddStudyMaterialPanel.module.css";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: "59vw",
   },
 }));
-function AddStudyMaterialPanel() {
+function AddHomeWorkPanel() {
   const initialValues = {
     name: "",
   };
@@ -31,6 +31,9 @@ function AddStudyMaterialPanel() {
     name: Yup.string()
       .required("Name field is needed")
       .min(4, "Name is too Short"),
+    marks: Yup.number("Marks should to be a number").required(
+      "Please provide the marks"
+    ),
   });
   const onSubmit = (values) => {
     console.log("form data Add Study material sumit", values);
@@ -55,11 +58,11 @@ function AddStudyMaterialPanel() {
         startIcon={<CloudUploadIcon />}
         onClick={handleOpen}
       >
-        Add Material Here
+        Add Home
       </Button> */}
       <Tooltip title="Add Homework" aria-label="add" onClick={handleOpen}>
         <Fab color="primary" className={styles.fab}>
-          <AddIcon className={styles.icon} />
+          <AddIcon />
         </Fab>
       </Tooltip>
       <Modal
@@ -76,7 +79,7 @@ function AddStudyMaterialPanel() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <div className={styles.header}>Upload Study Material to Class</div>
+            <div className={styles.header}>Upload Assignments to Class</div>
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
@@ -96,25 +99,22 @@ function AddStudyMaterialPanel() {
                           name="name"
                           control="input"
                           type="text"
-                          label="Enter Name of Material"
+                          label=" Name of Assignment"
                           placeholder="Name"
                           errMsg={errors.name}
                           isTouched={touched.email}
                         />
                       </div>
                       <div className={styles.fileContainer}>
-                        <input
-                          className={styles.file}
-                          type="file"
-                          name="file"
-                          id="file"
-                          data-multiple-caption="{count} files selected"
-                          multiple
+                        <FormikControl
+                          name="marks"
+                          control="input"
+                          type="number"
+                          label="Marks of Assignment "
+                          placeholder="marks"
+                          errMsg={errors.marks}
+                          isTouched={touched.email}
                         />
-                        <label htmlFor="file">
-                          <strong>Choose a file</strong>
-                          <span class="box__dragndrop"> or drag it here</span>.
-                        </label>
                       </div>
                       <div class={styles.buttonContainer}>
                         <button
@@ -122,7 +122,7 @@ function AddStudyMaterialPanel() {
                           disabled={!formik.isValid}
                           className={styles.button}
                         >
-                          Upload Study Material
+                          Assign Homework to Students
                         </button>
                       </div>
                     </div>
@@ -137,4 +137,4 @@ function AddStudyMaterialPanel() {
   );
 }
 
-export default AddStudyMaterialPanel;
+export default AddHomeWorkPanel;

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import FormikControl from "../../UserDetailsFrom/FormikControl";
 import { Form } from "formik";
-import styles from "./EmailLogin.module.css";
-
+import styles from "./Signup.module.css";
 import GoogleLogin from "react-google-login";
 import { Helmet } from "react-helmet";
-import UserDetailsFrom from "../../UserDetailsFrom/UserDetailsFrom";
-import RegistrationForm from "../RegistrationForm/RegistrationForm";
+// import UserDetailsFrom from "../../UserDetailsFrom/UserDetailsFrom";
+import PrincipalForm from "../Login/PrincipalForm/PrincipalForm";
+import RegistrationForm from "../Login/RegistrationForm/RegistrationForm";
+import TeacherForm from "../Login/TeacherForm/TeacherForm";
+import FormikControl from "./../UserDetailsFrom/FormikControl";
 
-function EmailLogin({ role }) {
+function Signup({ role }) {
   const [loadNextForm, setLoadNextForm] = useState(false);
   const [u, sU] = useState({});
 
@@ -39,12 +39,19 @@ function EmailLogin({ role }) {
   return (
     <>
       <Helmet>
-        <title>Login</title>
+        <title>Create Account - App</title>
       </Helmet>
 
       {loadNextForm ? (
-        <RegistrationForm />
+        loadNextForm && role === "Principal" ? (
+          <PrincipalForm />
+        ) : loadNextForm && role === "Teacher" ? (
+          <TeacherForm />
+        ) : loadNextForm && role === "Student" ? (
+          <RegistrationForm />
+        ) : null
       ) : (
+        // <RegistrationForm />
         <div className={styles.mainContainer}>
           <div className={styles.container}>
             <div className={styles.inner1}>
@@ -56,7 +63,7 @@ function EmailLogin({ role }) {
               />
             </div>
             <div className={styles.inner2}>
-              <h1 className={styles.h1L}>Login to App</h1>
+              <h1 className={styles.h1L}>Register to App</h1>
 
               <Formik
                 className={styles.formContainer}
@@ -146,4 +153,4 @@ function EmailLogin({ role }) {
   );
 }
 
-export default EmailLogin;
+export default Signup;

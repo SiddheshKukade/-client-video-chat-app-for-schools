@@ -85,4 +85,8 @@
   letter-spacing: normal;
   position: absolute;
   top: 5vh;
+  height: 10vh;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
 }
