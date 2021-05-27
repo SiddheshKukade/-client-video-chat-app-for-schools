@@ -62,17 +62,13 @@ OG Lingatures
 
 <!-- # <-- DONE --> Apply Material UI Lists to the Sidebar and make the Sidebar mobile responsive -->
 
-[www->>TOMMOROW<<--www]
-
-## CREATE A REGISTER FORM
+## CREATE A REGISTER FORM DONE
 
 ## MAKE CHANGES IN SERVER SO THAT THEY CAN SUPPORT BOTH GOOGLE SSO AND OUR DB LOGIN.
 
 ## CREATE A PRICIPAL FORM AND THEN CONNECT THEM ALL TO DB AND SERVER
 
-[www->>TOMMOROW<<--www]
-
-## CREATE A MODAL FOR SUBMITING THE FILE OF THE STUDY MATERTIAL AND STORE THE FILES ON <<--SERVER-->>.
+## CREATE A MODAL FOR SUBMITING THE FILE OF THE STUDY MATERTIAL AND STORE THE FILES ON <<--SERVER-->>. DONE
 
 ## CREATE A MODAL FOR CREATING A HOMEWORK <--->DONE<--->
 
@@ -86,7 +82,9 @@ OG Lingatures
 
 ###### >>----www---------www--->> THINGS TO DO AFTER ALL OTHER STUFF IS DONE <<----www---------www---<<
 
-        www TRY TO INSRET CODESANDBOX API www
+[www->>TOMMOROW<<--www]
+[www->>TOMMOROW<<--www]
+www TRY TO INSRET CODESANDBOX API www
 
 ----www----www------www-------www------www----------www-----------www------------www------www----------www----
 
@@ -95,6 +93,7 @@ OG Lingatures
 REFERAL CODE FOR SCHOOL
 AUTOMATICALLY DISPLAY TEACHER'S SUBJECT IF EXISTS ON DB OTHERWISE SAY YOU ARE NOT ALLOWED AS A TEACHER
 CONFIRM AND CONTINUE
+<<---DONE--->>
 
 # PRINCIPAL FORM
 

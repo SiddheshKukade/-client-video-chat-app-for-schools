@@ -60,11 +60,13 @@ function AddHomeWorkPanel() {
       >
         Add Home
       </Button> */}
-      <Tooltip title="Add Homework" aria-label="add" onClick={handleOpen}>
-        <Fab color="primary" className={styles.fab}>
-          <AddIcon />
-        </Fab>
-      </Tooltip>
+      <div className={styles.fab}>
+        <Tooltip title="Add Homework" aria-label="add" onClick={handleOpen}>
+          <Fab color="primary">
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+      </div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

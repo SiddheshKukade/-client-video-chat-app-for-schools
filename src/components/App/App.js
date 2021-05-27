@@ -12,7 +12,7 @@ import ClassDashBoard from "./../ClassDashBoard/ClassDashBoard";
 import EmailLogin from "./../Login/MainLogin/EmailLogin";
 import LoginAs from "./../Login/LoginAs/LoginAs";
 import NotFound404 from "./../NotFound404/NotFound404";
-
+import TeacherForm from "./../Login/TeacherForm/TeacherForm";
 const App = () => {
   return (
     // <Sid />
@@ -30,6 +30,7 @@ const App = () => {
         <Route path="/create-account" component={LoginAs} />
         <Route path="/home" component={Home} />
         <Route path="/404" component={NotFound404} />
+        <Route path="/zz" component={TeacherForm} />
         <Route path="*" component={NotFound404} />
       </Switch>
     </Router>

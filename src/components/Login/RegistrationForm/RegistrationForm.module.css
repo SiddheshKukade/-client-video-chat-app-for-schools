@@ -1,9 +1,11 @@
 .container {
   min-width: 100vw;
+  max-width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  overflow-x: hidden;
 }
 .form_container {
   display: flex;
@@ -17,6 +19,14 @@
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
+.inputsbtn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .inputsIn {
   width: 235%;
 }
@@ -29,6 +39,7 @@
   padding: 0.5rem 3.5rem;
   border-radius: 5px;
   color: var(--complementary);
+  width: 80%;
 }
 .buttonSb:hover {
   color: var(--primary);

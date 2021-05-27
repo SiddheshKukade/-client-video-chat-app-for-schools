@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import React from "react";
 import styles from "./AddStudyMaterialPanel.module.css";
 import Modal from "@material-ui/core/Modal";
@@ -57,11 +56,13 @@ function AddStudyMaterialPanel() {
       >
         Add Material Here
       </Button> */}
-      <Tooltip title="Add Homework" aria-label="add" onClick={handleOpen}>
-        <Fab color="primary" className={styles.fab}>
-          <AddIcon className={styles.icon} />
-        </Fab>
-      </Tooltip>
+      <div className={styles.fab}>
+        <Tooltip title="Add Homework" aria-label="add" onClick={handleOpen}>
+          <Fab color="primary">
+            <AddIcon className={styles.icon} />
+          </Fab>
+        </Tooltip>
+      </div>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

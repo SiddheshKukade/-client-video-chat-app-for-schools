@@ -15,7 +15,7 @@ function Signup({ role }) {
   const [loadNextForm, setLoadNextForm] = useState(false);
   const [u, sU] = useState({});
 
-  console.log(u);
+  console.log("Googel AO", u);
   const responseG = (res) => {
     console.log(res);
     console.log(res.profileObject);
@@ -36,20 +36,27 @@ function Signup({ role }) {
     console.log(values);
     setLoadNextForm(true);
   };
+  const loadForm = (role) => {
+    switch (role) {
+      case "Principal":
+        return <PrincipalForm />;
+      case "Teacher":
+        return <TeacherForm />;
+      case "Student":
+        return <RegistrationForm />;
+      default:
+        console.log("problem with role in signup.js");
+    }
+  };
+  console.log(role);
+
   return (
     <>
       <Helmet>
         <title>Create Account - App</title>
       </Helmet>
-
       {loadNextForm ? (
-        loadNextForm && role === "Principal" ? (
-          <PrincipalForm />
-        ) : loadNextForm && role === "Teacher" ? (
-          <TeacherForm />
-        ) : loadNextForm && role === "Student" ? (
-          <RegistrationForm />
-        ) : null
+        loadForm(role)
       ) : (
         // <RegistrationForm />
         <div className={styles.mainContainer}>
