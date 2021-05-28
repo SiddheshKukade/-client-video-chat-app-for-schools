@@ -1,45 +1,130 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
-import { Formik } from "formik";
-import { Form } from "formik";
+import { Formik, Form } from "formik";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "../RegistrationForm/extra.css";
 import styles from "../RegistrationForm/RegistrationForm.module.css";
+let count = 0;
+
+const AddNew = ({ key, defaultValue, inputvalues, count, ...rest }) => {
+  const swt = (i, val) => {
+    inputvalues[i] = val;
+  };
+  let i = count;
+  return (
+    // <>
+    //   <input
+    //     type="text"
+    //     name="teacherName"
+    //     key={key}
+    //     defaultValue={defaultValue}
+    //     onBlur={(e) => {
+    //       swt((i += 1), e.target.value);
+    //     }}
+    //   />
+    //   <input
+    //     type="text"
+    //     name="subject"
+    //     key={key}
+    //     defaultValue={defaultValue}
+    //     onBlur={(e) => {
+    //       swt((i += 1), e.target.value);
+    //     }}
+    //   />
+    // </>
+    <FormikControl key={key} {...rest} />
+  );
+};
 
 function PrincipalForm() {
-  // const radioOptions = [
-  //   { key: "Email", value: "emailmoc" },
-  //   { key: "telephone", value: "telephonemoc" },
-  // ];
+  const [inputList, setInputList] = useState([]);
+  const [inputvalues, setInputValues] = useState([]);
+
   const initialValues = {
     submitstudentName: "",
-    fatherName: "",
-    dob: null,
     phone: "",
     selectStandard: "",
     refercode: "",
+    teacherEmail: "",
+    teacherSubject: "",
   };
   const validationSchema = Yup.object({
     submitstudentName: Yup.string().required("name needed"),
-    fatherName: Yup.string().required("fathername needed"),
     phone: Yup.string()
       .min(10, "Must be 10 characters")
       .required("phone is required"),
     selectStandard: Yup.string().required("please select standard"),
-    dob: Yup.date("please give correct date"),
     refercode: Yup.string()
       .required("Referece code is Required")
       .min(4, "Minimum 4 characters are required for the code"),
+    teacherEmail: Yup.string()
+      .required("Teacher Name is required")
+      .email("This is not a correct E-mail"),
+    teacherSubject: Yup.string().required("Subject is Required"),
   });
   const dropdownOptions = [
-    { key: "1", value: "Select your Standard" },
-    { key: "2", value: "5th" },
-    { key: "3", value: "6th" },
-    { key: "4", value: "7th" },
-    { key: "5", value: "8th" },
+    { key: "default", value: "Select your Standard" },
+    { key: "1-12", value: "1st to 12th" },
+    { key: "1-10", value: "1st to 10th" },
+    { key: "5-10", value: "5th to 10th" },
+    { key: "5-12", value: "5th to 12th" },
   ];
   const handleSubmit = (values) => {
     console.log("Form submited desc ", values);
+  };
+  const onAddBtnClick = (event, errors, touched) => {
+    count += 2;
+    setInputList(
+      inputList.concat(
+        <div className={styles.inputs}>
+          <AddNew
+            key={inputList.length}
+            defaultValue=""
+            errMsg={errors.teacherEmail}
+            isTouched={touched.teacherEmail}
+            onChange={(e) => {
+              [e.target.name] = e.target.value;
+              swt(inputList.length + 2, e.target.value);
+            }}
+            name="teacherEmail"
+            inputvalues={inputvalues}
+            count={count}
+            control="input"
+            type="text"
+            label="Enter Email of Teacher "
+            fullWidth="true"
+            className={styles.inputsIn}
+            placeholder="E-mail"
+            onBlur={(e) => {
+              swt(2, e.target.value);
+            }}
+          />
+          <AddNew
+            key={inputList.length}
+            defaultValue=""
+            errMsg={errors.teacherSubject}
+            isTouched={touched.teacherSubject}
+            onChange={(e) => {
+              [e.target.name] = e.target.value;
+              swt(inputList.length + 2, e.target.value);
+            }}
+            inputvalues={inputvalues}
+            count={count}
+            control="input"
+            type="text"
+            label="Subject of that Teacher"
+            name="teacherSubject"
+            className={styles.inputsIn}
+            fullWidth="true"
+          />
+        </div>
+      )
+    );
+  };
+  console.log(inputList);
+  console.log(inputvalues);
+  const swt = (i, val) => {
+    inputvalues[i] = val;
   };
   return (
     <div className={styles.container}>
@@ -58,20 +143,7 @@ function PrincipalForm() {
                 <FormikControl
                   control="input"
                   type="text"
-                  label="Enter the referal code provided by your principal"
-                  name="refercode"
-                  errMsg={errors.refercode}
-                  isTouched={touched.refercode}
-                  fullWidth="true"
-                  className={styles.inputsIn}
-                  placeholder="Referal Code"
-                />
-              </div>
-              <div className={styles.inputs}>
-                <FormikControl
-                  control="input"
-                  type="text"
-                  label="Full Name of Teacher"
+                  label="Full Name of Principal"
                   isTouched={touched.submitstudentName}
                   fullWidth="true"
                   name="submitstudentName"
@@ -80,11 +152,11 @@ function PrincipalForm() {
                   className={styles.inputsIn}
                 />
               </div>
-              <div className={styles.inputs}>
+              {/* <div className={styles.inputs}>
                 <FormikControl
                   control="input"
                   type="text"
-                  label="Full Name of Teacher's Father"
+                  label="Full Name of Principal's Father"
                   name="fatherName"
                   errMsg={errors.fatherName}
                   isTouched={touched.fatherName}
@@ -92,18 +164,31 @@ function PrincipalForm() {
                   className={styles.inputsIn}
                   placeholder="Father's Name"
                 />
-              </div>
+              </div> */}
 
               <div className={styles.inputs}>
                 <FormikControl
                   control="select"
-                  label="Select Your Standard"
+                  label="Select the Standard range of your School"
                   name="selectStandard"
                   options={dropdownOptions}
                   errMsg={errors.selectStandard}
                   isTouched={touched.selectStandard}
                   className={styles.inputsIn}
                   fullWidth="true"
+                />
+              </div>
+              <div className={styles.inputs}>
+                <FormikControl
+                  control="input"
+                  type="text"
+                  label="Create a Referal Code for your School"
+                  name="refercode"
+                  errMsg={errors.refercode}
+                  isTouched={touched.refercode}
+                  fullWidth="true"
+                  className={styles.inputsIn}
+                  placeholder="Referal Code"
                 />
               </div>
               <div className={styles.inputs}>
@@ -118,6 +203,45 @@ function PrincipalForm() {
                   fullWidth="true"
                 />
               </div>
+              <div className={styles.inputs}>
+                <div className={styles.headerContainerh4}>
+                  Add Teachers and their subjects
+                </div>
+              </div>
+              <div className={styles.inputs}>
+                <FormikControl
+                  control="input"
+                  type="text"
+                  name="teacherEmail"
+                  label="Enter Email of Teacher "
+                  errMsg={errors.teacherEmail}
+                  isTouched={touched.teacherEmail}
+                  fullWidth="true"
+                  className={styles.inputsIn}
+                  placeholder="E-mail"
+                  defaultValue=""
+                  onBlur={(e) => {
+                    swt(2, e.target.value);
+                  }}
+                />
+
+                <FormikControl
+                  control="input"
+                  type="text"
+                  label="Subject of that Teacher"
+                  name="teacherSubject"
+                  errMsg={errors.teacherSubject}
+                  isTouched={touched.teacherSubject}
+                  className={styles.inputsIn}
+                  fullWidth="true"
+                />
+              </div>
+              {inputList}
+              <div className={styles.inputs}>
+                <button onClick={(e) => onAddBtnClick(e, errors, touched)}>
+                  Add input
+                </button>
+              </div>
               <div className={styles.inputsbtn}>
                 <button
                   type="submit"
@@ -129,35 +253,6 @@ function PrincipalForm() {
               </div>
               <pre>{JSON.stringify(formik.values)}</pre>
               {console.log(formik.isValid)}
-              {/* 
-            <FormikControl
-              control="input"
-              type="password"
-              label="Enter password herr"
-              name="password"
-            />
-
-            <FormikControl
-              control="input"
-              type="password"
-              label="Enter  Confirm password herr"
-              name="confirmPassword"
-            />
-            <FormikControl
-              control="radio"
-              label="Mode of Contact"
-              name="modeOfContact"
-              options={radioOptions}
-            />
-            <FormikControl
-              control="input"
-              type="text"
-              label="phone numer"
-              name="phone"
-            />
-            <button type="submit" disabled={!formik.isValid}>
-              Submit
-            </button> */}
             </Form>
           );
         }}
