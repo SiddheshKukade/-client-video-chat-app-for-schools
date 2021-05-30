@@ -1,0 +1,92 @@
+.main_container {
+  background-color: #ebebeb;
+  background-image: url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 16c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm0-2c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zm33.414-6l5.95-5.95L45.95.636 40 6.586 34.05.636 32.636 2.05 38.586 8l-5.95 5.95 1.414 1.414L40 9.414l5.95 5.95 1.414-1.414L41.414 8zM40 48c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm0-2c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6zM9.414 40l5.95-5.95-1.414-1.414L8 38.586l-5.95-5.95L.636 34.05 6.586 40l-5.95 5.95 1.414 1.414L8 41.414l5.95 5.95 1.414-1.414L9.414 40z' fill='%232431e5' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  background-color: #fefefe;
+  border-radius: 0.8rem;
+  width: 80vw;
+  height: 80vh;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex: 0.33;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0.33;
+}
+.middle {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0.33;
+}
+.button {
+  border: 1px solid var(--complementary);
+  padding: 0.5rem 3.5rem;
+  border-radius: 5px;
+  color: var(--complementary);
+  width: 60%;
+  text-align: center;
+}
+.button:hover {
+  color: var(--primary);
+  cursor: pointer;
+  background-color: var(--complementary);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.img {
+  max-height: 20vh;
+  margin-bottom: 5rem;
+}
+.headingContainer {
+  font-size: 2.5rem;
+  background: #196eff;
+  background: -webkit-linear-gradient(
+    to left,
+    #196eff 10%,
+    #1fc2eb 49%,
+    #11ffcc 100%
+  );
+  background: -moz-linear-gradient(
+    to left,
+    #196eff 10%,
+    #1fc2eb 49%,
+    #11ffcc 100%
+  );
+  background: linear-gradient(to left, #196eff 10%, #1fc2eb 49%, #11ffcc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  letter-spacing: normal;
+  position: absolute;
+  top: 5vh;
+  height: 10vh;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+}

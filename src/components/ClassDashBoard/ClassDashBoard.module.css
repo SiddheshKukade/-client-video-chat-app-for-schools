@@ -1,0 +1,46 @@
+.dashboard__container {
+  display: flex;
+  position: relative;
+  min-height: 100vh;
+}
+.dash__header__container {
+  flex: 1;
+  margin-right: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.dash__header {
+  display: flex;
+  flex: 0.82 !important;
+  margin-right: 0 !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center;
+  height: 10vh;
+  width: 100% !important;
+}
+/* 
+.nav-tabs {
+  border: 3px solid darkgray !important;
+} */
+.nav-tabs {
+  width: 20vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navtabs > .MuiSvgIcon-root {
+  margin-right: 15px;
+}
+.dash__header > .header__left {
+}
+.dash__header > .header__middle {
+}
+.dash__header > .header__right {
+}
+.addSM {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+}

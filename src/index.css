@@ -1,4 +1,44 @@
 /* ./src/index.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif !important;
+  box-sizing: border-box;
+
+  --primary: #f5f5f5;
+  --primary-back: #ffffff;
+  --primary-hover: #ffffff;
+  --primary-border: #ffffff;
+  --primary-box_shadow: #ffffff;
+
+  --secondary: #3a4b69;
+  --secondary-border: #ffffff;
+  --secondary-hover: #ffffff;
+
+  --complementary: #2431e5;
+  --complementary-back: #ffffff;
+  --complementary-hover: #ffffff;
+  --complementary-border: #ffffff;
+}
+body {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+.MuiTab-wrapper {
+  font-weight: 600;
+  font-size: large;
+}
+.MuiTab-fullWidth {
+  flex-grow: 1;
+  max-width: none;
+  flex-basis: 0;
+  flex-shrink: 1;
+  height: 10vh !important;
+}
+.MuiPaper-elevation4 {
+  box-shadow: none;
+}

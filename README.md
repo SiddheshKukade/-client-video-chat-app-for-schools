@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+### OM GAN GANAPATAY NAMAH
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### OM NAMAH SHIVAY
 
-## Available Scripts
+### JAI SHANI MAMA
 
-In the project directory, you can run:
+### JAI RENUKA MATA
 
-### `npm start`
+### JAI SAI BABA
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### JAI KALBHAIRAVNATH MAHARAJ
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tasks
 
-### `npm test`
+## Homework Component :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+--Ability to Add Homework Post  
+ Name of Homework
+Sended By TecherName
+Due Date
+Marks
+--Ability for submitting the Homework
+--Tracking who and how many have submitted the homework
 
-### `npm run build`
+## StudyMaterial Component :
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+--Ability to Add StudyMaterial Post
+Name of StudyMaterial
+Sended By TecherName
+--Ability to Download the StudyMaterial
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Video Meeting Component :
 
-### `npm run eject`
+    # Modes :
+        --Teaching Mode
+            www-->> JUST LIKE A LIVESTREAM <<----
+            In teaching mode only teacher can livestream
+            other can only watch and comment answers
+            they will have a option to '<==TALK-TO-TEACHER==>'
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+        --Meeting Mode :
+        works just like other meeting apps anyone can share camera and turn on mic .
+        But teacher still holds the control to turn off camera or mic of any of the participants.        [I will go into it's details Later]
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<!--
+### Sign-in as Techer - Student - Principal Component
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Create this Component
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# <<---->> DONE <<---->> -->
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+OG Lingatures
+!== www \*\*\* -> --> <==> ------------>>=>->->
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<!-- # <-- DONE --> Apply Material UI Lists to the Sidebar and make the Sidebar mobile responsive -->
 
-### Analyzing the Bundle Size
+## CREATE A REGISTER FORM DONE
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## MAKE CHANGES IN SERVER SO THAT THEY CAN SUPPORT BOTH GOOGLE SSO AND OUR DB LOGIN.
 
-### Making a Progressive Web App
+## CREATE A PRICIPAL FORM AND THEN CONNECT THEM ALL TO DB AND SERVER
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## CREATE A MODAL FOR SUBMITING THE FILE OF THE STUDY MATERTIAL AND STORE THE FILES ON <<--SERVER-->>. DONE
 
-### Advanced Configuration
+## CREATE A MODAL FOR CREATING A HOMEWORK <--->DONE<--->
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## SIDEBAR ADDED MATERTIAL UI <---DONE---->
 
-### Deployment
+## WORK QUICKLY ON THE CHAT COMPONENTS <-www----DONE----www---->
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+[www->>TOMMOROW<<--www]
 
-### `npm run build` fails to minify
+## CREATE VIDEO CHAT ROOMS OR CAN CREATE LIVESTREAM TYPE OG
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[www->>TOMMOROW<<--www]
+[www->>TOMMOROW<<--www]
+
+## LET'S GO
+
+###### >>----www---------www--->> THINGS TO DO AFTER ALL OTHER STUFF IS DONE <<----www---------www---<<
+
+www TRY TO INSRET CODESANDBOX API www
+
+----www----www------www-------www------www----------www-----------www------------www------www----------www----
+
+# TEACHER FORM DONE
+
+REFERAL CODE FOR SCHOOL
+AUTOMATICALLY DISPLAY TEACHER'S SUBJECT IF EXISTS ON DB OTHERWISE SAY YOU ARE NOT ALLOWED AS A TEACHER
+CONFIRM AND CONTINUE
+<<---DONE--->>
+
+# PRINCIPAL FORM DONE
+
+NAME OF SCHOOL
+TEACHER AND SUBJECT FOR EACH TEACHER [PRINCIPAL CAN ADD HIMSELF AS A TEACHER TOO]
+YOUR SCHOOL CAPACITY EX. 5 TH TO 10 TH
+REFERAL CODE FOR SCHOOL
+CONFIRM

@@ -1,0 +1,74 @@
+.sidebar__container {
+  display: flex;
+  flex: 0.18;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  border-right: 2px solid gray;
+  margin-left: 0;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  height: 100vh;
+  width: 18%;
+  color: black;
+}
+.sidebar-head {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.75rem /* 28px */;
+}
+
+.list-title {
+  margin-top: 1rem;
+  font-size: 18px /* 18px */;
+  line-height: 1.75rem /* 28px */;
+  font-weight: bold;
+  padding: 0.5 1rem;
+  cursor: pointer;
+}
+.profile-name {
+  margin-top: 1rem;
+  line-height: 1.75rem /* 28px */;
+  font-size: 0.9rem;
+}
+.channels {
+  padding-top: 1rem;
+  font-size: 1rem;
+}
+
+span {
+  font-weight: 300;
+}
+
+ul {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 100;
+  list-style-type: none;
+  width: 100%;
+}
+
+.channels-list {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+}
+
+li > span {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-right: 0.8rem;
+}
+
+.list-entry {
+  font-weight: normal;
+  width: 100%;
+}
+.list-entry:hover {
+  background-color: lightgray;
+  border-radius: 0.2rem;
+  font-weight: bold;
+}

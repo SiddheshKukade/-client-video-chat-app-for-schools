@@ -1,0 +1,10 @@
+.bottom_nav {
+  width: "100%";
+  background-color: #f5f5f5 !important;
+  padding-top: 0.5rem !important;
+}
+.navContainer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
