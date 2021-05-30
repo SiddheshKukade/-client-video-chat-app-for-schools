@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
@@ -11,29 +11,7 @@ const AddNew = ({ key, defaultValue, inputvalues, count, ...rest }) => {
     inputvalues[i] = val;
   };
   let i = count;
-  return (
-    // <>
-    //   <input
-    //     type="text"
-    //     name="teacherName"
-    //     key={key}
-    //     defaultValue={defaultValue}
-    //     onBlur={(e) => {
-    //       swt((i += 1), e.target.value);
-    //     }}
-    //   />
-    //   <input
-    //     type="text"
-    //     name="subject"
-    //     key={key}
-    //     defaultValue={defaultValue}
-    //     onBlur={(e) => {
-    //       swt((i += 1), e.target.value);
-    //     }}
-    //   />
-    // </>
-    <FormikControl key={key} {...rest} />
-  );
+  return <FormikControl key={key} {...rest} />;
 };
 
 function PrincipalForm() {

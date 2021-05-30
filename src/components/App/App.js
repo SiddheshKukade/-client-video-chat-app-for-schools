@@ -3,8 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useRouteMatch,
   Redirect,
 } from "react-router-dom";
 import Home from "../Home/Home";
@@ -12,11 +10,9 @@ import ClassDashBoard from "./../ClassDashBoard/ClassDashBoard";
 import EmailLogin from "./../Login/MainLogin/EmailLogin";
 import LoginAs from "./../Login/LoginAs/LoginAs";
 import NotFound404 from "./../NotFound404/NotFound404";
-import TeacherForm from "./../Login/TeacherForm/TeacherForm";
-import PrincipalForm from "./../Login/PrincipalForm/PrincipalForm";
+import Chat from "./../Chat/Chat";
 const App = () => {
   return (
-    // <Sid />
     <Router>
       <Route path="/" exact>
         <Redirect
@@ -31,7 +27,7 @@ const App = () => {
         <Route path="/create-account" component={LoginAs} />
         <Route path="/home" component={Home} />
         <Route path="/404" component={NotFound404} />
-        <Route path="/zz" component={PrincipalForm} />
+        <Route path="/chat" component={Chat} />
         <Route path="*" component={NotFound404} />
       </Switch>
     </Router>

@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import Sidebar from "./../Sidebar/Sidebar";
 import styles from "./ClassDashBoard.module.css";
-// import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import VideoMetting from "./DashBoardComponents/VideoMetting/VideoMetting";
 import HomeWork from "./DashBoardComponents/HomeWork/HomeWork";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -28,6 +27,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 
 import Box from "@material-ui/core/Box";
+import Chat from "./../Chat/Chat";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -242,6 +242,7 @@ function ClassDashBoard() {
               <HomeWork />
             </TabPanel>
           </SwipeableViews>
+          <Chat />
         </div>
       </div>
     );

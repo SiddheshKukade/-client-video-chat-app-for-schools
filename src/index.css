@@ -7,7 +7,7 @@
   font-family: "Poppins", sans-serif !important;
   box-sizing: border-box;
 
-  --primary: #ebebeb;
+  --primary: #f5f5f5;
   --primary-back: #ffffff;
   --primary-hover: #ffffff;
   --primary-border: #ffffff;
@@ -38,4 +38,7 @@ body {
   flex-basis: 0;
   flex-shrink: 1;
   height: 10vh !important;
+}
+.MuiPaper-elevation4 {
+  box-shadow: none;
 }

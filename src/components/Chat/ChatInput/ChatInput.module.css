@@ -1,0 +1,49 @@
+.inputContainer {
+  bottom: 0;
+  width: 100%;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  /* box-shadow: 0 -5px 5px -5px #333; */
+}
+.inputFormContainer {
+  height: 100%;
+  width: 80%;
+}
+
+.form {
+  height: 100%;
+}
+.input {
+  background-color: var(--primary);
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 1rem;
+  font-size: 1.3rem;
+  caret-color: var(--complementary);
+  color: #202020;
+}
+.input:active {
+  border: none !important ;
+}
+.input:focus-visible {
+  border: none;
+  outline: none;
+}
+.attachCotainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #09f;
+  color: #fff;
+  height: 100%;
+  width: 10%;
+}
+
+.icon {
+  height: 100%;
+  font-size: 2rem;
+}
