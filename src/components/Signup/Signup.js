@@ -10,32 +10,44 @@ import PrincipalForm from "../Login/PrincipalForm/PrincipalForm";
 import RegistrationForm from "../Login/RegistrationForm/RegistrationForm";
 import TeacherForm from "../Login/TeacherForm/TeacherForm";
 import FormikControl from "./../UserDetailsFrom/FormikControl";
+import { useDispatch, useSelector } from "react-redux";
 
+import axios from "axios";
+import { setMailPassRole } from "./../../redux/actions/actions";
 function Signup({ role }) {
   const [loadNextForm, setLoadNextForm] = useState(false);
   const [u, sU] = useState({});
-
+  const dispatch = useDispatch();
+  const StateValues = useSelector((state) => state);
   console.log("Googel AO", u);
   const responseG = (res) => {
     console.log(res);
     console.log(res.profileObject);
   };
-  const handleSubmit = () => {
-    setLoadNextForm(true);
-  };
+
   const initialValues = {
     email: "",
     password: "",
   };
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid E-mail").required("E-mail is required "),
-    password: Yup.string().required("You have to give a Password "),
+    password: Yup.string()
+      .min(6, "At least 6 Characters are required for the password")
+      .required("You have to give a Password "),
   });
   const onSubmit = (values) => {
-    console.log("form data sumit", values);
-    console.log(values);
+    // do a request to backend and with '/newUserCheck'
+    axios
+      .post("http://localhost:6969/newUserCheck", {
+        email: values.email,
+      })
+      .then((res) => {
+        dispatch(setMailPassRole(values.email, values.password, role));
+      })
+      .catch((err) => console.log(err));
     setLoadNextForm(true);
   };
+
   const loadForm = (role) => {
     switch (role) {
       case "Principal":
@@ -48,7 +60,6 @@ function Signup({ role }) {
         console.log("problem with role in signup.js");
     }
   };
-  console.log(role);
 
   return (
     <>

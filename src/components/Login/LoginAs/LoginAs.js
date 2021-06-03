@@ -4,6 +4,7 @@ import Teacherimg from "./images/teacher-clipart-transparent-15.png";
 import Studentimg from "./images/student.jpg";
 import Principalimg from "./images/principal.jpg";
 import Signup from "./../../Signup/Signup";
+
 const LoginAs = () => {
   const [selectRole, setSelectRole] = useState("");
   if (selectRole !== "") {
