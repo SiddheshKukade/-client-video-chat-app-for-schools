@@ -11,6 +11,7 @@ import EmailLogin from "./../Login/MainLogin/EmailLogin";
 import LoginAs from "./../Login/LoginAs/LoginAs";
 import NotFound404 from "./../NotFound404/NotFound404";
 import Chat from "./../Chat/Chat";
+import Sid from "./../Sid";
 const App = () => {
   return (
     <Router>
@@ -22,6 +23,7 @@ const App = () => {
         />
       </Route>
       <Switch>
+        <Route path="/sid" component={Sid} />
         <Route path="/dashboard" component={ClassDashBoard} />
         <Route path="/login" component={EmailLogin} />
         <Route path="/create-account" component={LoginAs} />

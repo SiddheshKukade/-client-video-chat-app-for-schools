@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import { Form } from "formik";
-import styles from "./EmailLogin.module.css";
-
 import GoogleLogin from "react-google-login";
 import { Helmet } from "react-helmet";
-import UserDetailsFrom from "../../UserDetailsFrom/UserDetailsFrom";
 import RegistrationForm from "../RegistrationForm/RegistrationForm";
+import styles from "./EmailLogin.module.css";
 
 function EmailLogin({ role }) {
   const [loadNextForm, setLoadNextForm] = useState(false);

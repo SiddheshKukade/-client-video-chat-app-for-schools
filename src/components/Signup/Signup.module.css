@@ -20,8 +20,8 @@
 .container {
   background-color: #fefefe;
   border-radius: 0.8rem;
-  width: 80vw;
-  height: 80vh;
+  width: 85vw;
+  height: 85vh;
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
   display: flex;

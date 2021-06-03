@@ -1,0 +1,1 @@
+export const STORE_EMAIL_PASS = "STORE_EMAIL_PASS";
