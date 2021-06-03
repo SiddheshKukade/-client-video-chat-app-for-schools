@@ -37,14 +37,15 @@ function Signup({ role }) {
   });
   const onSubmit = (values) => {
     // do a request to backend and with '/newUserCheck'
-    axios
-      .post("http://localhost:6969/newUserCheck", {
-        email: values.email,
-      })
-      .then((res) => {
-        dispatch(setMailPassRole(values.email, values.password, role));
-      })
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("http://localhost:6969/newUserCheck", {
+    //     email: values.email,
+    //   })
+    //   .then((res) => {
+    //     //check if the user exsts here !!
+    //     dispatch(setMailPassRole(values.email, values.password, role));
+    //   })
+    //   .catch((err) => console.log(err));
     setLoadNextForm(true);
   };
 

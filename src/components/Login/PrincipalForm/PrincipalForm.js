@@ -1,33 +1,55 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "../RegistrationForm/extra.css";
 import styles from "../RegistrationForm/RegistrationForm.module.css";
 let count = 0;
-
+console.log(count);
+let standardRange = [];
+const teacherMailSubject = [];
+function setTeacherMailSubject(newProp) {
+  teacherMailSubject.push(newProp);
+}
+let tempTeacherMail = "";
+function setTempTeacherMail(obj) {
+  tempTeacherMail = obj;
+}
+let tempSubject = "";
+function setTempSubject(obj) {
+  tempSubject = obj;
+}
 const AddNew = ({ key, defaultValue, inputvalues, count, ...rest }) => {
   const swt = (i, val) => {
     inputvalues[i] = val;
   };
   let i = count;
+
   return <FormikControl key={key} {...rest} />;
 };
 
 function PrincipalForm() {
+  const principalStateMail = useSelector((state) => state.email);
   const [inputList, setInputList] = useState([]);
   const [inputvalues, setInputValues] = useState([]);
-
+  // const [teacherMailSubject, setTeacherMailSubject] = useState([]);
+  const [tempObject, setTempObject] = useState({});
+  // const [tempTeacherMail, setTempTeacherMail] = useState("");
+  // const [tempSubject, setTempSubject] = useState("");
+  const dispatch = useDispatch();
   const initialValues = {
-    submitstudentName: "",
+    principalName: "",
     phone: "",
     selectStandard: "",
     refercode: "",
     teacherEmail: "",
     teacherSubject: "",
+    schoolName: "",
   };
   const validationSchema = Yup.object({
-    submitstudentName: Yup.string().required("name needed"),
+    principalName: Yup.string().required("name needed"),
     phone: Yup.string()
       .min(10, "Must be 10 characters")
       .required("phone is required"),
@@ -39,18 +61,81 @@ function PrincipalForm() {
       .required("Teacher Name is required")
       .email("This is not a correct E-mail"),
     teacherSubject: Yup.string().required("Subject is Required"),
+    schoolName: Yup.string()
+      .min(3, "minimum three chracters are required")
+      .required("Schoolname is Required"),
   });
   const dropdownOptions = [
-    { key: "default", value: "Select your Standard" },
-    { key: "1-12", value: "1st to 12th" },
-    { key: "1-10", value: "1st to 10th" },
-    { key: "5-10", value: "5th to 10th" },
-    { key: "5-12", value: "5th to 12th" },
+    { key: 1, value: "Select your Standard" },
+    { key: 2, value: "1st to 12th" },
+    { key: 3, value: "1st to 10th" },
+    { key: 4, value: "5th to 10th" },
+    { key: 5, value: "5th to 12th" },
   ];
-  const handleSubmit = (values) => {
-    console.log("Form submited desc ", values);
+  const combineNewTeacherSubjectInputs = () => {
+    // setTeacherMailSubject((prev) => [
+    //   ...prev,
+    //   { email: tempTeacherMail, subject: tempSubject },
+    // ]);
+    setTeacherMailSubject({ email: tempTeacherMail, subject: tempSubject });
   };
+  const onSubmit = (values) => {
+    console.log("Form submited desc ", values);
+    console.log("====================================");
+    console.log("Input Valeus are", inputvalues);
+    console.log("====================================");
+    // setTeacherMailSubject((prev) => [
+    //   ...prev,
+    //   { email: values.teacherEmail, subject: values.teacherSubject },
+    // ]);
+
+    setTeacherMailSubject({
+      email: values.teacherEmail,
+      subject: values.teacherSubject,
+    });
+    // do a request to backend and with '/checkSchoolRef'
+    switch (values.selectStandard) {
+      case "Select your Standard":
+        break;
+      case "1st to 12th":
+        standardRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        break;
+      case "1st to 10th":
+        standardRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        break;
+      case "5th to 10th":
+        standardRange = [5, 6, 7, 8, 9, 10];
+        break;
+      case "5th to 12th":
+        standardRange = [5, 6, 7, 8, 9, 10, 11, 12];
+        break;
+      default:
+        break;
+    }
+    console.log(standardRange);
+    const subjectsMap = teacherMailSubject.map((t) => t.subject);
+    axios
+      .post("http://localhost:6969/school", {
+        name: values.schoolName,
+        principalMail: principalStateMail,
+        principalName: values.principalName,
+        standards: standardRange,
+        teacherMails: teacherMailSubject,
+        subjects: subjectsMap,
+        createdAt: Date(),
+        updatedAt: Date(),
+      })
+      .then((res) => {
+        //check if the user exsts here !!
+        // dispatch(setMailPassRole(values.email, values.password, role));
+        // dispatch(set)
+      })
+      .catch((err) => console.log(err));
+    console.log(standardRange, "standard Range");
+  };
+
   const onAddBtnClick = (event, errors, touched) => {
+    event.preventDefault();
     count += 2;
     setInputList(
       inputList.concat(
@@ -61,10 +146,11 @@ function PrincipalForm() {
             errMsg={errors.teacherEmail}
             isTouched={touched.teacherEmail}
             onChange={(e) => {
+              setTempTeacherMail(e.target.value);
               [e.target.name] = e.target.value;
               swt(inputList.length + 2, e.target.value);
             }}
-            name="teacherEmail"
+            name={inputList.length.toString()}
             inputvalues={inputvalues}
             count={count}
             control="input"
@@ -72,7 +158,7 @@ function PrincipalForm() {
             label="Enter Email of Teacher "
             fullWidth="true"
             className={styles.inputsIn}
-            placeholder="E-mail"
+            placeholder="Teacher E-mail"
             onBlur={(e) => {
               swt(2, e.target.value);
             }}
@@ -83,7 +169,8 @@ function PrincipalForm() {
             errMsg={errors.teacherSubject}
             isTouched={touched.teacherSubject}
             onChange={(e) => {
-              [e.target.name] = e.target.value;
+              setTempSubject(e.target.value);
+              // [e.target.name] = e.target.value;
               swt(inputList.length + 2, e.target.value);
             }}
             inputvalues={inputvalues}
@@ -91,16 +178,17 @@ function PrincipalForm() {
             control="input"
             type="text"
             label="Subject of that Teacher"
-            name="teacherSubject"
+            // name="teacherSubject"
+            name={inputList.length.toString()}
             className={styles.inputsIn}
             fullWidth="true"
+            placeholder="Subject"
+            onBlur={combineNewTeacherSubjectInputs}
           />
         </div>
       )
     );
   };
-  console.log(inputList);
-  console.log(inputvalues);
   const swt = (i, val) => {
     inputvalues[i] = val;
   };
@@ -110,7 +198,7 @@ function PrincipalForm() {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
       >
         {(formik) => {
           const { errors, touched } = formik;
@@ -121,11 +209,24 @@ function PrincipalForm() {
                 <FormikControl
                   control="input"
                   type="text"
-                  label="Full Name of Principal"
-                  isTouched={touched.submitstudentName}
+                  label="School Name"
+                  isTouched={touched.schoolName}
                   fullWidth="true"
-                  name="submitstudentName"
-                  errMsg={errors.submitstudentName}
+                  name="schoolName"
+                  errMsg={errors.schoolName}
+                  placeholder="School Name"
+                  className={styles.inputsIn}
+                />
+              </div>
+              <div className={styles.inputs}>
+                <FormikControl
+                  control="input"
+                  type="text"
+                  label="Full Name of Principal"
+                  isTouched={touched.principalName}
+                  fullWidth="true"
+                  name="principalName"
+                  errMsg={errors.principalName}
                   placeholder="Teachers's Name"
                   className={styles.inputsIn}
                 />
@@ -143,7 +244,6 @@ function PrincipalForm() {
                   placeholder="Father's Name"
                 />
               </div> */}
-
               <div className={styles.inputs}>
                 <FormikControl
                   control="select"
@@ -198,9 +298,6 @@ function PrincipalForm() {
                   className={styles.inputsIn}
                   placeholder="E-mail"
                   defaultValue=""
-                  onBlur={(e) => {
-                    swt(2, e.target.value);
-                  }}
                 />
 
                 <FormikControl
@@ -229,8 +326,11 @@ function PrincipalForm() {
                   Save and Continue
                 </button>
               </div>
-              <pre>{JSON.stringify(formik.values)}</pre>
-              {console.log(formik.isValid)}
+              {/* {JSON.stringify(formik.values)}
+              is valuid {formik.isValid}
+              {JSON.stringify(tempTeacherMail)}
+              {JSON.stringify(tempSubject)} */}
+              <pre> {JSON.stringify(teacherMailSubject)}</pre>
             </Form>
           );
         }}

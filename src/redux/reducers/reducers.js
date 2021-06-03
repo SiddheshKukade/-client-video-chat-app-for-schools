@@ -2,6 +2,12 @@ const initialState = {
   role: "",
   email: "",
   password: "",
+  userName: "",
+  schoolName: "",
+  schoolRefCode: "",
+  teacherMails: [],
+  stanardRange: [],
+  phoneNo: "",
 };
 
 function rootReducer(state = initialState, action) {
