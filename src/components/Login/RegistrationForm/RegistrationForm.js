@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
-import { Formik } from "formik";
-import { Form } from "formik";
+import { Formik, Form } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "./extra.css";
 import styles from "./RegistrationForm.module.css";
 
-function RegistrationForm() {
-  // const radioOptions = [
-  //   { key: "Email", value: "emailmoc" },
-  //   { key: "telephone", value: "telephonemoc" },
-  // ];
+function RegistrationForm({ role, isGoogle }) {
+  const stateMail = useSelector((state) => state.email);
+  const statePass = useSelector((state) => state.password);
+
   const initialValues = {
     submitstudentName: "",
     fatherName: "",
@@ -31,14 +31,35 @@ function RegistrationForm() {
     selectStandard: Yup.string().required("please select standard"),
     dob: Yup.date("please give correct date"),
   });
-  const dropdownOptions = [
-    { key: "1", value: "Select your Standard" },
-    { key: "2", value: "5th" },
-    { key: "3", value: "6th" },
-    { key: "4", value: "7th" },
-    { key: "5", value: "8th" },
-  ];
   const handleSubmit = (values) => {
+    axios
+      .post(process.env.BACKEND_URL + "/checkSchoolRefr", {
+        refercode: values.refercode,
+      })
+      .then((res) => {
+        axios
+          .post(process.env.BACKEND_URL + "/newUser", {
+            role: role,
+            name: values.submitstudentName,
+            fathername: values.fathername,
+            dob: values.dob,
+            email: stateMail,
+            password: statePass,
+            standard: values.selectStandard,
+            phoneNo: values.phone,
+            googleLogin: isGoogle,
+            createdAt: Date(),
+            updatedAt: Date(),
+          })
+          .then((newUserResponse) => console.log(newUserResponse))
+          .catch((err) => console.log(err));
+
+        //check if the user exsts here !!
+        // dispatch(setMailPassRole(values.email, values.password, role));
+        // dispatch(set)
+      })
+      .catch((err) => console.log(err));
+
     console.log("Form submited desc ", values);
   };
   return (
@@ -95,10 +116,9 @@ function RegistrationForm() {
               </div>
               <div className={styles.inputs}>
                 <FormikControl
-                  control="select"
-                  label="Select Your Standard"
+                  control="input"
+                  label="Enter  Your Standard"
                   name="selectStandard"
-                  options={dropdownOptions}
                   errMsg={errors.selectStandard}
                   isTouched={touched.selectStandard}
                   className={styles.inputsIn}

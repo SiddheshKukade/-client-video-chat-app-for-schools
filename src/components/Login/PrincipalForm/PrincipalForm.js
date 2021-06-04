@@ -30,8 +30,10 @@ const AddNew = ({ key, defaultValue, inputvalues, count, ...rest }) => {
   return <FormikControl key={key} {...rest} />;
 };
 
-function PrincipalForm() {
+function PrincipalForm({ role, isGoogle }) {
   const principalStateMail = useSelector((state) => state.email);
+  const principalStatePass = useSelector((state) => state.password);
+
   const [inputList, setInputList] = useState([]);
   const [inputvalues, setInputValues] = useState([]);
   // const [teacherMailSubject, setTeacherMailSubject] = useState([]);
@@ -126,6 +128,17 @@ function PrincipalForm() {
         updatedAt: Date(),
       })
       .then((res) => {
+        axios
+          .post(process.env.BACKEND_URL + "/newUser", {
+            role: role,
+            name: values.schoolName,
+            email: principalStateMail,
+            password: principalStatePass,
+            googleLogin: isGoogle,
+            // school : object id of school will come from response
+          })
+          .then((newUserResponse) => console.log(newUserResponse))
+          .catch((err) => console.log(err));
         //check if the user exsts here !!
         // dispatch(setMailPassRole(values.email, values.password, role));
         // dispatch(set)

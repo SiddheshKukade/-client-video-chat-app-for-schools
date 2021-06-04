@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setMailPassRole } from "./../../redux/actions/actions";
 function Signup({ role }) {
+  const [isGoogle, setIsGoogle] = useState(false);
   const [loadNextForm, setLoadNextForm] = useState(false);
   const [u, sU] = useState({});
   const dispatch = useDispatch();
@@ -52,11 +53,11 @@ function Signup({ role }) {
   const loadForm = (role) => {
     switch (role) {
       case "Principal":
-        return <PrincipalForm />;
+        return <PrincipalForm role={role} isGoogle={isGoogle} />;
       case "Teacher":
-        return <TeacherForm />;
+        return <TeacherForm role={role} isGoogle={isGoogle} />;
       case "Student":
-        return <RegistrationForm />;
+        return <RegistrationForm role={role} isGoogle={isGoogle} />;
       default:
         console.log("problem with role in signup.js");
     }
@@ -158,7 +159,10 @@ function Signup({ role }) {
                 <GoogleLogin
                   clientId="204884301404-mt7viu03jv87ivlvu45qo41sv6cqg26v.apps.googleusercontent.com"
                   buttonText="Sign-up / Login  with Google "
-                  onSuccess={(res) => sU(res)}
+                  onSuccess={(res) => {
+                    sU(res);
+                    setIsGoogle(true);
+                  }}
                   onFailure={responseG}
                   cookiePolicy={"single_host_origin"}
                   className={styles.google}

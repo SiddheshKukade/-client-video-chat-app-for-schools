@@ -2,43 +2,58 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Form } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "../RegistrationForm/extra.css";
 import styles from "../RegistrationForm/RegistrationForm.module.css";
-
-function TeacherForm() {
-  // const radioOptions = [
-  //   { key: "Email", value: "emailmoc" },
-  //   { key: "telephone", value: "telephonemoc" },
-  // ];
+import axios from "axios";
+function TeacherForm({ role, isGoogle }) {
+  const stateMail = useSelector((state) => state.email);
+  const statePass = useSelector((state) => state.password);
   const initialValues = {
-    submitstudentName: "",
-    fatherName: "",
-    dob: null,
+    teacherName: "",
     phone: "",
-    selectStandard: "",
+    selectStandard: null,
     refercode: "",
   };
   const validationSchema = Yup.object({
-    submitstudentName: Yup.string().required("name needed"),
-    fatherName: Yup.string().required("fathername needed"),
+    teacherName: Yup.string().required("name needed"),
     phone: Yup.string()
       .min(10, "Must be 10 characters")
       .required("phone is required"),
-    selectStandard: Yup.string().required("please select standard"),
+    selectStandard: Yup.number().required("please select standard"),
     dob: Yup.date("please give correct date"),
     refercode: Yup.string()
       .required("Referece code is Required")
       .min(4, "Minimum 4 characters are required for the code"),
   });
-  const dropdownOptions = [
-    { key: "1", value: "Select your Standard" },
-    { key: "2", value: "5th" },
-    { key: "3", value: "6th" },
-    { key: "4", value: "7th" },
-    { key: "5", value: "8th" },
-  ];
   const handleSubmit = (values) => {
+    axios
+      .post(process.env.BACKEND_URL + "/checkTeacher", {
+        refercode: values.refercode,
+        teacherMail: values.teacherMail,
+        teacherStandard: values.selectStandard,
+      })
+      .then((res) => {
+        axios
+          .post(process.env.BACKEND_URL + "/newUser", {
+            role: role,
+            name: values.teacherName,
+            email: stateMail,
+            password: statePass,
+            standard: values.selectStandard,
+            googleLogin: isGoogle,
+            createdAt: Date(),
+            updatedAt: Date(),
+          })
+          .then((newUserResponse) => console.log(newUserResponse))
+          .catch((err) => console.log(err));
+
+        //check if the user exsts here !!
+        // dispatch(setMailPassRole(values.email, values.password, role));
+        // dispatch(set)
+      })
+      .catch((err) => console.log(err));
     console.log("Form submited desc ", values);
   };
   return (
@@ -72,38 +87,25 @@ function TeacherForm() {
                   control="input"
                   type="text"
                   label="Full Name of Teacher"
-                  isTouched={touched.submitstudentName}
+                  isTouched={touched.teacherName}
                   fullWidth="true"
-                  name="submitstudentName"
-                  errMsg={errors.submitstudentName}
+                  name="teacherName"
+                  errMsg={errors.teacherName}
                   placeholder="Teachers's Name"
                   className={styles.inputsIn}
-                />
-              </div>
-              <div className={styles.inputs}>
-                <FormikControl
-                  control="input"
-                  type="text"
-                  label="Full Name of Teacher's Father"
-                  name="fatherName"
-                  errMsg={errors.fatherName}
-                  isTouched={touched.fatherName}
-                  fullWidth="true"
-                  className={styles.inputsIn}
-                  placeholder="Father's Name"
                 />
               </div>
 
               <div className={styles.inputs}>
                 <FormikControl
-                  control="select"
+                  control="input"
                   label="Select Your Standard"
                   name="selectStandard"
-                  options={dropdownOptions}
                   errMsg={errors.selectStandard}
                   isTouched={touched.selectStandard}
                   className={styles.inputsIn}
                   fullWidth="true"
+                  type="number"
                 />
               </div>
               <div className={styles.inputs}>
@@ -129,35 +131,6 @@ function TeacherForm() {
               </div>
               <pre>{JSON.stringify(formik.values)}</pre>
               {console.log(formik.isValid)}
-              {/* 
-            <FormikControl
-              control="input"
-              type="password"
-              label="Enter password herr"
-              name="password"
-            />
-
-            <FormikControl
-              control="input"
-              type="password"
-              label="Enter  Confirm password herr"
-              name="confirmPassword"
-            />
-            <FormikControl
-              control="radio"
-              label="Mode of Contact"
-              name="modeOfContact"
-              options={radioOptions}
-            />
-            <FormikControl
-              control="input"
-              type="text"
-              label="phone numer"
-              name="phone"
-            />
-            <button type="submit" disabled={!formik.isValid}>
-              Submit
-            </button> */}
             </Form>
           );
         }}
