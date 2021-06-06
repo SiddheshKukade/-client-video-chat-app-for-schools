@@ -234,7 +234,7 @@ const useStyles = makeStyles((theme) => ({
     borderRight: "1px solid #d7d7d7",
   },
 }));
-export default function Sidebar() {
+export default function Sidebar({ userName, teacherList, schoolName }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [openTeacher, setOpenTeacher] = React.useState(true);

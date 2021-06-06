@@ -9,7 +9,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import styles from "./Homework.module.css";
 import AddHomeWorkPanel from "../../AddHomeWorkPanel/AddHomeworkPanel";
 const title = "Homework - Sid";
-function HomeWork() {
+function HomeWork({ homeWorkList }) {
   return (
     <div className={styles.mainContainer}>
       <Helmet>

@@ -3,7 +3,7 @@ import StudyMaterialPost from "./StudyMaterialPost/StudyMaterialPost";
 import { Helmet } from "react-helmet";
 import AddStudyMaterialPanel from "../../AddStudyMaterialPanel/AddStudyMaterialPanel";
 import styles from "./StudyMaterial.module.css";
-function StudyMaterial() {
+function StudyMaterial({ studyMaterialList }) {
   return (
     <div className={styles.mainContainer}>
       <Helmet>
