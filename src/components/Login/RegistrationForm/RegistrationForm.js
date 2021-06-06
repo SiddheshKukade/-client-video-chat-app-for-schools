@@ -6,11 +6,12 @@ import axios from "axios";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "./extra.css";
 import styles from "./RegistrationForm.module.css";
+import { setStudentInfo } from "../../../redux/actions/actions";
 
 function RegistrationForm({ role, isGoogle }) {
   const stateMail = useSelector((state) => state.email);
   const statePass = useSelector((state) => state.password);
-
+  const dispatch = useDispatch();
   const initialValues = {
     submitstudentName: "",
     fatherName: "",
@@ -37,6 +38,19 @@ function RegistrationForm({ role, isGoogle }) {
         refercode: values.refercode,
       })
       .then((res) => {
+        setStudentInfo(
+          role,
+          values.submitstudentName,
+          values.fathername,
+          values.dob,
+          stateMail,
+          statePass,
+          values.selectStandard,
+          values.phone,
+          isGoogle,
+          values.refercode
+        );
+
         axios
           .post(process.env.BACKEND_URL + "/newUser", {
             role: role,

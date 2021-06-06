@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,7 +12,7 @@ import styles from "./ClassDashBoard.module.css";
 import VideoMetting from "./DashBoardComponents/VideoMetting/VideoMetting";
 import HomeWork from "./DashBoardComponents/HomeWork/HomeWork";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
+import axios from "axios";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import StudyMaterial from "./DashBoardComponents/StudyMaterial/StudyMaterial";
@@ -25,11 +25,15 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
-
 import Box from "@material-ui/core/Box";
 import Chat from "./../Chat/Chat";
+import { useDispatch, useSelector } from "react-redux";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
+  useEffect(() => {
+    axios.get();
+  }, []);
 
   return (
     <div
@@ -66,9 +70,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function ClassDashBoard() {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [schoolName, setSchoolName] = useState("");
+  const [teacherList, setTeacherList] = useState([]);
+  const [homeWorkList, setHomeWorkList] = useState([]);
+  const [studyMaterialList, SetStudyMaterialList] = useState([]);
   let match = useRouteMatch();
   console.log(match);
 
@@ -79,6 +89,46 @@ function ClassDashBoard() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+  const requestHomeWorkFromServer = () => {
+    axios
+      .post(process.env.BACKEND_URL + "/getHomeWork", {
+        referCode: state.schoolRefCode,
+      })
+      .then((res) =>
+        //set the state values here and pass them down
+        console.log(res.data)
+      )
+      .catch((err) => console.log(err));
+  };
+
+  const requestStudyMaterialFromServer = () => {
+    axios
+      .post(process.env.BACKEND_URL + "/getStudyMaterial", {
+        referCode: state.schoolRefCode,
+      })
+      .then((res) =>
+        //set the state values here and pass them down
+        console.log(res.data)
+      )
+      .catch((err) => console.log(err));
+  };
+  const requestSchoolInfo = () => {
+    axios
+      .post(process.env.BACKEND_URL + "/schoolInfo", {
+        referCode: state.schoolRefCode,
+      })
+      .then((res) =>
+        //set the state values here and pass them down
+        console.log(res.data)
+      )
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    requestSchoolInfo();
+    requestHomeWorkFromServer();
+    requestStudyMaterialFromServer();
+  }, []);
   let width = window.innerWidth;
   if (width > 500) {
     return (
@@ -88,104 +138,12 @@ function ClassDashBoard() {
           <meta name="description" content="App Description" />
           <meta name="theme-color" content="#008f68" />
         </Helmet>
-        <Sidebar />
-        {/* <Tab
-          isFitted
-          size="lg"
-          align="center"
-          variant="enclosed"
-          colorScheme="green"
-          className={styles.dash__header__container}
-        >
-          <TabList>
-            <div className={styles.dash__header}>
-              <Link to={`${match.url}/video-meeting`}>
-                <Tab
-                  className={styles.nav - TabList}
-                  _selected={{
-                    color: "black",
-                    fontWeight: "semibold",
-                    borderWidth: "1px",
-                    borderColor: "gray.500",
-                    borderBottom: "0px",
-                  }}
-                  _focus={{
-                    borderBottom: "0px",
-                  }}
-                >
-                  <VideoCallOutlinedIcon />
-                  Video Metting
-                </Tab>
-              </Link>
-              <Link to={`${match.url}/home-work`}>
-                <Tab
-                  _selected={{
-                    color: "black",
-                    fontWeight: "semibold",
-                    borderWidth: "1px",
-                    borderColor: "gray.500",
-                    borderBottom: "0px",
-                  }}
-                  _focus={{
-                    borderBottom: "0px",
-                  }}
-                  className={styles.navtabs}
-                >
-                  <AssignmentLateOutlinedIcon />
-                  Home Work
-                </Tab>
-              </Link>
-              <Link to={`${match.url}/study-material`}>
-                <Tab
-                  className={styles.navtabs}
-                  _selected={{
-                    color: "black",
-                    fontWeight: "semibold",
-                    borderWidth: "1px",
-                    borderColor: "gray.500",
-                    borderBottom: "0px",
-                  }}
-                  _focus={{
-                    borderBottom: "0px",
-                  }}
-                >
-                  <SchoolOutlinedIcon /> Study Material
-                </Tab>
-              </Link>
-            </div>
-          </TabList> */}
-        {/* <br />
-          <br /> */}
+        <Sidebar
+          userName={state.userName}
+          teacherList={teacherList}
+          schoolName={schoolName}
+        />
 
-        {/* //aleady commenterd */}
-        {/* <TabPanels>
-          <TabPanel>
-            <Route path="/dashboard/video-meeting">
-              <VideoMetting />
-            </Route>
-          </TabPanel>
-          <TabPanel>
-            <Route path="/dashboard/home-work">
-              <HomeWork />
-            </Route>
-          </TabPanel>
-          <TabPanel>
-            <Route path="/dashboard/study-material">
-              <StudyMaterial />
-            </Route>
-          </TabPanel>
-        </TabPanels> */}
-        {/* <Route path="/dashboard/video-meeting">
-          <VideoMetting />
-        </Route>
-        <Route path="/dashboard/home-work">
-          <HomeWork />
-        </Route>
-        <Route path="/dashboard/study-material">
-          <StudyMaterial />
-          <AddStudyMaterialPanel class={styles.addSM} />
-        </Route> */}
-        {/* </Tab> */}
         <div className={styles.dash__header__container}>
           <AppBar position="static" color="default">
             <Tabs
@@ -236,10 +194,10 @@ function ClassDashBoard() {
               <VideoMetting />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <StudyMaterial />
+              <StudyMaterial studyMaterialList={studyMaterialList} />
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <HomeWork />
+              <HomeWork homeWorkList={homeWorkList} />
             </TabPanel>
           </SwipeableViews>
           <Chat />
