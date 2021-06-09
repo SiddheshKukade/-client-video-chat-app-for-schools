@@ -24,8 +24,6 @@ const App = () => {
         />
       </Route>
       <Switch>
-        <Route path="/z" component={TeacherForm} />
-        <Route path="/zz" component={RegistrationForm} />
         <Route path="/dashboard" component={ClassDashBoard} />
         <Route path="/login" component={EmailLogin} />
         <Route path="/create-account" component={LoginAs} />

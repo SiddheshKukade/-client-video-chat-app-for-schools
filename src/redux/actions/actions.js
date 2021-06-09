@@ -1,9 +1,9 @@
 import { STORE_EMAIL_PASS, STORE_STUDENT_INFO } from "./types";
 
-export const setMailPassRole = (email, password, role) => {
+export const setMailPassRole = (email, password, role, googleLogin) => {
   return {
     type: STORE_EMAIL_PASS,
-    payload: { email, password, role },
+    payload: { email, password, role, googleLogin },
   };
 };
 export const setStudentInfo = (

@@ -11,19 +11,38 @@ import RegistrationForm from "../Login/RegistrationForm/RegistrationForm";
 import TeacherForm from "../Login/TeacherForm/TeacherForm";
 import FormikControl from "./../UserDetailsFrom/FormikControl";
 import { useDispatch, useSelector } from "react-redux";
-
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from "axios";
 import { setMailPassRole } from "./../../redux/actions/actions";
 function Signup({ role }) {
   const [isGoogle, setIsGoogle] = useState(false);
   const [loadNextForm, setLoadNextForm] = useState(false);
-  const [u, sU] = useState({});
+  const [userFromGoogle, setUserFromGoogle] = useState({});
   const dispatch = useDispatch();
   const StateValues = useSelector((state) => state);
-  console.log("Googel AO", u);
-  const responseG = (res) => {
-    console.log(res);
-    console.log(res.profileObject);
+  const [open, setOpen] = useState(false);
+  const [openGoogle, setOpenGoogle] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleCloseGoogle = () => {
+    setOpenGoogle(false);
+  };
+
+  console.log("Googel Success", userFromGoogle);
+  console.log("Googel Success", userFromGoogle.profileObj.email);
+  const googleLoginFailed = (res) => {
+    setOpenGoogle(true);
   };
 
   const initialValues = {
@@ -38,16 +57,38 @@ function Signup({ role }) {
   });
   const onSubmit = (values) => {
     // do a request to backend and with '/newUserCheck'
-    // axios
-    //   .post("http://localhost:6969/newUserCheck", {
-    //     email: values.email,
-    //   })
-    //   .then((res) => {
-    //     //check if the user exsts here !!
-    //     dispatch(setMailPassRole(values.email, values.password, role));
-    //   })
-    //   .catch((err) => console.log(err));
-    setLoadNextForm(true);
+    axios
+      .post("http://localhost:6969/newUserCheck", {
+        email: values.email,
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        // check if the array contains something
+        if (res.data !== undefined && res.data.length === 0) {
+          console.log("no previous  record found");
+          if (isGoogle) {
+            dispatch(
+              setMailPassRole(
+                userFromGoogle.profileObj.email,
+                values.password,
+                role,
+                isGoogle
+              )
+            );
+          } else {
+            dispatch(
+              setMailPassRole(values.email, values.password, role, isGoogle)
+            );
+          }
+          setLoadNextForm(true);
+        } else {
+          handleClickOpen();
+        }
+
+        //check if the user exsts here !!
+      })
+      .catch((err) => console.log(err));
   };
 
   const loadForm = (role) => {
@@ -74,14 +115,6 @@ function Signup({ role }) {
         // <RegistrationForm />
         <div className={styles.mainContainer}>
           <div className={styles.container}>
-            <div className={styles.inner1}>
-              <img
-                src="https://image.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg"
-                alt="login"
-                srcset=""
-                className={styles.image}
-              />
-            </div>
             <div className={styles.inner2}>
               <h1 className={styles.h1L}>Register to App</h1>
 
@@ -160,18 +193,69 @@ function Signup({ role }) {
                   clientId="204884301404-mt7viu03jv87ivlvu45qo41sv6cqg26v.apps.googleusercontent.com"
                   buttonText="Sign-up / Login  with Google "
                   onSuccess={(res) => {
-                    sU(res);
+                    setUserFromGoogle(res);
                     setIsGoogle(true);
                   }}
-                  onFailure={responseG}
+                  onFailure={googleLoginFailed}
                   cookiePolicy={"single_host_origin"}
                   className={styles.google}
                 />
               </div>
             </div>
+            <div className={styles.inner1}>
+              <img
+                src="https://image.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg"
+                alt="login"
+                srcset=""
+                className={styles.image}
+              />
+            </div>
           </div>
         </div>
       )}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Problem while creating account"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This account already exists try again with a different email or Log
+            in instead.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openGoogle}
+        onClose={handleCloseGoogle}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Problem while signing-up with Google"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Problem Occured while Signing up with a Google Account. Please try
+            again.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseGoogle} color="primary">
+            Go back
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

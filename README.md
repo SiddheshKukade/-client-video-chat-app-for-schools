@@ -109,3 +109,8 @@ CONFIRM
 # Work on Video Straming Feature :
 
  <!-- Steps to stream a video to -->
+
+# API and Progress
+
+Create Account -
+newUserCheck - DONE Completely

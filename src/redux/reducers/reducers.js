@@ -22,6 +22,7 @@ function rootReducer(state = initialState, action) {
         email: action.payload.email,
         role: action.payload.role,
         password: action.payload.password,
+        googleLogin: action.payload.googleLogin,
       };
       break;
     case "STORE_STUDENT_INFO":
