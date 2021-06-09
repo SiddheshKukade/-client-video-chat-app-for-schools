@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Form } from "formik";
@@ -7,9 +7,20 @@ import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "../RegistrationForm/extra.css";
 import styles from "../RegistrationForm/RegistrationForm.module.css";
 import axios from "axios";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 function TeacherForm({ role, isGoogle }) {
   const stateMail = useSelector((state) => state.email);
+  const [open, setOpen] = useState(false);
   const statePass = useSelector((state) => state.password);
+  const handleClose = () => {
+    setOpen(false);
+  };
   const initialValues = {
     teacherName: "",
     phone: "",
@@ -35,19 +46,23 @@ function TeacherForm({ role, isGoogle }) {
         teacherStandard: values.selectStandard,
       })
       .then((res) => {
-        axios
-          .post(process.env.BACKEND_URL + "/newUser", {
-            role: role,
-            name: values.teacherName,
-            email: stateMail,
-            password: statePass,
-            standard: values.selectStandard,
-            googleLogin: isGoogle,
-            createdAt: Date(),
-            updatedAt: Date(),
-          })
-          .then((newUserResponse) => console.log(newUserResponse))
-          .catch((err) => console.log(err));
+        if (res.data.allowed) {
+          axios
+            .post(process.env.BACKEND_URL + "/newUser", {
+              role: role,
+              name: values.teacherName,
+              email: stateMail,
+              password: statePass,
+              standard: values.selectStandard,
+              googleLogin: isGoogle,
+              createdAt: Date(),
+              updatedAt: Date(),
+            })
+            .then((newUserResponse) => console.log(newUserResponse))
+            .catch((err) => console.log(err));
+        } else {
+          setOpen(true);
+        }
 
         //check if the user exsts here !!
         // dispatch(setMailPassRole(values.email, values.password, role));
@@ -135,6 +150,27 @@ function TeacherForm({ role, isGoogle }) {
           );
         }}
       </Formik>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Problem Occured while connecting to your school  "}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            The school is not found or either you are not allowed as a teacher.
+            Check your reference code and email again.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

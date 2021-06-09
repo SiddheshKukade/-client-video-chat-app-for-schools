@@ -12,11 +12,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import styles from "../RegistrationForm/RegistrationForm.module.css";
-import {
-  setPrincipalInfo,
-  setStudentInfo,
-} from "../../../redux/actions/actions";
 import { setSchoolInfo } from "./../../../redux/actions/actions";
+import { setPrincipalInfo } from "../../../redux/actions/actions";
 let count = 0;
 console.log(count);
 let standardRange = [];
