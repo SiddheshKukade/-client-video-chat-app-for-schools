@@ -40,7 +40,7 @@ function Signup({ role }) {
   };
 
   console.log("Googel Success", userFromGoogle);
-  console.log("Googel Success", userFromGoogle.profileObj.email);
+  console.log("Googel Success", userFromGoogle?.profileObj?.email);
   const googleLoginFailed = (res) => {
     setOpenGoogle(true);
   };
@@ -55,6 +55,7 @@ function Signup({ role }) {
       .min(6, "At least 6 Characters are required for the password")
       .required("You have to give a Password "),
   });
+
   const onSubmit = (values) => {
     // do a request to backend and with '/newUserCheck'
     axios

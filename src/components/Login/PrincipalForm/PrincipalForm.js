@@ -5,7 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "../RegistrationForm/extra.css";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import styles from "../RegistrationForm/RegistrationForm.module.css";
+import {
+  setPrincipalInfo,
+  setStudentInfo,
+} from "../../../redux/actions/actions";
+import { setSchoolInfo } from "./../../../redux/actions/actions";
 let count = 0;
 console.log(count);
 let standardRange = [];
@@ -33,7 +44,7 @@ const AddNew = ({ key, defaultValue, inputvalues, count, ...rest }) => {
 function PrincipalForm({ role, isGoogle }) {
   const principalStateMail = useSelector((state) => state.email);
   const principalStatePass = useSelector((state) => state.password);
-
+  const [open, setOpen] = useState(false);
   const [inputList, setInputList] = useState([]);
   const [inputvalues, setInputValues] = useState([]);
   // const [teacherMailSubject, setTeacherMailSubject] = useState([]);
@@ -41,6 +52,9 @@ function PrincipalForm({ role, isGoogle }) {
   // const [tempTeacherMail, setTempTeacherMail] = useState("");
   // const [tempSubject, setTempSubject] = useState("");
   const dispatch = useDispatch();
+  const handleClose = () => {
+    setOpen(false);
+  };
   const initialValues = {
     principalName: "",
     phone: "",
@@ -124,24 +138,51 @@ function PrincipalForm({ role, isGoogle }) {
         standards: standardRange,
         teacherMails: teacherMailSubject,
         subjects: subjectsMap,
+        referCode: values.referCode,
         createdAt: Date(),
         updatedAt: Date(),
       })
       .then((res) => {
-        axios
-          .post(process.env.BACKEND_URL + "/newUser", {
-            role: role,
-            name: values.schoolName,
-            email: principalStateMail,
-            password: principalStatePass,
-            googleLogin: isGoogle,
-            // school : object id of school will come from response
-          })
-          .then((newUserResponse) => console.log(newUserResponse))
-          .catch((err) => console.log(err));
-        //check if the user exsts here !!
-        // dispatch(setMailPassRole(values.email, values.password, role));
-        // dispatch(set)
+        if (res.data.alreadyExists) {
+          setOpen(true);
+        } else {
+          setSchoolInfo(
+            principalStateMail,
+            values.principalName,
+            standardRange,
+            values.refercode,
+            teacherMailSubject,
+            subjectsMap,
+            values.schoolName
+          );
+          axios
+            .post("http://localhost:6969/newUser", {
+              role: role,
+              name: values.schoolName,
+              email: principalStateMail,
+              password: principalStatePass,
+              googleLogin: isGoogle,
+              createdAt: Date(),
+              updatedAt: Date(),
+              // school : object id of school will come from response
+            })
+            .then((newUserResponse) => {
+              console.log(
+                "new User sucxess on DB from Principal form",
+                newUserResponse
+              );
+              setPrincipalInfo(
+                principalStateMail,
+                principalStatePass,
+                role,
+                values.principalName,
+                values.schoolName,
+                values.referCode,
+                values.phone
+              );
+            })
+            .catch((err) => console.log(err));
+        }
       })
       .catch((err) => console.log(err));
     console.log(standardRange, "standard Range");
@@ -231,6 +272,7 @@ function PrincipalForm({ role, isGoogle }) {
                   className={styles.inputsIn}
                 />
               </div>
+
               <div className={styles.inputs}>
                 <FormikControl
                   control="input"
@@ -348,6 +390,27 @@ function PrincipalForm({ role, isGoogle }) {
           );
         }}
       </Formik>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Problem Occured while creating your school  "}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Sorry! Other school with same Reference code Exists please try again
+            with different reference code
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
