@@ -3,6 +3,7 @@ import {
   STORE_STUDENT_INFO,
   STORE_PRINCIPAL_INFO,
   STORE_SCHOOL_INFO,
+  STORE_TEACHER_INFO,
 } from "./types";
 
 export const setMailPassRole = (email, password, role, googleLogin) => {
@@ -21,7 +22,7 @@ export const setStudentInfo = (
   standard,
   phoneNo,
   googleLogin,
-  schoolName,
+
   schoolRefCode
 ) => {
   return {
@@ -36,7 +37,7 @@ export const setStudentInfo = (
       standard,
       phoneNo,
       googleLogin,
-      schoolName,
+
       schoolRefCode,
     },
   };
@@ -86,5 +87,19 @@ export const setPrincipalInfo = (
       schoolRefCode,
       phoneNo,
     },
+  };
+};
+
+export const setTeacherInfo = (
+  role,
+  userName,
+  email,
+  password,
+  userStandard,
+  googleLogin
+) => {
+  return {
+    type: STORE_TEACHER_INFO,
+    payload: { role, userName, email, password, userStandard, googleLogin },
   };
 };

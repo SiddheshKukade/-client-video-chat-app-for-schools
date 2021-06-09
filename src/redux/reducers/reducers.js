@@ -12,7 +12,7 @@ const initialState = {
   standard: null,
   googleLogin: false,
   fatherName: "",
-
+  userStandard: null,
   SCHOOL_principalName: "",
   SCHOOL_selectStandard: [],
   SCHOOL_refercode: "",
@@ -45,7 +45,6 @@ function rootReducer(state = initialState, action) {
         standard: action.payload.standard,
         phoneNo: action.payload.phoneNo,
         googleLogin: action.payload.googleLogin,
-        schoolName: action.payload.schoolName,
         schoolRefCode: action.payload.schoolRefCode,
       };
     case "STORE_SCHOOL_INFO":
@@ -69,6 +68,16 @@ function rootReducer(state = initialState, action) {
         schoolName: action.payload.schoolName,
         schoolRefCode: action.payload.schoolRefCode,
         phoneNo: action.payload.phoneNo,
+      };
+    case "STORE_TEACHER_INFO":
+      return {
+        ...state,
+        role: action.payload.role,
+        userName: action.payload.userName,
+        email: action.payload.email,
+        password: action.payload.password,
+        userStandard: action.payload.userStandard,
+        googleLogin: action.payload.googleLogin,
       };
     default:
       return state;

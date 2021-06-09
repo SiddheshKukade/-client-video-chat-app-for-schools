@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Formik } from "formik";
-import { Form } from "formik";
+import { Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "../RegistrationForm/extra.css";
@@ -13,11 +12,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { setTeacherInfo } from "./../../../redux/actions/actions";
 
 function TeacherForm({ role, isGoogle }) {
   const stateMail = useSelector((state) => state.email);
   const [open, setOpen] = useState(false);
   const statePass = useSelector((state) => state.password);
+  const dispatch = useDispatch();
   const handleClose = () => {
     setOpen(false);
   };
@@ -44,9 +45,19 @@ function TeacherForm({ role, isGoogle }) {
         refercode: values.refercode,
         teacherMail: values.teacherMail,
         teacherStandard: values.selectStandard,
-      })
+      }), 
       .then((res) => {
         if (res.data.allowed) {
+          dispatch(
+            setTeacherInfo(
+              role,
+              values.teacherName,
+              stateMail,
+              statePass,
+              values.selectStandard,
+              isGoogle
+            )
+          );
           axios
             .post("http://localhost:6969/newUser", {
               role: role,

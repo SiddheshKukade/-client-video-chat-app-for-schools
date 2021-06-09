@@ -7,10 +7,20 @@ import FormikControl from "../../UserDetailsFrom/FormikControl";
 import "./extra.css";
 import styles from "./RegistrationForm.module.css";
 import { setStudentInfo } from "../../../redux/actions/actions";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 function RegistrationForm({ role, isGoogle }) {
   const stateMail = useSelector((state) => state.email);
   const statePass = useSelector((state) => state.password);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
   const initialValues = {
     submitstudentName: "",
@@ -19,6 +29,7 @@ function RegistrationForm({ role, isGoogle }) {
     address: "",
     phone: "",
     selectStandard: "",
+    refCode: "",
   };
   const validationSchema = Yup.object({
     submitstudentName: Yup.string().required("name needed"),
@@ -31,43 +42,43 @@ function RegistrationForm({ role, isGoogle }) {
       .required("phone is required"),
     selectStandard: Yup.string().required("please select standard"),
     dob: Yup.date("please give correct date"),
+    refCode: Yup.string().required("Refercode is required"),
   });
   const handleSubmit = (values) => {
     axios
-      .post(process.env.BACKEND_URL + "/checkSchoolRefr", {
-        refercode: values.refercode,
+      .post("http://localhost:6969/newUser", {
+        role: role,
+        name: values.submitstudentName,
+        fathername: values.fathername,
+        dob: values.dob,
+        email: stateMail,
+        password: statePass,
+        standard: values.selectStandard,
+        phoneNo: values.phone,
+        googleLogin: isGoogle,
+        referCode: values.refCode,
+        createdAt: Date(),
+        updatedAt: Date(),
       })
       .then((res) => {
-        setStudentInfo(
-          role,
-          values.submitstudentName,
-          values.fathername,
-          values.dob,
-          stateMail,
-          statePass,
-          values.selectStandard,
-          values.phone,
-          isGoogle,
-          values.refercode
-        );
-
-        axios
-          .post(process.env.BACKEND_URL + "/newUser", {
-            role: role,
-            name: values.submitstudentName,
-            fathername: values.fathername,
-            dob: values.dob,
-            email: stateMail,
-            password: statePass,
-            standard: values.selectStandard,
-            phoneNo: values.phone,
-            googleLogin: isGoogle,
-            createdAt: Date(),
-            updatedAt: Date(),
-          })
-          .then((newUserResponse) => console.log(newUserResponse))
-          .catch((err) => console.log(err));
-
+        if (res.data.alreadyExists) {
+          setOpen(true);
+        } else {
+          dispatch(
+            setStudentInfo(
+              role,
+              values.submitstudentName,
+              values.fathername,
+              values.dob,
+              stateMail,
+              statePass,
+              values.selectStandard,
+              values.phone,
+              isGoogle,
+              values.refercode
+            )
+          );
+        }
         //check if the user exsts here !!
         // dispatch(setMailPassRole(values.email, values.password, role));
         // dispatch(set)
@@ -142,6 +153,17 @@ function RegistrationForm({ role, isGoogle }) {
               <div className={styles.inputs}>
                 <FormikControl
                   control="input"
+                  label="Enter the Reference code of your School"
+                  name="selectStandard"
+                  errMsg={errors.refCode}
+                  isTouched={touched.refCode}
+                  className={styles.inputsIn}
+                  fullWidth="true"
+                />
+              </div>
+              <div className={styles.inputs}>
+                <FormikControl
+                  control="input"
                   type="text"
                   label="Phone number"
                   name="phone"
@@ -209,6 +231,27 @@ function RegistrationForm({ role, isGoogle }) {
           );
         }}
       </Formik>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Problem Occured while connecting to your school  "}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            The school is not found or either your email is already taken, try
+            logging in or Check your reference code and email again.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

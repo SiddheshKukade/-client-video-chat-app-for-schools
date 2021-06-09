@@ -143,14 +143,16 @@ function PrincipalForm({ role, isGoogle }) {
         if (res.data.alreadyExists) {
           setOpen(true);
         } else {
-          setSchoolInfo(
-            principalStateMail,
-            values.principalName,
-            standardRange,
-            values.refercode,
-            teacherMailSubject,
-            subjectsMap,
-            values.schoolName
+          dispatch(
+            setSchoolInfo(
+              principalStateMail,
+              values.principalName,
+              standardRange,
+              values.refercode,
+              teacherMailSubject,
+              subjectsMap,
+              values.schoolName
+            )
           );
           axios
             .post("http://localhost:6969/newUser", {
@@ -168,14 +170,16 @@ function PrincipalForm({ role, isGoogle }) {
                 "new User sucxess on DB from Principal form",
                 newUserResponse
               );
-              setPrincipalInfo(
-                principalStateMail,
-                principalStatePass,
-                role,
-                values.principalName,
-                values.schoolName,
-                values.referCode,
-                values.phone
+              dispatch(
+                setPrincipalInfo(
+                  principalStateMail,
+                  principalStatePass,
+                  role,
+                  values.principalName,
+                  values.schoolName,
+                  values.referCode,
+                  values.phone
+                )
               );
             })
             .catch((err) => console.log(err));
