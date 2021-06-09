@@ -40,7 +40,7 @@ function TeacherForm({ role, isGoogle }) {
   });
   const handleSubmit = (values) => {
     axios
-      .post(process.env.BACKEND_URL + "/checkTeacher", {
+      .post("http://localhost:6969/checkTeacher", {
         refercode: values.refercode,
         teacherMail: values.teacherMail,
         teacherStandard: values.selectStandard,
@@ -48,7 +48,7 @@ function TeacherForm({ role, isGoogle }) {
       .then((res) => {
         if (res.data.allowed) {
           axios
-            .post(process.env.BACKEND_URL + "/newUser", {
+            .post("http://localhost:6969/newUser", {
               role: role,
               name: values.teacherName,
               email: stateMail,
