@@ -2,7 +2,7 @@ const initialState = {
   role: "",
   email: "",
   password: "",
-  userName: "",
+  userName: "sid is user",
   schoolName: "",
   schoolRefCode: "",
   teacherMails: [],

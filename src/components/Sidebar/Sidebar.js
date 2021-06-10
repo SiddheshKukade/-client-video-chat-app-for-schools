@@ -200,7 +200,7 @@
 // //     <span></span>
 // //     <span></span>
 // //   </div>
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
@@ -216,6 +216,8 @@ import Divider from "@material-ui/core/Divider";
 import SurroundSoundIcon from "@material-ui/icons/SurroundSound";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import SubjectIcon from "@material-ui/icons/Subject";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -236,11 +238,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Sidebar({ userName, teacherList, schoolName }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const [openTeacher, setOpenTeacher] = React.useState(true);
-  const [openOther, setOpenOther] = React.useState(true);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
-
+  const [open, setOpen] = useState(true);
+  const [openTeacher, setOpenTeacher] = useState(true);
+  const [openOther, setOpenOther] = useState(true);
+  const [selectedIndex, setSelectedIndex] = useState(1);
+  const state = useSelector((s) => s);
+  const [teacherNamesFromServer, setTeacherNamesFromServer] = useState([]);
+  const [subjectsFromServer, setSubjectsFromServer] = useState([]);
+  const teachersMailsOnly = state.teacherMails.map((t) => t.email);
+  useEffect(() => {
+    axios
+      .post("http://localhost:6969/userDash", {
+        teachersMailsOnly,
+        schoolRefCode: state.schoolRefCode,
+      })
+      .then((res) => {
+        setTeacherNamesFromServer(res.names);
+        setSubjectsFromServer(res.subjects);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
@@ -293,7 +310,8 @@ export default function Sidebar({ userName, teacherList, schoolName }) {
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="Siddhesh Bhupedra Kukade" />
+          <ListItemText primary={state.userName} />
+          {/* Or change to siddhesh Kukade for testing username */}
         </ListItem>
         <Divider />
         {/* <GmailSidebarItem
@@ -318,6 +336,14 @@ export default function Sidebar({ userName, teacherList, schoolName }) {
         </ListItem>
         <Collapse in={openTeacher} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
+            {teacherNamesFromServer.map((name) => (
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary={name} />
+              </ListItem>
+            ))}
             <ListItem button className={classes.nested}>
               <ListItemIcon>
                 <AccountCircleIcon />
@@ -361,6 +387,12 @@ export default function Sidebar({ userName, teacherList, schoolName }) {
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
+            {subjectsFromServer.map((subject) => (
+              <ListItem button className={classes.nested}>
+                <ListItemIcon></ListItemIcon>
+                <ListItemText primary={subject} />
+              </ListItem>
+            ))}
             <ListItem button className={classes.nested}>
               <ListItemIcon></ListItemIcon>
               <ListItemText primary="Maths" />

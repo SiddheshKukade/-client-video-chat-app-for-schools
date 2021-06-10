@@ -57,42 +57,41 @@ function Signup({ role }) {
   });
 
   const onSubmit = (values) => {
-    // do a request to backend and with '/newUserCheck'
-    axios
-      .post("http://localhost:6969/newUserCheck", {
-        email: values.email,
-      })
-      .then((res) => {
-        console.log(res.data);
-
-        // check if the array contains something
-        if (res.data !== undefined && res.data.length === 0) {
-          console.log("no previous  record found");
-          if (isGoogle) {
-            dispatch(
-              setMailPassRole(
-                userFromGoogle.profileObj.email,
-                values.password,
-                role,
-                isGoogle
-              )
-            );
-          } else {
-            dispatch(
-              setMailPassRole(values.email, values.password, role, isGoogle)
-            );
-          }
-          setLoadNextForm(true);
-        } else {
-          handleClickOpen();
-        }
-
-        //check if the user exsts here !!
-      })
-      .catch((err) => console.log(err));
+    // // do a request to backend and with '/newUserCheck'
+    // axios
+    //   .post("http://localhost:6969/newUserCheck", {
+    //     email: values.email,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     // check if the array contains something
+    //     if (res.data !== undefined && res.data.length === 0) {
+    //       console.log("no previous  record found");
+    //       if (isGoogle) {
+    //         dispatch(
+    //           setMailPassRole(
+    //             userFromGoogle.profileObj.email,
+    //             values.password,
+    //             role,
+    //             isGoogle
+    //           )
+    //         );
+    //       } else {
+    //         dispatch(
+    //           setMailPassRole(values.email, values.password, role, isGoogle)
+    //         );
+    //       }
+    //       setLoadNextForm(true);
+    //     } else {
+    //       handleClickOpen();
+    //     }
+    //     //check if the user exsts here !!
+    //   })
+    //   .catch((err) => console.log(err));
+    setLoadNextForm(true);
   };
 
-  const loadForm = (role) => {
+  const loadForm = () => {
     switch (role) {
       case "Principal":
         return <PrincipalForm role={role} isGoogle={isGoogle} />;
@@ -104,7 +103,7 @@ function Signup({ role }) {
         console.log("problem with role in signup.js");
     }
   };
-
+  console.log(role);
   return (
     <>
       <Helmet>
@@ -207,7 +206,6 @@ function Signup({ role }) {
               <img
                 src="https://image.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg"
                 alt="login"
-                srcset=""
                 className={styles.image}
               />
             </div>

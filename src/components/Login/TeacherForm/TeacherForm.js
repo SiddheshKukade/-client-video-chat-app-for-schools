@@ -45,7 +45,7 @@ function TeacherForm({ role, isGoogle }) {
         refercode: values.refercode,
         teacherMail: values.teacherMail,
         teacherStandard: values.selectStandard,
-      }), 
+      })
       .then((res) => {
         if (res.data.allowed) {
           dispatch(

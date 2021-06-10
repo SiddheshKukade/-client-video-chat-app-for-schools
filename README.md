@@ -114,3 +114,4 @@ CONFIRM
 
 Create Account -
 newUserCheck - DONE Completely
+Student account also done !
