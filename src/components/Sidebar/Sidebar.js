@@ -253,8 +253,8 @@ export default function Sidebar({ userName, teacherList, schoolName }) {
         schoolRefCode: state.schoolRefCode,
       })
       .then((res) => {
-        setTeacherNamesFromServer(res.names);
-        setSubjectsFromServer(res.subjects);
+        setTeacherNamesFromServer(res.data.names);
+        setSubjectsFromServer(res.data.subjects);
       })
       .catch((err) => console.log(err));
   }, []);

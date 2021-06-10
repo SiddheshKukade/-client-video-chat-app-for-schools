@@ -31,10 +31,6 @@ import { useDispatch, useSelector } from "react-redux";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
-  useEffect(() => {
-    axios.get();
-  }, []);
-
   return (
     <div
       role="tabpanel"
@@ -79,6 +75,10 @@ function ClassDashBoard() {
   const [teacherList, setTeacherList] = useState([]);
   const [homeWorkList, setHomeWorkList] = useState([]);
   const [studyMaterialList, SetStudyMaterialList] = useState([]);
+  const [homeWorkPostsFromServer, setHomeWorkPostsFromServer] = useState(null);
+  const [studyMaterialFromServer, setStudyMaterialFromServer] = useState(null);
+  const [videoMeetingFromServer, setVideoMeetingFromServer] = useState(null);
+
   let match = useRouteMatch();
   console.log(match);
 
@@ -92,25 +92,19 @@ function ClassDashBoard() {
 
   const requestHomeWorkFromServer = () => {
     axios
-      .post(process.env.BACKEND_URL + "/getHomeWork", {
-        referCode: state.schoolRefCode,
+      .get("http://localhost:6969/getHomeWork", {
+        fromSchool: state.schoolRefCode,
       })
-      .then((res) =>
-        //set the state values here and pass them down
-        console.log(res.data)
-      )
+      .then((res) => setHomeWorkPostsFromServer(res.data.homeWorkPosts))
       .catch((err) => console.log(err));
   };
 
   const requestStudyMaterialFromServer = () => {
     axios
-      .post(process.env.BACKEND_URL + "/getStudyMaterial", {
-        referCode: state.schoolRefCode,
+      .get("http://localhost:6969/getStudyMaterial", {
+        fromSchool: state.schoolRefCode,
       })
-      .then((res) =>
-        //set the state values here and pass them down
-        console.log(res.data)
-      )
+      .then((res) => setStudyMaterialFromServer(res.data.studyMaterialPosts))
       .catch((err) => console.log(err));
   };
   const requestSchoolInfo = () => {
@@ -124,10 +118,19 @@ function ClassDashBoard() {
       )
       .catch((err) => console.log(err));
   };
+  const requestVideoMeetingFromServer = () => {
+    axios
+      .post("http://localhost:6969/getVideoMeeting", {
+        referCode: state.schoolRefCode,
+      })
+      .then((res) => setVideoMeetingFromServer(res.data.videoMeetingPosts))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     requestSchoolInfo();
     requestHomeWorkFromServer();
     requestStudyMaterialFromServer();
+    requestVideoMeetingFromServer();
   }, []);
   let width = window.innerWidth;
   if (width > 500) {
@@ -191,13 +194,19 @@ function ClassDashBoard() {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <VideoMetting />
+              <VideoMetting videoMeetingPosts={videoMeetingFromServer} />
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <StudyMaterial studyMaterialList={studyMaterialList} />
+              <StudyMaterial
+                studyMaterialList={studyMaterialList}
+                studyMaterialPosts={studyMaterialFromServer}
+              />
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <HomeWork homeWorkList={homeWorkList} />
+              <HomeWork
+                homeWorkList={homeWorkList}
+                homeWorkPosts={homeWorkPostsFromServer}
+              />
             </TabPanel>
           </SwipeableViews>
           <Chat />
