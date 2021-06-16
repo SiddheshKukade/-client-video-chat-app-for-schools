@@ -32,7 +32,6 @@ function rootReducer(state = initialState, action) {
         password: action.payload.password,
         googleLogin: action.payload.googleLogin,
       };
-      break;
     case "STORE_STUDENT_INFO":
       return {
         ...state,

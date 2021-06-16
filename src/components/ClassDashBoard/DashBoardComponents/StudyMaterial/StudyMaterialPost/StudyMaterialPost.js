@@ -1,6 +1,5 @@
 import React from "react";
 import "./StudyMaterialPost.css";
-import Moment from "react-moment";
 
 function StudyMaterialPost({
   postedAt,
@@ -67,12 +66,7 @@ function StudyMaterialPost({
             {/* Teacher has posted Chapter Two Notes */}
             {name}
           </div>
-          <div className="post__date">
-            {/* 23.11.2021 */} Posted
-            <Moment fromNow interval={100}>
-              {postedAt.toISOString()}
-            </Moment>{" "}
-          </div>
+          <div className="post__date">{/* 23.11.2021 */} Posted</div>
         </div>
       </div>
       <div className="third__wrapper" title="Download Material">

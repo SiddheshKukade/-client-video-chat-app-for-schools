@@ -115,3 +115,10 @@ CONFIRM
 Create Account -
 newUserCheck - DONE Completely
 Student account also done !
+
+# TODOS ==>
+
+        🍎 implement upload study material for student.
+
+        🥚 Create Homework post for teacher
+        🐤 Upload Student Homework option for students.

@@ -12,7 +12,9 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
+import axios from "axios";
 import Tooltip from "@material-ui/core/Tooltip";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -25,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 function AddStudyMaterialPanel() {
   const initialValues = {
     name: "",
+    file: null,
   };
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -32,8 +35,9 @@ function AddStudyMaterialPanel() {
       .min(4, "Name is too Short"),
   });
   const onSubmit = (values) => {
-    console.log("form data Add Study material sumit", values);
+    console.log("form data Add Study material sumit 🍎 📎", values);
     console.log(values);
+    axios.post("http://localhost:6969/uploadStudyMaterial");
   };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -76,6 +80,11 @@ function AddStudyMaterialPanel() {
         }}
       >
         <Fade in={open}>
+          {/* <form
+            method="POST"
+            action="http://localhost:6969"
+            enctype="multipart/form-data"
+          > */}
           <div className={classes.paper}>
             <div className={styles.header}>Upload Study Material to Class</div>
             <Formik
@@ -86,10 +95,11 @@ function AddStudyMaterialPanel() {
             >
               {(formik) => {
                 console.log(formik.values);
-                const { errors, touched } = formik;
+                const { errors, touched, setFieldValue } = formik;
                 return (
-                  <Form>
+                  <Form encType="multipart/form-data">
                     <div
+                      // className={styles.formContainer}
                       className={`rounded-md shadow-sm -space-y-px ${styles.inner} `}
                     >
                       <div class={styles.nameContainer}>
@@ -100,17 +110,20 @@ function AddStudyMaterialPanel() {
                           label="Enter Name of Material"
                           placeholder="Name"
                           errMsg={errors.name}
-                          isTouched={touched.email}
+                          isTouched={touched.name}
                         />
                       </div>
                       <div className={styles.fileContainer}>
                         <input
                           className={styles.file}
                           type="file"
-                          name="file"
                           id="file"
                           data-multiple-caption="{count} files selected"
                           multiple
+                          name="file"
+                          onChange={(event) => {
+                            setFieldValue("file", event.currentTarget.files[0]);
+                          }}
                         />
                         <label htmlFor="file">
                           <strong>Choose a file</strong>
@@ -120,7 +133,7 @@ function AddStudyMaterialPanel() {
                       <div class={styles.buttonContainer}>
                         <button
                           type="submit"
-                          disabled={!formik.isValid}
+                          // disabled={!formik.isValid}
                           className={styles.button}
                         >
                           Upload Study Material
@@ -134,6 +147,8 @@ function AddStudyMaterialPanel() {
           </div>
         </Fade>
       </Modal>
+      {/* </form> */}
+      {/* </Modal> */}
     </div>
   );
 }
