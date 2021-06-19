@@ -14,6 +14,8 @@ import Fab from "@material-ui/core/Fab";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import axios from "axios";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -24,8 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function AddHomeWorkPanel() {
+  const userMail = useSelector((state) => state.email);
+  const schoolRefCode = useSelector((state) => state.schoolRefCode);
+  const currentSubject = useSelector((state) => state.currentSubject);
+  const currentStandard = useSelector((state) => state.currentStandard);
   const initialValues = {
     name: "",
+    dueDate: null,
+    marks: 0,
   };
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -34,10 +42,23 @@ function AddHomeWorkPanel() {
     marks: Yup.number("Marks should to be a number").required(
       "Please provide the marks"
     ),
+    dueDate: Yup.date("This is not a Date").required("Due Date Is required"),
   });
   const onSubmit = (values) => {
     console.log("form data Add Study material sumit", values);
     console.log(values);
+
+    axios.post("http://localhost:6969/addHomeWork", {
+      title: values.name,
+      postedAt: Date(),
+      fromSchoolRef: schoolRefCode,
+      fromTeacherMail: userMail,
+      subject: currentSubject,
+      standard: currentStandard,
+      marks: values.marks,
+      emailWhoSubmitted: [],
+      dueDate: values.dueDate,
+    });
   };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -53,6 +74,7 @@ function AddHomeWorkPanel() {
     <div className={styles.container}>
       {/* <Button
         variant="contained"
+
         color="default"
         className=" "
         startIcon={<CloudUploadIcon />}
@@ -107,16 +129,31 @@ function AddHomeWorkPanel() {
                           isTouched={touched.email}
                         />
                       </div>
-                      <div className={styles.fileContainer}>
+                      <div class={styles.nameContainer}>
                         <FormikControl
-                          name="marks"
+                          name="dueDate"
                           control="input"
-                          type="number"
-                          label="Marks of Assignment "
-                          placeholder="marks"
-                          errMsg={errors.marks}
-                          isTouched={touched.email}
+                          type="date"
+                          errMsg={errors.dueDate}
+                          isTouched={touched.dueDate}
                         />
+                      </div>
+                      <div className={styles.fileContainer}>
+                        <Tooltip
+                          title="Enter Due Date for Homework"
+                          aria-label="add"
+                          onClick={handleOpen}
+                        >
+                          <FormikControl
+                            name="marks"
+                            control="input"
+                            type="number"
+                            label="Marks of Assignment "
+                            placeholder="marks"
+                            errMsg={errors.marks}
+                            isTouched={touched.email}
+                          />
+                        </Tooltip>
                       </div>
                       <div class={styles.buttonContainer}>
                         <button

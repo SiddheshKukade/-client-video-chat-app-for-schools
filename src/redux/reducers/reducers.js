@@ -7,10 +7,13 @@ const initialState = {
   schoolRefCode: "",
   teacherMails: [],
   stanardRange: [],
+  currentSubject: "",
+  currentStandard: "",
   phoneNo: null,
   dob: null,
   standard: null,
   googleLogin: false,
+
   fatherName: "",
   userStandard: null,
   SCHOOL_principalName: "",

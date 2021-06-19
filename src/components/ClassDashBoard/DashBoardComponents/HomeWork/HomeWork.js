@@ -8,8 +8,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import styles from "./Homework.module.css";
 import AddHomeWorkPanel from "../../AddHomeWorkPanel/AddHomeworkPanel";
+import { useDispatch, useSelector } from "react-redux";
 const title = "Homework - Sid";
-function HomeWork({ homeWorkList }) {
+function HomeWork({ homeWorkList, homeWorkPosts }) {
+  const userRole = useSelector((state) => state.role);
+
   return (
     <div className={styles.mainContainer}>
       <Helmet>
@@ -18,7 +21,25 @@ function HomeWork({ homeWorkList }) {
         <meta name="theme-color" content="#008f68" />
       </Helmet>
       {/* <TitleComponent title={title} /> */}
+      {/* {homeWorkPosts.map((post) => (
+        <HomeWorkPost
+          title={post.title}
+          postedAt={post.postedAt}
+          fromSchoolRef={post.fromSchoolRef}
+          fromTeacherMail={post.fromTeacherMail}
+          subject={post.subject}
+          standard={post.standard}
+          file={post.file}
+          createdAt={post.createdAt}
+          emailWhoSubmitted={post.emailWhoSubmitted}
+          updatedAt={post.updatedAt}
+          marks={post.marks}
+          dueDate={post.dueDate}
+        />
+      ))} */}
       <HomeWorkPost />
+
+      {/* {userRole ==="Teacher" ? <AddHomeWorkPanel /> : null } */}
 
       <AddHomeWorkPanel />
     </div>
