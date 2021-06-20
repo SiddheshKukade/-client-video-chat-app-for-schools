@@ -1,0 +1,18 @@
+.button {
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: var(--complementary);
+  outline: none;
+  border: none;
+  margin-right: 1rem;
+  transition: all ease-out 0.2s;
+  color: var(--complementary);
+  background: #fff;
+  border: 1px solid var(--complementary);
+  border-radius: 15px;
+}
+.button:hover {
+  color: white;
+  background-color: var(--complementary);
+  cursor: pointer;
+}

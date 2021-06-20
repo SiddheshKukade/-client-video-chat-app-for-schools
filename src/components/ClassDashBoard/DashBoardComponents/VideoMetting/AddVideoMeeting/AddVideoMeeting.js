@@ -1,41 +1,47 @@
-import { Button } from "@material-ui/core";
 import React from "react";
-import styles from "./AddStudyMaterialPanel.module.css";
+import styles from "./AddVideoMeeting.module.css";
+import { Button } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik, Form } from "formik";
-import FormikControl from "./../../UserDetailsFrom/FormikControl";
 import * as Yup from "yup";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import axios from "axios";
 import Tooltip from "@material-ui/core/Tooltip";
+import FormikControl from "./../../../../UserDetailsFrom/FormikControl";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    height: " 73vh",
-    width: "59vw",
+    height: " 53vh",
+    width: "50vw",
   },
 }));
-function AddStudyMaterialPanel() {
+
+const AddVideoMeeting = () => {
+  const currentMail = useSelector((state) => state.email);
   const initialValues = {
     name: "",
-    file: null,
   };
   const validationSchema = Yup.object({
-    name: Yup.string()
+    name: Yup.string("This is  a wrong format")
       .required("Name field is needed")
       .min(4, "Name is too Short"),
   });
   const onSubmit = (values) => {
     console.log("form data Add Study material sumit 🍎 📎", values);
     console.log(values);
-    axios.post("http://localhost:6969/uploadStudyMaterial");
+    axios.post("http://localhost:6969/addVideo", {
+      title: values.name,
+      fromTeacher: currentMail,
+      date: Date(),
+    });
   };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -84,7 +90,9 @@ function AddStudyMaterialPanel() {
             enctype="multipart/form-data"
           > */}
           <div className={classes.paper}>
-            <div className={styles.header}>Upload Study Material to Class</div>
+            <div className={styles.header}>
+              Create Video Meeting For your class
+            </div>
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
@@ -97,36 +105,19 @@ function AddStudyMaterialPanel() {
                 return (
                   <Form encType="multipart/form-data">
                     <div
-                      // className={styles.formContainer}
-                      className={`rounded-md shadow-sm -space-y-px ${styles.inner} `}
+                      className={styles.formContainer}
+                      // className={`rounded-md shadow-sm -space-y-px ${styles.inner} `}
                     >
                       <div class={styles.nameContainer}>
                         <FormikControl
                           name="name"
                           control="input"
                           type="text"
-                          label="Enter Name of Material"
+                          label="Enter Topic of Meeting"
                           placeholder="Name"
                           errMsg={errors.name}
                           isTouched={touched.name}
                         />
-                      </div>
-                      <div className={styles.fileContainer}>
-                        <input
-                          className={styles.file}
-                          type="file"
-                          id="file"
-                          data-multiple-caption="{count} files selected"
-                          multiple
-                          name="file"
-                          onChange={(event) => {
-                            setFieldValue("file", event.currentTarget.files[0]);
-                          }}
-                        />
-                        <label htmlFor="file">
-                          <strong>Choose a file</strong>
-                          <span class="box__dragndrop"> or drag it here</span>.
-                        </label>
                       </div>
                       <div class={styles.buttonContainer}>
                         <button
@@ -134,7 +125,7 @@ function AddStudyMaterialPanel() {
                           // disabled={!formik.isValid}
                           className={styles.button}
                         >
-                          Upload Study Material
+                          Start Video Meeting
                         </button>
                       </div>
                     </div>
@@ -149,6 +140,5 @@ function AddStudyMaterialPanel() {
       {/* </Modal> */}
     </div>
   );
-}
-
-export default AddStudyMaterialPanel;
+};
+export default AddVideoMeeting;

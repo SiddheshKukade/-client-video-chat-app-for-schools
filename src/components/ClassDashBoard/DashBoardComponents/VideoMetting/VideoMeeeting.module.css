@@ -1,0 +1,8 @@
+.mainContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 83vh;
+  gap: 2rem;
+  flex-direction: column;
+}

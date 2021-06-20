@@ -120,6 +120,7 @@ Student account also done !
 
         🍎 implement upload study material for student.
 
+DONE
 
         🥚 Create Homework post for teacher
                     Create any task with a heading and attach an fileuploader to it
@@ -127,9 +128,21 @@ Student account also done !
                     2) Student will Upload their files and it wiil store them in the backend in a separate folder
                     3) After a due date for homework has been passeed homeworkpost will disappear.
 
+DONE
 
         🐤 Upload Student Homework option for students.
 
 
         📻 Work on Chat 🐄 Components :
+
                     👍 Socket.io
+
+📹 Video Program :
+
+               🤦  Create Video posts  [UI] DONE
+                        🚡 Meeting title
+                        💳 Created By
+
+
+            DONE    Create Ability for teacher to Create Video Posts
+                Abiltity for students to join the meeting.
