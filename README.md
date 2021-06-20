@@ -145,4 +145,4 @@ DONE
 
 
             DONE    Create Ability for teacher to Create Video Posts
-                Abiltity for students to join the meeting.
+            DONE     Abiltity for students to join the meeting.

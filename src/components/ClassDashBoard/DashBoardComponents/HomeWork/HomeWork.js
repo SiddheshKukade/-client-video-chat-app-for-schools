@@ -20,6 +20,7 @@ function HomeWork({ homeWorkList, homeWorkPosts }) {
         <meta name="description" content="App Description" />
         <meta name="theme-color" content="#008f68" />
       </Helmet>
+
       {/* <TitleComponent title={title} /> */}
       {/* {homeWorkPosts.map((post) => (
         <HomeWorkPost

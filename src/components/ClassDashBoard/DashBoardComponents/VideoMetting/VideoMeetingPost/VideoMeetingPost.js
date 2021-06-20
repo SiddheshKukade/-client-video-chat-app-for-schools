@@ -1,7 +1,12 @@
 import React from "react";
 import DuoIcon from "@material-ui/icons/Duo";
 import styles from "./VideoMeetingPost.module.css";
-const VideoMeetingPost = () => {
+const VideoMeetingPost = ({ title = "so dsds sd id", fromTeacher, date }) => {
+  const handleClickVideo = () => {
+    window.location.replace(
+      `http://localhost:3030/${title.replace(/\s/g, "")}`
+    );
+  };
   return (
     <div className="post__wrapper">
       <div className="upper__wrapper">
@@ -40,13 +45,18 @@ const VideoMeetingPost = () => {
         <div className="second__wrapper">
           <div className="post__title">
             Teacher has posted Chapter Two Notes
-            {/* {name} */}
+            {title}
           </div>
-          <div className="post__date">{/* 23.11.2021 */} Posted</div>
+          <div className="post__date">
+            {/* 23.11.2021 Posted at {date.toISOString().slice(0, 10)} */}
+            New mwwting chap 3
+          </div>
         </div>
       </div>
-      <div className="third__wrapper" title="Download Material">
-        <button className={styles.button}>Join Meeting</button>
+      <div className="third__wrapper" title="Click to Join Meeting Directly">
+        <button className={styles.button} onClick={handleClickVideo}>
+          Join Meeting
+        </button>
       </div>
     </div>
   );
