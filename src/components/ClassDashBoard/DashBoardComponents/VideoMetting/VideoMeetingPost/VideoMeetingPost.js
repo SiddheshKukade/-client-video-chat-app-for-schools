@@ -43,13 +43,10 @@ const VideoMeetingPost = ({ title = "so dsds sd id", fromTeacher, date }) => {
           </svg>
         </div>
         <div className="second__wrapper">
-          <div className="post__title">
-            Teacher has posted Chapter Two Notes
-            {title}
-          </div>
+          <div className="post__title">{title}</div>
           <div className="post__date">
-            {/* 23.11.2021 Posted at {date.toISOString().slice(0, 10)} */}
-            New mwwting chap 3
+            {/* 23.11.2021 Posted at {date.toISOString().slice(0, 10)} */}2
+            hours ago
           </div>
         </div>
       </div>

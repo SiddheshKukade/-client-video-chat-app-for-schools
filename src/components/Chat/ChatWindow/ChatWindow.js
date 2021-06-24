@@ -18,15 +18,15 @@ export const ChatWindow = () => {
         <ChatMessage
           avatar={AVATAR}
           messages={[
-            "Hi Jenny, How r u today?",
-            "Did you train yesterday",
+            "Hi Siddhesh Kukade , do you have any doubt",
+            "Did you completed homework yesterday",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.",
           ]}
         />
         <ChatMessage
           side={"right"}
           messages={[
-            "You are so Op",
+            "Yes Mam I have Submitted that yesterday",
             "Of course I did. Speaking of which check this out",
           ]}
         />

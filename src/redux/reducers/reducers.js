@@ -23,6 +23,8 @@ const initialState = {
   SCHOOL_schoolName: "",
   SCHOOL_principalMail: "",
   SCHOOL_subjects: [],
+
+  // loadChat: false,
 };
 
 function rootReducer(state = initialState, action) {
@@ -81,6 +83,11 @@ function rootReducer(state = initialState, action) {
         userStandard: action.payload.userStandard,
         googleLogin: action.payload.googleLogin,
       };
+    // case "TOGGLE_CHAT":
+    //   return {
+    //     ...state,
+    //     loadChat: action.payload.bool,
+    //   };
     default:
       return state;
   }

@@ -13,14 +13,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { FlashOnTwoTone } from "@material-ui/icons";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import ClassDashBoard from "../../ClassDashBoard/ClassDashBoard";
 
 function RegistrationForm({ role, isGoogle }) {
   const stateMail = useSelector((state) => state.email);
   const statePass = useSelector((state) => state.password);
-  const [loadNextForm, setloadNextForm] = useState(false);
-
+  const [loadDashBoard, setLoadDashBoard] = useState(false);
+  const [loadLoadingIcon, setLoadLoadingIcon] = useState(false);
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -49,8 +50,9 @@ function RegistrationForm({ role, isGoogle }) {
     refCode: Yup.string().required("Refercode is required"),
   });
   const handleSubmit = (values) => {
+    setLoadLoadingIcon(true);
     axios
-      .post("http://localhost:6969/newUser", {
+      .post(process.env.REACT_APP_BACKEND_URL + "newUser", {
         role: role,
         name: values.submitstudentName,
         fathername: values.fathername,
@@ -82,18 +84,25 @@ function RegistrationForm({ role, isGoogle }) {
               values.refercode
             )
           );
+          setLoadLoadingIcon(false);
+          setLoadDashBoard(true);
         }
         //check if the user exsts here !!
         // dispatch(setMailPassRole(values.email, values.password, role));
         // dispatch(set)
       })
       .catch((err) => console.log(err));
-    setloadNextForm(true);
     console.log("Form submited desc ", values);
   };
-  if (loadNextForm) {
+  if (loadDashBoard) {
     return <ClassDashBoard />;
-  } else {
+  } else if (loadLoadingIcon) {
+    return (
+      <div className={styles.containerLoad}>
+        <CircularProgress className={styles.loading} />
+      </div>
+    );
+  }
     return (
       <div className={styles.container}>
         <div className={styles.headerContainer}>Fill in the Below Details</div>
@@ -161,7 +170,7 @@ function RegistrationForm({ role, isGoogle }) {
                   <FormikControl
                     control="input"
                     label="Enter the Reference code of your School"
-                    name="selectStandard"
+                    name="refCode"
                     errMsg={errors.refCode}
                     isTouched={touched.refCode}
                     className={styles.inputsIn}
@@ -203,8 +212,8 @@ function RegistrationForm({ role, isGoogle }) {
                 >
                   Save and Continue
                 </button>
-                <pre>{JSON.stringify(formik.values)}</pre>
-                {console.log(formik.isValid)}
+                {/* <pre>{JSON.stringify(formik.values)}</pre>
+                {console.log(formik.isValid)} */}
                 {/* 
             <FormikControl
               control="input"

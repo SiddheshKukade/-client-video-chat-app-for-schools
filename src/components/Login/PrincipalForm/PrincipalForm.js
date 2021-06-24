@@ -41,6 +41,8 @@ const AddNew = ({ key, defaultValue, inputvalues, count, ...rest }) => {
 function PrincipalForm({ role, isGoogle }) {
   const principalStateMail = useSelector((state) => state.email);
   const principalStatePass = useSelector((state) => state.password);
+  console.log("📫 " + principalStateMail);
+  console.log("🔑 " + principalStatePass);
   const [open, setOpen] = useState(false);
   const [inputList, setInputList] = useState([]);
   const [inputvalues, setInputValues] = useState([]);
@@ -56,7 +58,7 @@ function PrincipalForm({ role, isGoogle }) {
     principalName: "",
     phone: "",
     selectStandard: "",
-    refercode: "",
+    referCode: "",
     teacherEmail: "",
     teacherSubject: "",
     schoolName: "",
@@ -93,10 +95,7 @@ function PrincipalForm({ role, isGoogle }) {
     setTeacherMailSubject({ email: tempTeacherMail, subject: tempSubject });
   };
   const onSubmit = (values) => {
-    console.log("Form submited desc ", values);
-    console.log("====================================");
-    console.log("Input Valeus are", inputvalues);
-    console.log("====================================");
+    console.log(" 🆗Form submited desc ", values);
     // setTeacherMailSubject((prev) => [
     //   ...prev,
     //   { email: values.teacherEmail, subject: values.teacherSubject },
@@ -125,19 +124,17 @@ function PrincipalForm({ role, isGoogle }) {
       default:
         break;
     }
-    console.log(standardRange);
     const subjectsMap = teacherMailSubject.map((t) => t.subject);
+
     axios
-      .post("http://localhost:6969/school", {
+      .post(process.env.REACT_APP_BACKEND_URL + "signup/school", {
         name: values.schoolName,
         principalMail: principalStateMail,
         principalName: values.principalName,
         standards: standardRange,
         teacherMails: teacherMailSubject,
         subjects: subjectsMap,
-        referCode: values.referCode,
-        createdAt: Date(),
-        updatedAt: Date(),
+        referCode: values.refercode,
       })
       .then((res) => {
         if (res.data.alreadyExists) {
@@ -154,38 +151,38 @@ function PrincipalForm({ role, isGoogle }) {
               values.schoolName
             )
           );
-          axios
-            .post("http://localhost:6969/newUser", {
-              role: role,
-              name: values.schoolName,
-              email: principalStateMail,
-              password: principalStatePass,
-              googleLogin: isGoogle,
-              createdAt: Date(),
-              updatedAt: Date(),
-              // school : object id of school will come from response
-            })
-            .then((newUserResponse) => {
-              console.log(
-                "new User sucxess on DB from Principal form",
-                newUserResponse
-              );
-              dispatch(
-                setPrincipalInfo(
-                  principalStateMail,
-                  principalStatePass,
-                  role,
-                  values.principalName,
-                  values.schoolName,
-                  values.referCode,
-                  values.phone
-                )
-              );
-            })
-            .catch((err) => console.log(err));
+
+            axios
+              .post(process.env.REACT_APP_BACKEND_URL + "signup/newUser", {
+                role: role,
+                name: values.schoolName,
+                email: principalStateMail,
+                password: principalStatePass,
+                googleLogin: isGoogle,
+                referCode: values.refercode,
+                // school : object id of school will come from response
+              })
+              .then((newUserResponse) => {
+                console.log(
+                  "new User sucxess on DB from Principal form",
+                  newUserResponse
+                );
+                dispatch(
+                  setPrincipalInfo(
+                    principalStateMail,
+                    principalStatePass,
+                    role,
+                    values.principalName,
+                    values.schoolName,
+                    values.referCode,
+                    values.phone
+                  )
+                );
+              })
+              .catch((err) => console.log(err.response));
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
     console.log(standardRange, "standard Range");
   };
 
@@ -244,9 +241,8 @@ function PrincipalForm({ role, isGoogle }) {
       )
     );
   };
-  const swt = (i, val) => {
-    inputvalues[i] = val;
-  };
+  // const onSubmit = () => {};
+  const swt = (i, val) => {};
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>Fill in the Below Details</div>
@@ -415,5 +411,7 @@ function PrincipalForm({ role, isGoogle }) {
     </div>
   );
 }
+console.log("🍎");
+console.log(process.env.REACT_APP_BACKEND_URL + "sid");
 
 export default PrincipalForm;

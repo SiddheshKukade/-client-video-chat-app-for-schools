@@ -7,6 +7,10 @@ const Chat = () => {
   return (
     <div className={styles.container}>
       <ChatWindow />
+      <br />
+      <br />
+      <br />
+      <br />
       <ChatInput />
     </div>
   );

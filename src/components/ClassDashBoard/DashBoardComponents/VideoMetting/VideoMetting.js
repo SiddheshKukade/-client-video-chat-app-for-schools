@@ -18,12 +18,10 @@ function VideoMetting({ videoMeetingPosts }) {
           date={post.data}
         />
       ))} */}
-      <VideoMeetingPost />
-      <VideoMeetingPost />
-      <VideoMeetingPost />
-      <VideoMeetingPost />
-      <VideoMeetingPost />
-      <AddVideoMeeting />
+      <VideoMeetingPost title="Java Programming  " />
+      <VideoMeetingPost title="PHP Class" />
+      <VideoMeetingPost title="Maths Class" />
+      {/* <AddVideoMeeting /> */}
     </div>
   );
 }

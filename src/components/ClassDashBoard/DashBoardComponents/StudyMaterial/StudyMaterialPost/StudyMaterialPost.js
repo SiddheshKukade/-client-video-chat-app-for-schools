@@ -11,6 +11,7 @@ function StudyMaterialPost({
   standard,
   createdAt,
   updatedAt,
+  title,
 }) {
   const downloadDoc = () => {
     console.log("cliucked");
@@ -62,11 +63,8 @@ function StudyMaterialPost({
           </svg>
         </div>
         <div className="second__wrapper">
-          <div className="post__title">
-            {/* Teacher has posted Chapter Two Notes */}
-            {name}
-          </div>
-          <div className="post__date">{/* 23.11.2021 */} Posted</div>
+          <div className="post__title">{title}</div>
+          <div className="post__date">{/* 23.11.2021 */}2 hours ago</div>
         </div>
       </div>
       <div className="third__wrapper" title="Download Material">

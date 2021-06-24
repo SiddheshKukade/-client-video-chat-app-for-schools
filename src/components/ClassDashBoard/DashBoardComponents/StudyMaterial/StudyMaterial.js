@@ -28,6 +28,7 @@ function StudyMaterial({ studyMaterialList, studyMaterialPosts }) {
         />
       ))} */}
       {/* {userRole ==="Teacher" ? <AddStudyMaterialPanel /> : null } */}
+      <StudyMaterialPost title="Teacher has posted Chapter Two Notes" />
       <AddStudyMaterialPanel />
     </div>
   );

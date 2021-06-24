@@ -13,11 +13,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { setTeacherInfo } from "./../../../redux/actions/actions";
-
+import ClassDashBoard from "./../../ClassDashBoard/ClassDashBoard";
+import CircularProgress from "@material-ui/core/CircularProgress";
 function TeacherForm({ role, isGoogle }) {
   const stateMail = useSelector((state) => state.email);
   const [open, setOpen] = useState(false);
   const statePass = useSelector((state) => state.password);
+  const [loadDashBoard, setLoadDashBoard] = useState(false);
+  const [loadLoadingIcon, setLoadLoadingIcon] = useState(false);
   const dispatch = useDispatch();
   const handleClose = () => {
     setOpen(false);
@@ -40,10 +43,11 @@ function TeacherForm({ role, isGoogle }) {
       .min(4, "Minimum 4 characters are required for the code"),
   });
   const handleSubmit = (values) => {
+    setLoadLoadingIcon(true);
     axios
-      .post("http://localhost:6969/checkTeacher", {
+      .post(process.env.REACT_APP_BACKEND_URL + "signup/checkTeacher", {
         refercode: values.refercode,
-        teacherMail: values.teacherMail,
+        teacherMail: stateMail,
         teacherStandard: values.selectStandard,
       })
       .then((res) => {
@@ -59,7 +63,7 @@ function TeacherForm({ role, isGoogle }) {
             )
           );
           axios
-            .post("http://localhost:6969/newUser", {
+            .post(process.env.REACT_APP_BACKEND_URL + "signup/newUser", {
               role: role,
               name: values.teacherName,
               email: stateMail,
@@ -71,6 +75,8 @@ function TeacherForm({ role, isGoogle }) {
             })
             .then((newUserResponse) => console.log(newUserResponse))
             .catch((err) => console.log(err));
+          setLoadLoadingIcon(false);
+          setLoadDashBoard(true);
         } else {
           setOpen(true);
         }
@@ -82,6 +88,15 @@ function TeacherForm({ role, isGoogle }) {
       .catch((err) => console.log(err));
     console.log("Form submited desc ", values);
   };
+  if (loadDashBoard) {
+    return <ClassDashBoard />;
+  } else if (loadLoadingIcon) {
+    return (
+      <div className={styles.containerLoad}>
+        <CircularProgress className={styles.loading} />
+      </div>
+    );
+  }
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>Fill in the Below Details</div>
@@ -155,8 +170,8 @@ function TeacherForm({ role, isGoogle }) {
                   Save and Continue
                 </button>
               </div>
-              <pre>{JSON.stringify(formik.values)}</pre>
-              {console.log(formik.isValid)}
+              {/* <pre>{JSON.stringify(formik.values)}</pre>
+              {console.log(formik.isValid)} */}
             </Form>
           );
         }}

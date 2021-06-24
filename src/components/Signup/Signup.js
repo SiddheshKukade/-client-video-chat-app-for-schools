@@ -18,6 +18,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from "axios";
+// import setMailPassRole from "./../../redux/actions/actions";
 import { setMailPassRole } from "./../../redux/actions/actions";
 function Signup({ role }) {
   const [isGoogle, setIsGoogle] = useState(false);
@@ -57,6 +58,7 @@ function Signup({ role }) {
   });
 
   const onSubmit = (values) => {
+    dispatch(setMailPassRole(values.email, values.password, role, isGoogle));
     // // do a request to backend and with '/newUserCheck'
     // axios
     //   .post("http://localhost:6969/newUserCheck", {
@@ -127,7 +129,7 @@ function Signup({ role }) {
                 {(formik) => {
                   const { errors, touched } = formik;
                   return (
-                    <Form class={styles.form1}>
+                    <Form className={styles.form1}>
                       <div className={styles.formMain}>
                         <div className={styles.formInputs}>
                           {/* <label

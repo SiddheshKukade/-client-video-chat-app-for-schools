@@ -78,7 +78,8 @@ function ClassDashBoard() {
   const [homeWorkPostsFromServer, setHomeWorkPostsFromServer] = useState(null);
   const [studyMaterialFromServer, setStudyMaterialFromServer] = useState(null);
   const [videoMeetingFromServer, setVideoMeetingFromServer] = useState(null);
-
+  const [loadChat, setLoadChat] = useState(false);
+  // const loadChat = useSelector((state) => state.loadChat);
   let match = useRouteMatch();
   console.log(match);
 
@@ -98,7 +99,9 @@ function ClassDashBoard() {
       .then((res) => setHomeWorkPostsFromServer(res.data.homeWorkPosts))
       .catch((err) => console.log(err));
   };
-
+  const handleChat = () => {
+    setLoadChat(!loadChat);
+  };
   const requestStudyMaterialFromServer = () => {
     axios
       .get("http://localhost:6969/getStudyMaterial", {
@@ -145,6 +148,7 @@ function ClassDashBoard() {
           userName={state.userName}
           teacherList={teacherList}
           schoolName={schoolName}
+          handleChat={handleChat}
         />
 
         <div className={styles.dash__header__container}>
@@ -194,7 +198,11 @@ function ClassDashBoard() {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <VideoMetting videoMeetingPosts={videoMeetingFromServer} />
+              {loadChat ? (
+                <Chat />
+              ) : (
+                <VideoMetting videoMeetingPosts={videoMeetingFromServer} />
+              )}
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               <StudyMaterial
@@ -209,7 +217,7 @@ function ClassDashBoard() {
               />
             </TabPanel>
           </SwipeableViews>
-          <Chat />
+          {/* <Chat /> */}
         </div>
       </div>
     );

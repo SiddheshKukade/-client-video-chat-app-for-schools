@@ -4,6 +4,7 @@ import {
   STORE_PRINCIPAL_INFO,
   STORE_SCHOOL_INFO,
   STORE_TEACHER_INFO,
+  // TOGGLE_CHAT,
 } from "./types";
 
 export const setMailPassRole = (email, password, role, googleLogin) => {
@@ -103,3 +104,9 @@ export const setTeacherInfo = (
     payload: { role, userName, email, password, userStandard, googleLogin },
   };
 };
+// export const toogleChat = (bool) => {
+//   return {
+//     type: TOGGLE_CHAT,
+//     payload: { bool },
+//   };
+// };
