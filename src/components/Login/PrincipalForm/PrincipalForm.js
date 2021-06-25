@@ -14,6 +14,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import styles from "../RegistrationForm/RegistrationForm.module.css";
 import { setSchoolInfo } from "./../../../redux/actions/actions";
 import { setPrincipalInfo } from "../../../redux/actions/actions";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Redirect } from "react-router-dom";
 let count = 0;
 console.log(count);
 let standardRange = [];
@@ -41,18 +43,20 @@ const AddNew = ({ key, defaultValue, inputvalues, count, ...rest }) => {
 function PrincipalForm({ role, isGoogle }) {
   const principalStateMail = useSelector((state) => state.email);
   const principalStatePass = useSelector((state) => state.password);
-  console.log("📫 " + principalStateMail);
-  console.log("🔑 " + principalStatePass);
+  const [loadDashBoard, setLoadDashBoard] = useState(false);
+
   const [open, setOpen] = useState(false);
+  const [openLoad, setOpenLoad] = useState(false);
   const [inputList, setInputList] = useState([]);
   const [inputvalues, setInputValues] = useState([]);
-  // const [teacherMailSubject, setTeacherMailSubject] = useState([]);
   const [tempObject, setTempObject] = useState({});
-  // const [tempTeacherMail, setTempTeacherMail] = useState("");
-  // const [tempSubject, setTempSubject] = useState("");
   const dispatch = useDispatch();
   const handleClose = () => {
+    setOpenLoad(false);
     setOpen(false);
+  };
+  const handleCloseLoad = () => {
+    setOpenLoad(false);
   };
   const initialValues = {
     principalName: "",
@@ -125,6 +129,7 @@ function PrincipalForm({ role, isGoogle }) {
         break;
     }
     const subjectsMap = teacherMailSubject.map((t) => t.subject);
+    setOpenLoad(true);
 
     axios
       .post(process.env.REACT_APP_BACKEND_URL + "signup/school", {
@@ -152,34 +157,35 @@ function PrincipalForm({ role, isGoogle }) {
             )
           );
 
-            axios
-              .post(process.env.REACT_APP_BACKEND_URL + "signup/newUser", {
-                role: role,
-                name: values.schoolName,
-                email: principalStateMail,
-                password: principalStatePass,
-                googleLogin: isGoogle,
-                referCode: values.refercode,
-                // school : object id of school will come from response
-              })
-              .then((newUserResponse) => {
-                console.log(
-                  "new User sucxess on DB from Principal form",
-                  newUserResponse
-                );
-                dispatch(
-                  setPrincipalInfo(
-                    principalStateMail,
-                    principalStatePass,
-                    role,
-                    values.principalName,
-                    values.schoolName,
-                    values.referCode,
-                    values.phone
-                  )
-                );
-              })
-              .catch((err) => console.log(err.response));
+          axios
+            .post(process.env.REACT_APP_BACKEND_URL + "signup/newUser", {
+              role: role,
+              name: values.schoolName,
+              email: principalStateMail,
+              password: principalStatePass,
+              googleLogin: isGoogle,
+              referCode: values.refercode,
+              // school : object id of school will come from response
+            })
+            .then((newUserResponse) => {
+              console.log(
+                "new User sucxess on DB from Principal form",
+                newUserResponse
+              );
+              dispatch(
+                setPrincipalInfo(
+                  principalStateMail,
+                  principalStatePass,
+                  role,
+                  values.principalName,
+                  values.schoolName,
+                  values.referCode,
+                  values.phone
+                )
+              );
+              setLoadDashBoard(true);
+            })
+            .catch((err) => console.log(err.response));
         }
       })
       .catch((err) => console.log(err.response));
@@ -241,6 +247,9 @@ function PrincipalForm({ role, isGoogle }) {
       )
     );
   };
+  if (loadDashBoard) {
+    return <Redirect to="/dashboard" />;
+  }
   // const onSubmit = () => {};
   const swt = (i, val) => {};
   return (
@@ -378,11 +387,6 @@ function PrincipalForm({ role, isGoogle }) {
                   Save and Continue
                 </button>
               </div>
-              {/* {JSON.stringify(formik.values)}
-              is valuid {formik.isValid}
-              {JSON.stringify(tempTeacherMail)}
-              {JSON.stringify(tempSubject)} */}
-              <pre> {JSON.stringify(teacherMailSubject)}</pre>
             </Form>
           );
         }}
@@ -407,6 +411,17 @@ function PrincipalForm({ role, isGoogle }) {
             Ok
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openLoad}
+        onClose={handleCloseLoad}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <div style={{ overflowX: "hidden", overflowY: "hidden" }}></div>
+          <CircularProgress />
+        </DialogContent>
       </Dialog>
     </div>
   );

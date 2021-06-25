@@ -13,18 +13,24 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { setTeacherInfo } from "./../../../redux/actions/actions";
-import ClassDashBoard from "./../../ClassDashBoard/ClassDashBoard";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { Redirect } from "react-router-dom";
+
 function TeacherForm({ role, isGoogle }) {
   const stateMail = useSelector((state) => state.email);
   const [open, setOpen] = useState(false);
   const statePass = useSelector((state) => state.password);
   const [loadDashBoard, setLoadDashBoard] = useState(false);
-  const [loadLoadingIcon, setLoadLoadingIcon] = useState(false);
+  const [openLoad, setOpenLoad] = useState(false);
   const dispatch = useDispatch();
+  const handleCloseLoad = () => {
+    setOpenLoad(false);
+  };
   const handleClose = () => {
+    handleCloseLoad();
     setOpen(false);
   };
+
   const initialValues = {
     teacherName: "",
     phone: "",
@@ -43,7 +49,7 @@ function TeacherForm({ role, isGoogle }) {
       .min(4, "Minimum 4 characters are required for the code"),
   });
   const handleSubmit = (values) => {
-    setLoadLoadingIcon(true);
+    setOpenLoad(true);
     axios
       .post(process.env.REACT_APP_BACKEND_URL + "signup/checkTeacher", {
         refercode: values.refercode,
@@ -73,9 +79,11 @@ function TeacherForm({ role, isGoogle }) {
               createdAt: Date(),
               updatedAt: Date(),
             })
-            .then((newUserResponse) => console.log(newUserResponse))
+            .then((newUserResponse) => {
+              handleCloseLoad();
+              console.log(newUserResponse);
+            })
             .catch((err) => console.log(err));
-          setLoadLoadingIcon(false);
           setLoadDashBoard(true);
         } else {
           setOpen(true);
@@ -89,13 +97,7 @@ function TeacherForm({ role, isGoogle }) {
     console.log("Form submited desc ", values);
   };
   if (loadDashBoard) {
-    return <ClassDashBoard />;
-  } else if (loadLoadingIcon) {
-    return (
-      <div className={styles.containerLoad}>
-        <CircularProgress className={styles.loading} />
-      </div>
-    );
+    return <Redirect to="/dashboard" />;
   }
   return (
     <div className={styles.container}>
@@ -196,6 +198,17 @@ function TeacherForm({ role, isGoogle }) {
             Ok
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openLoad}
+        onClose={handleCloseLoad}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <div style={{ overflowX: "hidden", overflowY: "hidden" }}></div>
+          <CircularProgress />
+        </DialogContent>
       </Dialog>
     </div>
   );
