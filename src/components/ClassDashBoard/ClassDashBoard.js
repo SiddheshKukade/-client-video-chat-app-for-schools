@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import Sidebar from "./../Sidebar/Sidebar";
 import styles from "./ClassDashBoard.module.css";
 import VideoMetting from "./DashBoardComponents/VideoMetting/VideoMetting";
@@ -75,13 +68,19 @@ function ClassDashBoard() {
   const [teacherList, setTeacherList] = useState([]);
   const [homeWorkList, setHomeWorkList] = useState([]);
   const [studyMaterialList, SetStudyMaterialList] = useState([]);
+
+  const [schoolDataFromServer, setSchoolDataFromServer] = useState([]);
   const [homeWorkPostsFromServer, setHomeWorkPostsFromServer] = useState(null);
   const [studyMaterialFromServer, setStudyMaterialFromServer] = useState(null);
   const [videoMeetingFromServer, setVideoMeetingFromServer] = useState(null);
   const [loadChat, setLoadChat] = useState(false);
+  const [teacherNamesFromServer, setTeacherNamesFromServer] = useState(["sid"]);
+
+  const teachersMailsOnly = schoolDataFromServer.teacherMails?.map(
+    (tm) => tm.email
+  );
   // const loadChat = useSelector((state) => state.loadChat);
   let match = useRouteMatch();
-  console.log(match);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -90,13 +89,28 @@ function ClassDashBoard() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
-
+  const requestTeacherNames = (tm) => {
+    console.log("is trm", tm);
+    axios
+      .post(
+        process.env.REACT_APP_BACKEND_URL + "dashboard/teacherNameFromMail",
+        {
+          email: tm,
+        }
+      )
+      .then((res) => {
+        setTeacherNamesFromServer((prev) => {
+          return [...prev, res.data];
+        });
+      })
+      .catch((err) => console.log(err));
+  };
   const requestHomeWorkFromServer = () => {
     axios
-      .get("http://localhost:6969/getHomeWork", {
-        fromSchool: state.schoolRefCode,
+      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/homeWork", {
+        referCode: state.schoolRefCode,
       })
-      .then((res) => setHomeWorkPostsFromServer(res.data.homeWorkPosts))
+      .then((res) => setHomeWorkPostsFromServer(res.data))
       .catch((err) => console.log(err));
   };
   const handleChat = () => {
@@ -104,37 +118,44 @@ function ClassDashBoard() {
   };
   const requestStudyMaterialFromServer = () => {
     axios
-      .get("http://localhost:6969/getStudyMaterial", {
-        fromSchool: state.schoolRefCode,
-      })
-      .then((res) => setStudyMaterialFromServer(res.data.studyMaterialPosts))
-      .catch((err) => console.log(err));
-  };
-  const requestSchoolInfo = () => {
-    axios
-      .post(process.env.BACKEND_URL + "/schoolInfo", {
+      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/studyMaterial", {
         referCode: state.schoolRefCode,
       })
-      .then((res) =>
-        //set the state values here and pass them down
-        console.log(res.data)
-      )
+      .then((res) => setStudyMaterialFromServer(res.data))
+      .catch((err) => console.log(err));
+  };
+  const requestSchoolFromServer = () => {
+    axios
+      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/school", {
+        // referCode: state.schoolRefCode,
+        referCode: "ewewe",
+      })
+      .then((res) => {
+        res.data[0].teacherMails
+          ?.map((tm) => tm.email)
+          .forEach((tm) => requestTeacherNames(tm));
+        setSchoolDataFromServer(res.data[0]);
+      })
       .catch((err) => console.log(err));
   };
   const requestVideoMeetingFromServer = () => {
     axios
-      .post("http://localhost:6969/getVideoMeeting", {
+      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/videoMeeting", {
         referCode: state.schoolRefCode,
       })
       .then((res) => setVideoMeetingFromServer(res.data.videoMeetingPosts))
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    requestSchoolInfo();
+    requestSchoolFromServer();
     requestHomeWorkFromServer();
     requestStudyMaterialFromServer();
     requestVideoMeetingFromServer();
+    console.log(teacherNamesFromServer);
   }, []);
+
+  console.log("data in the Dashboar 💇 ", schoolDataFromServer);
+
   let width = window.innerWidth;
   if (width > 500) {
     return (
@@ -149,6 +170,8 @@ function ClassDashBoard() {
           teacherList={teacherList}
           schoolName={schoolName}
           handleChat={handleChat}
+          teachersMailsNames={teacherNamesFromServer}
+          schoolDataFromServer={schoolDataFromServer}
         />
 
         <div className={styles.dash__header__container}>

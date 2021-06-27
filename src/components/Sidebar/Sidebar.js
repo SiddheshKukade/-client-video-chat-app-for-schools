@@ -241,8 +241,9 @@ export default function Sidebar({
   userName,
   teacherList,
   schoolName,
-
   handleChat,
+  teachersMailsNames,
+  schoolDataFromServer,
 }) {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
@@ -250,21 +251,29 @@ export default function Sidebar({
   const [openOther, setOpenOther] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const state = useSelector((s) => s);
-  const [teacherNamesFromServer, setTeacherNamesFromServer] = useState([]);
-  const [subjectsFromServer, setSubjectsFromServer] = useState([]);
-  const teachersMailsOnly = state.teacherMails.map((t) => t.email);
-  useEffect(() => {
-    axios
-      .post("http://localhost:6969/userDash", {
-        teachersMailsOnly,
-        schoolRefCode: state.schoolRefCode,
-      })
-      .then((res) => {
-        setTeacherNamesFromServer(res.data.names);
-        setSubjectsFromServer(res.data.subjects);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // const [teacherNamesFromServer, setTeacherNamesFromServer] = useState(["sid"]);
+  // const [subjectsFromServer, setSubjectsFromServer] = useState([]);
+
+  // const requestTeacherNames = (tm) => {
+  //   console.log("is trm", tm);
+  //   axios
+  //     .post(
+  //       process.env.REACT_APP_BACKEND_URL + "dashboard/teacherNameFromMail",
+  //       {
+  //         email: tm,
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setTeacherNamesFromServer((prev) => {
+  //         return [...prev, res.data];
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+  // useEffect(() => {
+  //   console.log("wait sddieh");
+  //   teachersMailsOnly?.forEach((tm) => requestTeacherNames(tm));
+  // }, []);
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
@@ -317,7 +326,7 @@ export default function Sidebar({
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
-          <ListItemText primary="Siddhesh B. Kukade" />
+          <ListItemText primary={state.userName} />
           {/* Or change to siddhesh Kukade for testing username */}
           {/* primary={state.userName} */}
         </ListItem>
@@ -344,12 +353,12 @@ export default function Sidebar({
         </ListItem>
         <Collapse in={openTeacher} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {teacherNamesFromServer.map((name) => (
+            {teachersMailsNames.map((nameteacher) => (
               <ListItem button className={classes.nested}>
                 <ListItemIcon>
                   <AccountCircleIcon />
                 </ListItemIcon>
-                <ListItemText primary={name} />
+                <ListItemText primary={nameteacher} />
               </ListItem>
             ))}
             <ListItem
@@ -399,8 +408,9 @@ export default function Sidebar({
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {subjectsFromServer.map((subject) => (
+            {/* {schoolDataFromServer.subjects.map((subject, i) => (
               <ListItem
+                key={i}
                 button
                 className={classes.nested}
                 onClick={() => handleChat(true)}
@@ -408,7 +418,7 @@ export default function Sidebar({
                 <ListItemIcon></ListItemIcon>
                 <ListItemText primary={subject} />
               </ListItem>
-            ))}
+            ))} */}
             <ListItem
               button
               className={classes.nested}
