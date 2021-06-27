@@ -228,16 +228,24 @@ function ClassDashBoard() {
               )}
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <StudyMaterial
-                studyMaterialList={studyMaterialList}
-                studyMaterialPosts={studyMaterialFromServer}
-              />
+              {loadChat ? (
+                <Chat />
+              ) : (
+                <StudyMaterial
+                  studyMaterialList={studyMaterialList}
+                  studyMaterialPosts={studyMaterialFromServer}
+                />
+              )}
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
-              <HomeWork
-                homeWorkList={homeWorkList}
-                homeWorkPosts={homeWorkPostsFromServer}
-              />
+              {loadChat ? (
+                <Chat />
+              ) : (
+                <HomeWork
+                  homeWorkList={homeWorkList}
+                  homeWorkPosts={homeWorkPostsFromServer}
+                />
+              )}
             </TabPanel>
           </SwipeableViews>
           {/* <Chat /> */}
