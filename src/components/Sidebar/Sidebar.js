@@ -251,6 +251,7 @@ export default function Sidebar({
   const [openOther, setOpenOther] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const state = useSelector((s) => s);
+  console.log(schoolDataFromServer);
   // const [teacherNamesFromServer, setTeacherNamesFromServer] = useState(["sid"]);
   // const [subjectsFromServer, setSubjectsFromServer] = useState([]);
 
@@ -310,14 +311,6 @@ export default function Sidebar({
         }
         className={classes.root}
       >
-        {/* <GmailSidebarItem
-        color={"#da3125"}
-        startIcon={<Inbox />}
-        label={"Inbox"}
-        amount={"1,198"}
-        {...commonProps(0)}
-        dotOnCollapsed={false}
-      /> */}
         <ListItem
           button
           selected={selectedIndex === 0}
@@ -331,12 +324,7 @@ export default function Sidebar({
           {/* primary={state.userName} */}
         </ListItem>
         <Divider />
-        {/* <GmailSidebarItem
-        color={"#1a73e8"}
-        startIcon={<PeopleAltIcon />}
-        label="Teachers"
-        {...commonProps(0)}
-      /> */}
+
         <ListItem
           button
           selected={selectedIndex === 1}
@@ -354,7 +342,11 @@ export default function Sidebar({
         <Collapse in={openTeacher} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {teachersMailsNames.map((nameteacher) => (
-              <ListItem button className={classes.nested}>
+              <ListItem
+                button
+                onClick={() => handleChat(true)}
+                className={classes.nested}
+              >
                 <ListItemIcon>
                   <AccountCircleIcon />
                 </ListItemIcon>
@@ -370,24 +362,6 @@ export default function Sidebar({
                 <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText primary="P.B Malii" />
-            </ListItem>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="R. D. Kalambe" />
-            </ListItem>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="S. P. Dudhe" />
-            </ListItem>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="T. S. Sonanwane" />
             </ListItem>
           </List>
         </Collapse>
@@ -408,30 +382,23 @@ export default function Sidebar({
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {/* {schoolDataFromServer.subjects.map((subject, i) => (
-              <ListItem
-                key={i}
-                button
-                className={classes.nested}
-                onClick={() => handleChat(true)}
-              >
-                <ListItemIcon></ListItemIcon>
-                <ListItemText primary={subject} />
-              </ListItem>
-            ))} */}
-            <ListItem
-              button
-              className={classes.nested}
-              onClick={() => handleChat(true)}
-            >
+            {/* {  schoolDataFromServer.subjects.map((subject, i) => (
+                  <ListItemIcon
+                    key={i}
+                    button
+                    className={classes.nested}
+                    onClick={() => handleChat(true)}
+                  >
+                    <ListItemIcon></ListItemIcon>
+                    <ListItemText primary={subject} />
+                  </ListItemIcon>
+                ))
+             } */}
+            <ListItem button className={classes.nested}>
               <ListItemIcon></ListItemIcon>
               <ListItemText primary="PHP Programming" />
             </ListItem>
-            <ListItem
-              button
-              className={classes.nested}
-              onClick={() => handleChat(true)}
-            >
+            <ListItem button className={classes.nested}>
               <ListItemIcon></ListItemIcon>
               <ListItemText primary="Maths" />
             </ListItem>{" "}

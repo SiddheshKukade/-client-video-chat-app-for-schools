@@ -1,5 +1,4 @@
-import { Button } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AddStudyMaterialPanel.module.css";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -23,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function AddStudyMaterialPanel() {
+  const [fileUpload, setfileUpload] = useState(null);
   const initialValues = {
     name: "",
     file: null,
@@ -33,10 +33,34 @@ function AddStudyMaterialPanel() {
       .min(4, "Name is too Short"),
   });
   const onSubmit = (values) => {
+    console.log(fileUpload)
     console.log("form data Add Study material sumit 🍎 📎", values);
-    console.log(values);
-    axios.post("http://localhost:6969/uploadStudyMaterial");
+    const formData = new FormData();
+    formData.append("myfile", fileUpload);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    const data = new FormData()
+    data.append('image', fileUpload)
+    axios
+      .post(
+        process.env.REACT_APP_BACKEND_URL + "studymaterial/upload",
+        data
+      )
+      .then((response) => {
+        console.log("response", response.data)
+        if(response.data.sucess){
+          handleClose();
+        }
+        alert("The file is successfully uploaded");
+      })
+    .catch((error) => {
+        alert(error);
+      });
   };
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -78,11 +102,7 @@ function AddStudyMaterialPanel() {
         }}
       >
         <Fade in={open}>
-          {/* <form
-            method="POST"
-            action="http://localhost:6969"
-            enctype="multipart/form-data"
-          > */}
+        
           <div className={classes.paper}>
             <div className={styles.header}>Upload Study Material to Class</div>
             <Formik
@@ -90,6 +110,7 @@ function AddStudyMaterialPanel() {
               onSubmit={onSubmit}
               validationSchema={validationSchema}
               className={styles.formContainer}
+              enctype="multipart/form-data"
             >
               {(formik) => {
                 console.log(formik.values);
@@ -120,7 +141,8 @@ function AddStudyMaterialPanel() {
                           multiple
                           name="file"
                           onChange={(event) => {
-                            setFieldValue("file", event.currentTarget.files[0]);
+                            // setFieldValue("file", event.currentTarget.files[0]);
+                            setfileUpload(event.target.files[0]);
                           }}
                         />
                         <label htmlFor="file">
@@ -145,8 +167,6 @@ function AddStudyMaterialPanel() {
           </div>
         </Fade>
       </Modal>
-      {/* </form> */}
-      {/* </Modal> */}
     </div>
   );
 }

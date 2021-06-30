@@ -49,4 +49,10 @@
 }
 
 .third__wrapper {
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0.4;
+  height: auto;
 }
