@@ -299,6 +299,12 @@ export default function Sidebar({
     collapsed,
     dotOnCollapsed: true,
   });
+
+  useEffect(() => {
+    return () => {
+      teachersMailsNames = ["Loading"];
+    };
+  }, []);
   return (
     <div className={classes.container}>
       <List
@@ -341,16 +347,17 @@ export default function Sidebar({
         </ListItem>
         <Collapse in={openTeacher} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {teachersMailsNames.map((nameteacher) => (
+            {teachersMailsNames.map((nameteacher, index) => (
               <ListItem
                 button
                 onClick={() => handleChat(true)}
                 className={classes.nested}
+                key={index}
               >
-                <ListItemIcon>
-                  <AccountCircleIcon />
+                <ListItemIcon key={"p" + index}>
+                  <AccountCircleIcon key={"ac" + index} />
                 </ListItemIcon>
-                <ListItemText primary={nameteacher} />
+                <ListItemText key={"li" + index} primary={nameteacher} />
               </ListItem>
             ))}
             <ListItem

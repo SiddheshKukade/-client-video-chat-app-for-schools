@@ -1,13 +1,13 @@
 const initialState = {
   role: "",
-  email: "",
+  email: "sample@gmail.com",
   password: "",
   userName: "sid is user",
   schoolName: "",
-  schoolRefCode: "",
+  schoolRefCode: "sampleref",
   teacherMails: [],
   stanardRange: [],
-  currentSubject: "",
+  currentSubject: "sampleSubject",
   currentStandard: "",
   phoneNo: null,
   dob: null,
@@ -24,6 +24,7 @@ const initialState = {
   SCHOOL_principalMail: "",
   SCHOOL_subjects: [],
 
+  fetch_data_again: false
   // loadChat: false,
 };
 
@@ -83,6 +84,11 @@ function rootReducer(state = initialState, action) {
         userStandard: action.payload.userStandard,
         googleLogin: action.payload.googleLogin,
       };
+    case "FETCH_DATA_AGAIN":
+      return {
+        ...state , 
+        fetch_data_again : action.payload.fetch_data_again
+      }
     // case "TOGGLE_CHAT":
     //   return {
     //     ...state,

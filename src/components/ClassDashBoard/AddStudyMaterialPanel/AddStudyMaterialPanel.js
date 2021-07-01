@@ -11,7 +11,8 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import axios from "axios";
 import Tooltip from "@material-ui/core/Tooltip";
-
+import { useSelector, useDispatch } from "react-redux";
+import { fetch_data_toggle } from "../../../redux/actions/actions";
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -23,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 function AddStudyMaterialPanel() {
   const [fileUpload, setfileUpload] = useState(null);
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
   const initialValues = {
     name: "",
     file: null,
@@ -33,30 +36,40 @@ function AddStudyMaterialPanel() {
       .min(4, "Name is too Short"),
   });
   const onSubmit = (values) => {
-    console.log(fileUpload)
+    console.log(fileUpload);
     console.log("form data Add Study material sumit 🍎 📎", values);
-    const formData = new FormData();
-    formData.append("myfile", fileUpload);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    const data = new FormData()
-    data.append('image', fileUpload)
+
+    const data = new FormData();
+    data.append("image", fileUpload);
     axios
-      .post(
-        process.env.REACT_APP_BACKEND_URL + "studymaterial/upload",
-        data
-      )
+      .post(process.env.REACT_APP_BACKEND_URL + "studymaterial/upload", data)
       .then((response) => {
-        console.log("response", response.data)
-        if(response.data.sucess){
-          handleClose();
+        console.log("response", response.data);
+
+        if (response.data.sucess) {
+          axios
+            .post(process.env.REACT_APP_BACKEND_URL + "studymaterial/sm", {
+              // fromSchoolRef:  state.schoolRefCode,
+              // fromTeacherMail: state.email,
+              // name : state.userName,
+              // fileName:response.data.filename,
+              // subject:state.currentSubject
+              fromSchoolRef: "state.schoolRefCode",
+              fromTeacherMail: " state.email",
+              name: "state.userName",
+              fileName: "response.data.filename",
+              subject: "state.currentSubject",
+            })
+            .then((res) => {
+              console.log("rerendering");
+              dispatch(fetch_data_toggle(true));
+            });
+
+          // handleClose();
         }
         alert("The file is successfully uploaded");
       })
-    .catch((error) => {
+      .catch((error) => {
         alert(error);
       });
   };
@@ -102,7 +115,6 @@ function AddStudyMaterialPanel() {
         }}
       >
         <Fade in={open}>
-        
           <div className={classes.paper}>
             <div className={styles.header}>Upload Study Material to Class</div>
             <Formik

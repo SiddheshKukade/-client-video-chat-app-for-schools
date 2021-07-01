@@ -4,6 +4,7 @@ import {
   STORE_PRINCIPAL_INFO,
   STORE_SCHOOL_INFO,
   STORE_TEACHER_INFO,
+  FETCH_DATA_AGAIN,
   // TOGGLE_CHAT,
 } from "./types";
 
@@ -104,6 +105,10 @@ export const setTeacherInfo = (
     payload: { role, userName, email, password, userStandard, googleLogin },
   };
 };
+export const fetch_data_toggle=(fetch_data_again)=>{
+  console.log("Re-Rendering dashboard__container")
+  return{type : FETCH_DATA_AGAIN,payload :{fetch_data_again}}
+}
 // export const toogleChat = (bool) => {
 //   return {
 //     type: TOGGLE_CHAT,

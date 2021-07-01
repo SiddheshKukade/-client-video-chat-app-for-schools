@@ -7,6 +7,9 @@ import styles from "./StudyMaterial.module.css";
 import { useForm } from "react-hook-form";
 
 function StudyMaterial({ studyMaterialList, studyMaterialPosts }) {
+  const updateStudyMaterial = (sm) => {
+    study;
+  };
   const userRole = useSelector((state) => state.role);
   return (
     <div className={styles.mainContainer}>
