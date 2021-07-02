@@ -56,21 +56,29 @@ const AddYourHWStudent = ({ hwCode, handleCloseParent }) => {
 
 
         console.log("Student Submitting Homework");
-        axios.post(process.env.REACT_APP_BACKEND_URL + "homework/addHomeWorkStudent", {
-            name: userName,
-            email: userMail,
-            file: data,
-            hwCode: hwCode
-        }).then(response => {
-            console.log(response)
-            handleCloseLoad();
-            handleCloseParent();
+        axios
+            .post(process.env.REACT_APP_BACKEND_URL + "homework/upload", data)
+            .then(response => {
+                console.log("my response", response)
+                axios.post(process.env.REACT_APP_BACKEND_URL + "homework/addHomeWorkStudent", {
+                    name: userName,
+                    email: userMail,
+                    filename: response.data.filename,
+                    hwCode: hwCode
+                }).then(response => {
+                    console.log(response)
+                    handleCloseLoad();
+                    handleCloseParent();
 
-        }).catch((err) => {
-            console.log(err)
-            handleCloseLoad();
-            setOpen(true)
-        })
+                }).catch((err) => {
+                    console.log(err)
+                    handleCloseLoad();
+                    setOpen(true)
+                })
+            })
+            .catch(err => console.log(err))
+
+
     };
     const classes = useStyles();
 

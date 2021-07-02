@@ -13,6 +13,13 @@ import axios from "axios";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useSelector, useDispatch } from "react-redux";
 import { fetch_data_toggle } from "../../../redux/actions/actions";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -25,17 +32,34 @@ const useStyles = makeStyles((theme) => ({
 function AddStudyMaterialPanel({ updateStudyMaterial }) {
   const [fileUpload, setfileUpload] = useState(null);
   const state = useSelector((state) => state);
+  const [openLoad, setOpenLoad] = useState(false);
   const dispatch = useDispatch();
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const initialValues = {
     name: "",
     file: null,
   };
+  const handleCloseLoad = () => {
+    setOpenLoad(false);
+  };
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .required("Name field is needed")
       .min(4, "Name is too Short"),
   });
+
   const onSubmit = (values) => {
+    setOpenLoad(true)
     console.log(fileUpload);
     console.log("form data Add Study material sumit 🍎 📎", values);
 
@@ -47,6 +71,8 @@ function AddStudyMaterialPanel({ updateStudyMaterial }) {
         console.log("response", response.data);
 
         if (response.data.sucess) {
+          setOpenLoad(false)
+
           axios
             .post(process.env.REACT_APP_BACKEND_URL + "studymaterial/sm", {
               // fromSchoolRef:  state.schoolRefCode,
@@ -56,41 +82,30 @@ function AddStudyMaterialPanel({ updateStudyMaterial }) {
               // subject:state.currentSubject
               fromSchoolRef: "state.schoolRefCode",
               fromTeacherMail: " state.email",
-              name: "state.userName",
-              fileName: "response.data.filename",
+              name: values.name,
+              fileName: response.data.filename,
               subject: "state.currentSubject",
             })
             .then((res) => {
               updateStudyMaterial({
                 fromSchoolRef: "state.schoolRefCode",
                 fromTeacherMail: " state.email",
-                name: "state.userName",
-                fileName: "response.data.filename",
+                name: values.name,
+                fileName: response.data.filename,
                 subject: "state.currentSubject",
               });
               console.log("rerendering");
               dispatch(fetch_data_toggle(true));
             });
 
-          // handleClose();
+          handleClose();
         }
-        alert("The file is successfully uploaded");
       })
       .catch((error) => {
-        alert(error);
+        setOpenLoad(false)
       });
   };
 
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <div className={styles.container}>
       {/* <Button
@@ -184,6 +199,17 @@ function AddStudyMaterialPanel({ updateStudyMaterial }) {
           </div>
         </Fade>
       </Modal>
+      <Dialog
+        open={openLoad}
+        onClose={handleCloseLoad}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <div style={{ overflowX: "hidden", overflowY: "hidden" }}></div>
+          <CircularProgress />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

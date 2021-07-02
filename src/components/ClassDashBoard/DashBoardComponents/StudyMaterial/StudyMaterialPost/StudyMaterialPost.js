@@ -1,6 +1,8 @@
 import React from "react";
 import "./StudyMaterialPost.css";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import axios from "axios";
+import download from 'downloadjs'
 function StudyMaterialPost({
   fromSchoolRef,
   fromTeacherMail,
@@ -8,36 +10,62 @@ function StudyMaterialPost({
   fileName,
   subject,
 }) {
-  const downloadDoc = () => {
-    console.log("cliucked");
-    // fetch('https://source.unsplash.com/user/erondu/1600x900', {
-    fetch("https://jsonplaceholder.typicode.com/todos/", {
-      crossDomain: true,
-      method: "GET",
-      headers: {
-        // 'Content-Type': 'application/jpeg'
-        "Content-Type": "application/text",
-      },
-    })
-      .then((response) => response.blob())
-      .then((blob) => {
-        // Create blob link to download
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement("a");
-        link.href = url;
-        // link.setAttribute('download', `sidd.jpeg`);
-        link.setAttribute("download", `sidd`);
+  const downloadDoc = async () => {
+    // console.log("cliucked");
+    // // fetch('https://source.unsplash.com/user/erondu/1600x900', {
+    // fetch("https://jsonplaceholder.typicode.com/todos/", {
+    //   crossDomain: true,
+    //   method: "GET",
+    //   headers: {
+    //     // 'Content-Type': 'application/jpeg'
+    //     "Content-Type": "application/text",
+    //   },
+    // })
+    //   .then((response) => response.blob())
+    //   .then((blob) => {
+    //     // Create blob link to download
+    //     const url = window.URL.createObjectURL(new Blob([blob]));
+    //     const link = document.createElement("a");
+    //     link.href = url;
+    //     // link.setAttribute('download', `sidd.jpeg`);
+    //     link.setAttribute("download", `sidd`);
+    //
+    //     // Append to html link element page
+    //     document.body.appendChild(link);
+    //
+    //     // Start download
+    //     link.click();
+    //
+    //     // Clean up and remove the link
+    //     link.parentNode.removeChild(link);
+    //   });
 
-        // Append to html link element page
-        document.body.appendChild(link);
 
-        // Start download
-        link.click();
+    // try {
+    //   console.log("Name of file Downloading " + fileName);
+    //   // const result  = await axios.get(process.env.REACT_APP_BACKEND_URL+ `studymaterial/download${fileName}`  )
+    //   const result = await axios.get("http://localhost:6969/studymaterial/download1625250002918--sample.pdf", {})
 
-        // Clean up and remove the link
-        link.parentNode.removeChild(link);
-      });
-  };
+    //   return download(result, "HomweWork")
+    // } catch (err) {
+    //   console.log("Error while Downloading Study Material ", err)
+    // }
+
+    axios({
+      url: process.env.REACT_APP_BACKEND_URL + `studymaterial/download${fileName}`,
+      method: 'GET',
+      responseType: 'blob', // important
+    }).then((response) => {
+      console.log(fileName)
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.pdf'); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+    });
+
+  }
   return (
     <>
       <div className="post__wrapper">
@@ -59,7 +87,7 @@ function StudyMaterialPost({
             </svg>
           </div>
           <div className="second__wrapper">
-            <div className="post__title">Teacher has posted {name} </div>
+            <div className="post__title"> has posted {name} </div>
             <div className="post__date">
               {/* 23.11.2021 */}
               {subject}
@@ -69,7 +97,7 @@ function StudyMaterialPost({
         <div className="third__wrapper" title="Download Material">
           <a
             onClick={downloadDoc}
-            download
+
             style={{ height: "100%", width: "100%" }}
           >
             <GetAppIcon fontSize="large" />

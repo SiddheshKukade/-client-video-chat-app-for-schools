@@ -106,8 +106,8 @@ function ClassDashBoard() {
   };
   const requestHomeWorkFromServer = () => {
     axios
-      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/homeWork", {
-        referCode: state.schoolRefCode,
+      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/hw", {
+        fromSchoolRef: state.schoolRefCode,
       })
       .then((res) => setHomeWorkPostsFromServer(res.data))
       .catch((err) => console.log(err));
@@ -117,10 +117,13 @@ function ClassDashBoard() {
   };
   const requestStudyMaterialFromServer = () => {
     axios
-      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/studyMaterial", {
-        referCode: state.schoolRefCode,
+      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/sm", {
+        referCode: "state.schoolRefCode",
       })
-      .then((res) => setStudyMaterialFromServer(res.data))
+      .then((res) => {
+        setStudyMaterialFromServer(res.data)
+        console.log(res.data, "sm from server dash");
+      })
       .catch((err) => console.log(err));
   };
   const requestSchoolFromServer = () => {
@@ -139,7 +142,7 @@ function ClassDashBoard() {
   };
   const requestVideoMeetingFromServer = () => {
     axios
-      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/videoMeeting", {
+      .post(process.env.REACT_APP_BACKEND_URL + "dashboard/vm", {
         referCode: state.schoolRefCode,
       })
       .then((res) => setVideoMeetingFromServer(res.data.videoMeetingPosts))
@@ -154,7 +157,7 @@ function ClassDashBoard() {
       setSchoolDataFromServer([]);
       setStudyMaterialFromServer([]);
       setVideoMeetingFromServer([]);
-      setSchoolDataFromServer([]);
+      setHomeWorkPostsFromServer([]);
     };
   }, []);
   let width = window.innerWidth;
@@ -233,7 +236,6 @@ function ClassDashBoard() {
                 <Chat />
               ) : (
                 <StudyMaterial
-                  // studyMaterialList={studyMaterialList}
                   studyMaterialPosts={studyMaterialFromServer}
                 />
               )}
@@ -243,7 +245,6 @@ function ClassDashBoard() {
                 <Chat />
               ) : (
                 <HomeWork
-                  homeWorkList={homeWorkList}
                   homeWorkPosts={homeWorkPostsFromServer}
                 />
               )}

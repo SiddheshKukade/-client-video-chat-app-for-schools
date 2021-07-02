@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HomeWorkPost from "./HomeWorkPost/HomeWorkPost";
 import { Helmet } from "react-helmet";
 import AddIcon from "@material-ui/icons/Add";
@@ -10,44 +10,44 @@ import styles from "./Homework.module.css";
 import AddHomeWorkPanel from "../../AddHomeWorkPanel/AddHomeworkPanel";
 import { useDispatch, useSelector } from "react-redux";
 const title = "Homework - Sid";
-function HomeWork({ homeWorkList, homeWorkPosts }) {
+function HomeWork({ homeWorkPosts }) {
   const userRole = useSelector((state) => state.role);
   const [postsList, setPostsList] = useState(homeWorkPosts);
   const updateHomeWork = (sm) => {
-    setPostsList([...postsList, sm]);
-    console.log("I have a HomeWork added Post");
+    setPostsList([sm, ...postsList]);
+    console.log("I have a HomeWork added Post", postsList);
+    console.log("psts for sefve", homeWorkPosts)
   };
-  return (
+  useEffect(() => {
+    console.log("HW Updated")
+    // return () => {
+    //   cleanup
+    // }
+  }, [postsList])
+  return (<>
     <div className={styles.mainContainer}>
       <Helmet>
         <title>Home Work</title>
         <meta name="description" content="App Description" />
         <meta name="theme-color" content="#008f68" />
       </Helmet>
-
-      {/* <TitleComponent title={title} /> */}
-      {/* {homeWorkPosts.map((post) => (
+      {postsList.map((post) => (
         <HomeWorkPost
           title={post.title}
-          postedAt={post.postedAt}
           fromSchoolRef={post.fromSchoolRef}
           fromTeacherMail={post.fromTeacherMail}
           subject={post.subject}
-          standard={post.standard}
-          file={post.file}
-          createdAt={post.createdAt}
-          emailWhoSubmitted={post.emailWhoSubmitted}
-          updatedAt={post.updatedAt}
           marks={post.marks}
-          dueDate={post.dueDate}
+          hwCode={post.hwCode}
         />
-      ))} */}
-      <HomeWorkPost />
+
+      ))}
+      <HomeWorkPost title="samplke titel" marks={23} />
 
       {/* {userRole ==="Teacher" ? <AddHomeWorkPanel /> : null } */}
 
-      <AddHomeWorkPanel updatedAt={updateHomeWork} />
     </div>
+    <AddHomeWorkPanel updateHomeWork={updateHomeWork} /></>
   );
 }
 

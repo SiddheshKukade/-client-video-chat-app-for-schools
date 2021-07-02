@@ -44,8 +44,6 @@ function AddHomeWorkPanel({ updateHomeWork }) {
   });
   const onSubmit = (values) => {
     console.log("form data Add Study material sumit", values);
-    console.log(values);
-
     axios.post(process.env.REACT_APP_BACKEND_URL + "homework/addHomeWork", {
       title: values.name,
       fromSchoolRef: schoolRefCode,
@@ -65,6 +63,7 @@ function AddHomeWorkPanel({ updateHomeWork }) {
           hwCode: Date.now() + values.name
         }
       )
+      handleClose();
     })
   };
   const classes = useStyles();
@@ -79,16 +78,7 @@ function AddHomeWorkPanel({ updateHomeWork }) {
   };
   return (
     <div className={styles.container}>
-      {/* <Button
-        variant="contained"
 
-        color="default"
-        className=" "
-        startIcon={<CloudUploadIcon />}
-        onClick={handleOpen}
-      >
-        Add Home
-      </Button> */}
       <div className={styles.fab}>
         <Tooltip title="Add Homework" aria-label="add" onClick={handleOpen}>
           <Fab color="primary">
@@ -118,7 +108,6 @@ function AddHomeWorkPanel({ updateHomeWork }) {
               className={styles.formContainer}
             >
               {(formik) => {
-                console.log(formik.values);
                 const { errors, touched } = formik;
                 return (
                   <Form>
@@ -133,13 +122,13 @@ function AddHomeWorkPanel({ updateHomeWork }) {
                           label=" Name of Assignment"
                           placeholder="Name"
                           errMsg={errors.name}
-                          isTouched={touched.email}
+                          isTouched={touched.name}
                         />
                       </div>
 
                       <div className={styles.fileContainer}>
                         <Tooltip
-                          title="Enter Due Date for Homework"
+                          title="Enter Marks Homework"
                           aria-label="add"
                           onClick={handleOpen}
                         >
@@ -150,7 +139,7 @@ function AddHomeWorkPanel({ updateHomeWork }) {
                             label="Marks of Assignment "
                             placeholder="marks"
                             errMsg={errors.marks}
-                            isTouched={touched.email}
+                            isTouched={touched.marks}
                           />
                         </Tooltip>
                       </div>

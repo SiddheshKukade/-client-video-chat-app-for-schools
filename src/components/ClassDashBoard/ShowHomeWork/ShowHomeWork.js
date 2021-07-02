@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import styles from "../AddStudyMaterialPanel/AddStudyMaterialPanel.module.css";
 import Modal from "@material-ui/core/Modal";
@@ -13,6 +13,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -21,92 +29,100 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
         height: " 73vh",
         width: "59vw",
+        overflowY: "scroll"
+    },
+    table: {
+        minWidth: 650,
     },
 }));
-const ShowHomeWork = () => {
-    const userMail = useSelector((state) => state.email);
-    const schoolRefCode = useSelector((state) => state.schoolRefCode);
-    const currentSubject = useSelector((state) => state.currentSubject);
-    const currentStandard = useSelector((state) => state.currentStandard);
 
-    const validationSchema = Yup.object({
-        name: Yup.string()
-            .required("Name field is needed")
-            .min(4, "Name is too Short"),
-        marks: Yup.number("Marks should to be a number").required(
-            "Please provide the marks"
-        ),
-        dueDate: Yup.date("This is not a Date").required("Due Date Is required"),
-    });
-    const onSubmit = (values) => {
-        console.log("form data Add Study material sumit", values);
-        console.log(values);
-
-        axios.post("http://localhost:6969/addHomeWork", {
-            title: values.name,
-            postedAt: Date(),
-            fromSchoolRef: schoolRefCode,
-            fromTeacherMail: userMail,
-            subject: currentSubject,
-            standard: currentStandard,
-            marks: values.marks,
-            emailWhoSubmitted: [],
-            dueDate: values.dueDate,
-        });
-    };
+const ShowHomeWork = ({ hwCode }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    const [submissionDataFromServer, setSubmissionDataFromServer] = useState([])
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const downloadMaterial = (fileName) => {
+        console.log();
+        axios({
+            url: process.env.REACT_APP_BACKEND_URL + `homework/download${fileName}`,
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            console.log(fileName)
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'homeworkFromStudent.pdf'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
+    const requestSubmissionDataFromServer = () => {
+        console.log("requesting Submision data ", hwCode)
+        axios.post(process.env.REACT_APP_BACKEND_URL + "homework/getHomeWorkSubmissions", {
+            hwCode: hwCode
+        }).then(res => { console.log(res.data); setSubmissionDataFromServer(res.data) }).catch((err) => console.log(err))
+    }
+    useEffect(() => {
+        requestSubmissionDataFromServer()
+        return () => {
+            // cleanup
+            setSubmissionDataFromServer([])
+        }
+    }, [])
+    // const requestHW = async (filename) => {
+    //     // /homework/downloadsample.pdf
+    //     try {
+    //         const result = await axios.get(process.env.REACT_APP_BACKEND_URL + `homework/download${filename}`, {
+    //             responseType: 'blob'
+    //         })
+    //         return download(result, "HomweWork", "application/pdf")
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
     return (
-        <div className={styles.container}>
-            {/* <Button
-        variant="contained"
+        <div className={styles.container} >
 
-        color="default"
-        className=" "
-        startIcon={<CloudUploadIcon />}
-        onClick={handleOpen}
-      >
-        Add Home
-      </Button> */}
-            <div className={styles.fab}>
-                <Tooltip title="Check Submissions" aria-label="add" onClick={handleOpen}>
-                    <Fab color="primary">
-                        <AddIcon />
-                    </Fab>
-                </Tooltip>
+            <div className={classes.paper}>
+                <div className={styles.header}>Students who Submitted this Homework</div>
+                <TableContainer component={Paper}  >
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell> Name </TableCell>
+                                <TableCell  > E-mail</TableCell>
+                                <TableCell  >File</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow key={1}>
+                                <TableCell  >{"submission"}</TableCell>
+                                <TableCell  >{"submission"}</TableCell>
+                                <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial("sample.pdf")}   > <FileCopyIcon /></TableCell>
+                            </TableRow>
+
+                            {submissionDataFromServer ?
+                                submissionDataFromServer.map(submission => (
+                                    <TableRow key={submission.name}>
+                                        <TableCell  >{submission.name}</TableCell>
+                                        <TableCell  >{submission.email}</TableCell>
+                                        <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial(submission.file)}   > <FileCopyIcon /></TableCell>
+                                    </TableRow>
+                                )) : null}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={styles.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={open}>
-                    <div className={classes.paper}>
-                        <div className={styles.header}>Students who Submitted this Homework</div>
-
-                    </div>
-                </Fade>
-            </Modal>
-        </div>)
+        </div >)
 }
 
 export default ShowHomeWork
 
-
-
-
+// // Sample Code for Getting the Student Name email and FIles
+// submissionDataFromServer.map(submission =>
+// {
+    // submission.
+// }
+// )

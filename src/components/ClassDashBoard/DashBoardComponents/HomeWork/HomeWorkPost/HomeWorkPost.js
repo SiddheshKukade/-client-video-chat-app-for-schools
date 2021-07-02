@@ -7,6 +7,8 @@ import axios from "axios";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { useSelector } from "react-redux";
 import AddYourHWStudent from './../../../AddYourHWStudent/AddYourHWStudent';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import ShowHomeWork from "../../../ShowHomeWork/ShowHomeWork";
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -34,23 +36,20 @@ const useStyles = makeStyles((theme) => ({
 
 function HomeWorkPost({
   title,
-  postedAt,
   fromSchoolRef,
   fromTeacherMail,
   subject,
-  standard,
-  file,
-  createdAt,
-  emailWhoSubmitted,
-  updatedAt,
+  marks,
+  hwCode
 }) {
+  console.log("my Hw coe is ", hwCode)
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [fileObject, setFileObject] = useState(null);
   const schoolRefCode = useSelector((state) => state.schoolRefCode);
-
+  const role = useSelector(state => state.role)
   const currentMail = useSelector((state) => state.email);
   const handleOpen = () => {
     setOpen(true);
@@ -113,25 +112,16 @@ function HomeWorkPost({
         </div>
         <div className="second__wrapper">
           <div className="post__title">
-            Teacher has posted Some Homework {title}
+            Teacher has posted {title}
           </div>
-          <div className="post__date">23.11.2021 {postedAt}</div>
+          <div className="post__date"> {marks} Marks</div>
         </div>
       </div>
       <div className="third__wrapper">
-        <CloudUploadIcon onClick={handleOpen} />
-        {/* <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor" 
-        >
-          <path
-            fill-rule="evenodd"
-            d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg> */}
+        {
+          role === "Teacher" ? (<CheckCircleOutlineIcon onClick={handleOpen} />) : (<CloudUploadIcon onClick={handleOpen} />)
+
+        }
       </div>
       <Modal
         open={open}
@@ -140,10 +130,11 @@ function HomeWorkPost({
         aria-describedby="simple-modal-description"
         class="containerHomwWorkModal"
       >
-        <AddYourHWStudent handleCloseParent={handleClose} />
+        {
+          role === "Teacher" ? (<ShowHomeWork hwCode={hwCode} />) : (<AddYourHWStudent handleCloseParent={handleClose} hwCode={hwCode} />)
+        }
       </Modal>
     </div>
   );
 }
-
 export default HomeWorkPost;
