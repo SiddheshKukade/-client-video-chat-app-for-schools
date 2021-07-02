@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: "59vw",
   },
 }));
-function AddStudyMaterialPanel() {
+function AddStudyMaterialPanel({ updateStudyMaterial }) {
   const [fileUpload, setfileUpload] = useState(null);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -61,6 +61,13 @@ function AddStudyMaterialPanel() {
               subject: "state.currentSubject",
             })
             .then((res) => {
+              updateStudyMaterial({
+                fromSchoolRef: "state.schoolRefCode",
+                fromTeacherMail: " state.email",
+                name: "state.userName",
+                fileName: "response.data.filename",
+                subject: "state.currentSubject",
+              });
               console.log("rerendering");
               dispatch(fetch_data_toggle(true));
             });
@@ -125,7 +132,6 @@ function AddStudyMaterialPanel() {
               enctype="multipart/form-data"
             >
               {(formik) => {
-                console.log(formik.values);
                 const { errors, touched, setFieldValue } = formik;
                 return (
                   <Form encType="multipart/form-data">
@@ -146,7 +152,6 @@ function AddStudyMaterialPanel() {
                       </div>
                       <div className={styles.fileContainer}>
                         <input
-                          className={styles.file}
                           type="file"
                           id="file"
                           data-multiple-caption="{count} files selected"

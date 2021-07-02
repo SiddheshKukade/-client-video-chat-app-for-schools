@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import StudyMaterialPost from "./StudyMaterialPost/StudyMaterialPost";
 import { Helmet } from "react-helmet";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AddStudyMaterialPanel from "../../AddStudyMaterialPanel/AddStudyMaterialPanel";
 import styles from "./StudyMaterial.module.css";
-import { useForm } from "react-hook-form";
 
-function StudyMaterial({ studyMaterialList, studyMaterialPosts }) {
+function StudyMaterial({
+  studyMaterialPosts = [
+    { fromSchoolRef: "ref", fromTeacher: "teacherMail", name: "name" },
+  ],
+}) {
+  const [postsList, setPostsList] = useState(studyMaterialPosts);
+  console.log(postsList);
   const updateStudyMaterial = (sm) => {
-    study;
+    setPostsList([...postsList, sm]);
+    console.log("I have added Post");
   };
   const userRole = useSelector((state) => state.role);
   return (
@@ -16,23 +22,20 @@ function StudyMaterial({ studyMaterialList, studyMaterialPosts }) {
       <Helmet>
         <title>Study Material</title>
       </Helmet>
-      {/* <TitleComponent title={title} /> */}
-      {/* {studyMaterialPosts.map((post) => (
-        <StudyMaterialPost
-          postedAt={post.postedAt}
-          fromSchoolRef={post.fromSchoolRef}
-          fromTeacherMail={post.fromTeacherMail}
-          name={post.name}
-          file={post.file}
-          subject={post.subject}
-          standard={post.standard}
-          createdAt={post.createdAt}
-          updatedAt={post.updatedAt}
-        />
-      ))} */}
+      {postsList
+        ? postsList.map((post) => (
+            <StudyMaterialPost
+              fromSchoolRef={post.fromSchoolRef}
+              fromTeacherMail={post.fromTeacherMail}
+              name={post.name}
+              fileName={post.fileName}
+              subject={post.subject}
+            />
+          ))
+        : null}
       {/* {userRole ==="Teacher" ? <AddStudyMaterialPanel /> : null } */}
-      <StudyMaterialPost title="Teacher has posted Chapter Two Notes" />
-      <AddStudyMaterialPanel />
+      <StudyMaterialPost name=" Chapter Two Notes" />
+      <AddStudyMaterialPanel updateStudyMaterial={updateStudyMaterial} />
     </div>
   );
 }

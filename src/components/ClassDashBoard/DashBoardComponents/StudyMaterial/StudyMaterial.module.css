@@ -1,6 +1,9 @@
 .mainContainer {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
   height: 83vh;
+  flex-direction: column;
+  column-gap: 0.5rem;
+  row-gap: 1rem;
 }

@@ -90,7 +90,6 @@ function ClassDashBoard() {
     setValue(index);
   };
   const requestTeacherNames = (tm) => {
-    console.log("is trm", tm);
     axios
       .post(
         process.env.REACT_APP_BACKEND_URL + "dashboard/teacherNameFromMail",
@@ -151,11 +150,13 @@ function ClassDashBoard() {
     requestHomeWorkFromServer();
     requestStudyMaterialFromServer();
     requestVideoMeetingFromServer();
-    console.log(teacherNamesFromServer);
+    return function clean() {
+      setSchoolDataFromServer([]);
+      setStudyMaterialFromServer([]);
+      setVideoMeetingFromServer([]);
+      setSchoolDataFromServer([]);
+    };
   }, []);
-
-  console.log("data in the Dashboar 💇 ", schoolDataFromServer);
-
   let width = window.innerWidth;
   if (width > 500) {
     return (
@@ -232,7 +233,7 @@ function ClassDashBoard() {
                 <Chat />
               ) : (
                 <StudyMaterial
-                  studyMaterialList={studyMaterialList}
+                  // studyMaterialList={studyMaterialList}
                   studyMaterialPosts={studyMaterialFromServer}
                 />
               )}

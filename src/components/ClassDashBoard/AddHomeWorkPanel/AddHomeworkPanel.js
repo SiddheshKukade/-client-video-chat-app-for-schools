@@ -25,14 +25,13 @@ const useStyles = makeStyles((theme) => ({
     width: "59vw",
   },
 }));
-function AddHomeWorkPanel() {
+function AddHomeWorkPanel({ updateHomeWork }) {
   const userMail = useSelector((state) => state.email);
   const schoolRefCode = useSelector((state) => state.schoolRefCode);
   const currentSubject = useSelector((state) => state.currentSubject);
   const currentStandard = useSelector((state) => state.currentStandard);
   const initialValues = {
     name: "",
-    dueDate: null,
     marks: 0,
   };
   const validationSchema = Yup.object({
@@ -42,23 +41,31 @@ function AddHomeWorkPanel() {
     marks: Yup.number("Marks should to be a number").required(
       "Please provide the marks"
     ),
-    dueDate: Yup.date("This is not a Date").required("Due Date Is required"),
   });
   const onSubmit = (values) => {
     console.log("form data Add Study material sumit", values);
     console.log(values);
 
-    axios.post("http://localhost:6969/addHomeWork", {
+    axios.post(process.env.REACT_APP_BACKEND_URL + "homework/addHomeWork", {
       title: values.name,
-      postedAt: Date(),
       fromSchoolRef: schoolRefCode,
       fromTeacherMail: userMail,
       subject: currentSubject,
-      standard: currentStandard,
       marks: values.marks,
-      emailWhoSubmitted: [],
-      dueDate: values.dueDate,
-    });
+      hwCode: Date.now() + values.name
+    }).then((res) => {
+      console.log("response from the Server", res)
+      updateHomeWork(
+        {
+          title: values.name,
+          fromSchoolRef: schoolRefCode,
+          fromTeacherMail: userMail,
+          subject: currentSubject,
+          marks: values.marks,
+          hwCode: Date.now() + values.name
+        }
+      )
+    })
   };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -129,15 +136,7 @@ function AddHomeWorkPanel() {
                           isTouched={touched.email}
                         />
                       </div>
-                      <div class={styles.nameContainer}>
-                        <FormikControl
-                          name="dueDate"
-                          control="input"
-                          type="date"
-                          errMsg={errors.dueDate}
-                          isTouched={touched.dueDate}
-                        />
-                      </div>
+
                       <div className={styles.fileContainer}>
                         <Tooltip
                           title="Enter Due Date for Homework"

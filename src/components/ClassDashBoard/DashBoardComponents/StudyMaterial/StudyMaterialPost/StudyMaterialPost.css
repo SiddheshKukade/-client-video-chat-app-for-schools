@@ -37,6 +37,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow-wrap: break-word;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
 }
 
 .third__wrapper > svg {

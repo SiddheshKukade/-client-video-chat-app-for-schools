@@ -251,7 +251,6 @@ export default function Sidebar({
   const [openOther, setOpenOther] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const state = useSelector((s) => s);
-  console.log(schoolDataFromServer);
   // const [teacherNamesFromServer, setTeacherNamesFromServer] = useState(["sid"]);
   // const [subjectsFromServer, setSubjectsFromServer] = useState([]);
 

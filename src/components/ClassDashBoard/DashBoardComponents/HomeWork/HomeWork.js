@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HomeWorkPost from "./HomeWorkPost/HomeWorkPost";
 import { Helmet } from "react-helmet";
 import AddIcon from "@material-ui/icons/Add";
@@ -12,7 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 const title = "Homework - Sid";
 function HomeWork({ homeWorkList, homeWorkPosts }) {
   const userRole = useSelector((state) => state.role);
-
+  const [postsList, setPostsList] = useState(homeWorkPosts);
+  const updateHomeWork = (sm) => {
+    setPostsList([...postsList, sm]);
+    console.log("I have a HomeWork added Post");
+  };
   return (
     <div className={styles.mainContainer}>
       <Helmet>
@@ -42,7 +46,7 @@ function HomeWork({ homeWorkList, homeWorkPosts }) {
 
       {/* {userRole ==="Teacher" ? <AddHomeWorkPanel /> : null } */}
 
-      <AddHomeWorkPanel />
+      <AddHomeWorkPanel updatedAt={updateHomeWork} />
     </div>
   );
 }

@@ -1,0 +1,96 @@
+.box.has-advanced-upload {
+  background-color: white;
+  outline: 2px dashed black;
+  outline-offset: -10px;
+}
+.box.has-advanced-upload .box__dragndrop {
+  display: inline;
+}
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fab {
+  position: absolute;
+  bottom: 5rem;
+  z-index: 111;
+  left: auto;
+  margin-right: 2rem;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.formContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+}
+.header {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-bottom: 1px solid var(--secondary);
+  margin-bottom: 1rem;
+}
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  row-gap: 2rem;
+}
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5vh;
+}
+
+.button {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  
+  transition: all 100ms ease-in;
+
+   background-color: var(--primary);
+  color: var(--complementary);
+  cursor: pointer;
+  border: 1px solid var(--complementary);
+}
+.button:hover {
+  color: var(--primary);
+
+  background-color: var(--complementary);
+  border: 1px solid var(--primary);
+  cursor: pointer;
+ 
+}
+.nameContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+.fileContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.file {
+  padding: 4rem;
+  border: none;
+  background-color: var(--primary);
+  color: var(--secondary);
+  border-radius: 5px;
+}

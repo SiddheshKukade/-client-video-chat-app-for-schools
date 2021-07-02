@@ -6,6 +6,7 @@ import "./HomeWorkPost.css";
 import axios from "axios";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { useSelector } from "react-redux";
+import AddYourHWStudent from './../../../AddYourHWStudent/AddYourHWStudent';
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -137,8 +138,9 @@ function HomeWorkPost({
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        class="containerHomwWorkModal"
       >
-        {body}
+        <AddYourHWStudent handleCloseParent={handleClose} />
       </Modal>
     </div>
   );

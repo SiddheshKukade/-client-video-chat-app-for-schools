@@ -102,3 +102,6 @@
   transition: all 100ms ease-in;
   border: 1px solid var(--primary);
 }
+.containerHomwWorkModal{
+  display: grid;place-items: center;
+}
