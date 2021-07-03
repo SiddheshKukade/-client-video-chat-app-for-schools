@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AddVideoMeeting.module.css";
 import { Button } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
@@ -13,7 +13,9 @@ import axios from "axios";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormikControl from "./../../../../UserDetailsFrom/FormikControl";
 import { useSelector } from "react-redux";
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import CircularProgress from "@material-ui/core/CircularProgress";
 const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -24,8 +26,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddVideoMeeting = () => {
+const AddVideoMeeting = ({ updateVM }) => {
   const currentMail = useSelector((state) => state.email);
+  const currentSubject = useSelector(state => state.currentSubject)
+  const schoolRefCode = useSelector(state => state.schoolRefCode)
   const initialValues = {
     name: "",
   };
@@ -35,24 +39,41 @@ const AddVideoMeeting = () => {
       .min(4, "Name is too Short"),
   });
   const onSubmit = (values) => {
-    console.log("form data Add Study material sumit 🍎 📎", values);
-    console.log(values);
-    axios.post("http://localhost:6969/addVideo", {
+    setOpenLoad(true)
+    axios.post(process.env.REACT_APP_BACKEND_URL + "vm/video", {
       title: values.name,
       fromTeacher: currentMail,
-      date: Date(),
-    });
+      fromSchoolRef: schoolRefCode,
+      subject: currentSubject
+    }).then(response => {
+      setOpenLoad(false); console.log("Response is ", response
+      )
+      updateVM(
+        {
+          title: values.name,
+          fromTeacher: currentMail,
+          fromSchoolRef: schoolRefCode,
+          subject: currentSubject
+        }
+      )
+      handleClose();
+
+    })
+      .catch(err => { setOpenLoad(false); console.log(err) })
   };
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [openLoad, setOpenLoad] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
-  };
+  }
+  const handleCloseLoad = () => {
+    setOpenLoad(false);
+  }
   return (
     <div className={styles.container}>
       {/* <Button
@@ -106,7 +127,7 @@ const AddVideoMeeting = () => {
                   <Form encType="multipart/form-data">
                     <div
                       className={styles.formContainer}
-                      // className={`rounded-md shadow-sm -space-y-px ${styles.inner} `}
+                    // className={`rounded-md shadow-sm -space-y-px ${styles.inner} `}
                     >
                       <div class={styles.nameContainer}>
                         <FormikControl
@@ -136,8 +157,17 @@ const AddVideoMeeting = () => {
           </div>
         </Fade>
       </Modal>
-      {/* </form> */}
-      {/* </Modal> */}
+      <Dialog
+        open={openLoad}
+        onClose={handleCloseLoad}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <div style={{ overflowX: "hidden", overflowY: "hidden" }}></div>
+          <CircularProgress />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

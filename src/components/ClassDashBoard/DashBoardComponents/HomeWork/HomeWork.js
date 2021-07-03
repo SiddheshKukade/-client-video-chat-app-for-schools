@@ -13,6 +13,7 @@ const title = "Homework - Sid";
 function HomeWork({ homeWorkPosts }) {
   const userRole = useSelector((state) => state.role);
   const [postsList, setPostsList] = useState(homeWorkPosts);
+  const state = useSelector(state => state)
   const updateHomeWork = (sm) => {
     setPostsList([sm, ...postsList]);
     console.log("I have a HomeWork added Post", postsList);
@@ -23,7 +24,7 @@ function HomeWork({ homeWorkPosts }) {
     // return () => {
     //   cleanup
     // }
-  }, [postsList])
+  }, [postsList, state.currentSubject])
   return (<>
     <div className={styles.mainContainer}>
       <Helmet>

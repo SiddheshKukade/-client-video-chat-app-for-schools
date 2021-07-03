@@ -105,9 +105,10 @@ export const setTeacherInfo = (
     payload: { role, userName, email, password, userStandard, googleLogin },
   };
 };
-export const fetch_data_toggle=(fetch_data_again)=>{
+
+export const fetch_data_toggle = (currentSubject) => {
   console.log("Re-Rendering dashboard__container")
-  return{type : FETCH_DATA_AGAIN,payload :{fetch_data_again}}
+  return { type: FETCH_DATA_AGAIN, payload: { currentSubject } }
 }
 // export const toogleChat = (bool) => {
 //   return {

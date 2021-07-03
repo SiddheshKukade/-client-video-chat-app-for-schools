@@ -219,6 +219,7 @@ import SubjectIcon from "@material-ui/icons/Subject";
 
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { fetch_data_toggle } from "../../redux/actions/actions";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -244,6 +245,7 @@ export default function Sidebar({
   handleChat,
   teachersMailsNames,
   schoolDataFromServer,
+  HandlesetLoadSearch
 }) {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
@@ -251,6 +253,7 @@ export default function Sidebar({
   const [openOther, setOpenOther] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(1);
   const state = useSelector((s) => s);
+  const dispatch = useDispatch();
   // const [teacherNamesFromServer, setTeacherNamesFromServer] = useState(["sid"]);
   // const [subjectsFromServer, setSubjectsFromServer] = useState([]);
 
@@ -388,19 +391,24 @@ export default function Sidebar({
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {/* {  schoolDataFromServer.subjects.map((subject, i) => (
-                  <ListItemIcon
-                    key={i}
-                    button
-                    className={classes.nested}
-                    onClick={() => handleChat(true)}
-                  >
-                    <ListItemIcon></ListItemIcon>
-                    <ListItemText primary={subject} />
-                  </ListItemIcon>
-                ))
-             } */}
-            <ListItem button className={classes.nested}>
+            {console.log(schoolDataFromServer.subjects)}
+            {schoolDataFromServer.subjects ? schoolDataFromServer?.subjects.map((subject, i) => (
+              <ListItem
+                key={i}
+                button
+                className={classes.nested}
+                onClick={() => {
+                  console.log("Clicked and Changed Suvbject", subject)
+                  dispatch(fetch_data_toggle(subject))
+                }}
+              >
+                <ListItemIcon></ListItemIcon>
+                <ListItemText primary={subject} />
+              </ListItem>
+            ))
+
+              : null}
+            <ListItem key={3} button className={classes.nested}>
               <ListItemIcon></ListItemIcon>
               <ListItemText primary="PHP Programming" />
             </ListItem>
@@ -435,6 +443,12 @@ export default function Sidebar({
         </ListItem>
         <Collapse in={openOther} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon onClick={HandlesetLoadSearch}>
+                <SurroundSoundIcon />
+              </ListItemIcon>
+              <ListItemText primary="Search Topics" />
+            </ListItem>
             <ListItem button className={classes.nested}>
               <ListItemIcon>
                 <SurroundSoundIcon />

@@ -44,7 +44,7 @@ function PrincipalForm({ role, isGoogle }) {
   const principalStateMail = useSelector((state) => state.email);
   const principalStatePass = useSelector((state) => state.password);
   const [loadDashBoard, setLoadDashBoard] = useState(false);
-
+  const state = useSelector(state => state)
   const [open, setOpen] = useState(false);
   const [openLoad, setOpenLoad] = useState(false);
   const [inputList, setInputList] = useState([]);
@@ -251,7 +251,7 @@ function PrincipalForm({ role, isGoogle }) {
     return <Redirect to="/dashboard" />;
   }
   // const onSubmit = () => {};
-  const swt = (i, val) => {};
+  const swt = (i, val) => { };
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>Fill in the Below Details</div>

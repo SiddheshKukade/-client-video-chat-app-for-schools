@@ -69,7 +69,7 @@ const ShowHomeWork = ({ hwCode }) => {
             // cleanup
             setSubmissionDataFromServer([])
         }
-    }, [])
+    }, [submissionDataFromServer])
     // const requestHW = async (filename) => {
     //     // /homework/downloadsample.pdf
     //     try {
@@ -108,9 +108,19 @@ const ShowHomeWork = ({ hwCode }) => {
                                     <TableRow key={submission.name}>
                                         <TableCell  >{submission.name}</TableCell>
                                         <TableCell  >{submission.email}</TableCell>
-                                        <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial(submission.file)}   > <FileCopyIcon /></TableCell>
+                                        <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial("1625263836055--sample.pdf")}   > <FileCopyIcon /></TableCell>
                                     </TableRow>
                                 )) : null}
+                            <TableRow key="1">
+                                <TableCell  >Siddhesh Kukade</TableCell>
+                                <TableCell  > siddheshkukade2003@gmail.com </TableCell>
+                                <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial("1625263836055--sample.pdf")}   > <FileCopyIcon /></TableCell>
+                            </TableRow>
+                            <TableRow key="2">
+                                <TableCell ></TableCell>
+                                <TableCell>Eshaan Patil</TableCell>
+                                <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial("1625263836055--sample.pdf")}   > <FileCopyIcon /></TableCell>
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>

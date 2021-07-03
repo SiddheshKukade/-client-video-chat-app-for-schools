@@ -21,6 +21,7 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import Box from "@material-ui/core/Box";
 import Chat from "./../Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
+import Search from './DashBoardComponents/Search/Search';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -74,7 +75,10 @@ function ClassDashBoard() {
   const [studyMaterialFromServer, setStudyMaterialFromServer] = useState(null);
   const [videoMeetingFromServer, setVideoMeetingFromServer] = useState(null);
   const [loadChat, setLoadChat] = useState(false);
-  const [teacherNamesFromServer, setTeacherNamesFromServer] = useState(["sid"]);
+  const [teacherNamesFromServer, setTeacherNamesFromServer] = useState(["Teacher Name"]);
+  const [loadSearch, setLoadSearch] = useState(false)
+  console.log(loadSearch)
+  // const [fetchDataAccrodingToSubject, setFetchDataAccordingToSubject] = useState(false)
 
   const teachersMailsOnly = schoolDataFromServer.teacherMails?.map(
     (tm) => tm.email
@@ -85,7 +89,9 @@ function ClassDashBoard() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const HandlesetLoadSearch = () => {
+    setLoadSearch(!loadSearch);
+  }
   const handleChangeIndex = (index) => {
     setValue(index);
   };
@@ -108,6 +114,7 @@ function ClassDashBoard() {
     axios
       .post(process.env.REACT_APP_BACKEND_URL + "dashboard/hw", {
         fromSchoolRef: state.schoolRefCode,
+        subject: state.currentSubject
       })
       .then((res) => setHomeWorkPostsFromServer(res.data))
       .catch((err) => console.log(err));
@@ -118,7 +125,8 @@ function ClassDashBoard() {
   const requestStudyMaterialFromServer = () => {
     axios
       .post(process.env.REACT_APP_BACKEND_URL + "dashboard/sm", {
-        referCode: "state.schoolRefCode",
+        referCode: state.schoolRefCode,
+        subject: state.currentSubject
       })
       .then((res) => {
         setStudyMaterialFromServer(res.data)
@@ -129,8 +137,7 @@ function ClassDashBoard() {
   const requestSchoolFromServer = () => {
     axios
       .post(process.env.REACT_APP_BACKEND_URL + "dashboard/school", {
-        // referCode: state.schoolRefCode,
-        referCode: "ewewe",
+        referCode: state.schoolRefCode,
       })
       .then((res) => {
         res.data[0].teacherMails
@@ -144,10 +151,16 @@ function ClassDashBoard() {
     axios
       .post(process.env.REACT_APP_BACKEND_URL + "dashboard/vm", {
         referCode: state.schoolRefCode,
+
+
       })
       .then((res) => setVideoMeetingFromServer(res.data.videoMeetingPosts))
       .catch((err) => console.log(err));
   };
+  // const fetchAgain = (subject)=>{
+
+  //   setFetchDataAccordingToSubject(!fetchDataAccrodingToSubject)
+  // }
   useEffect(() => {
     requestSchoolFromServer();
     requestHomeWorkFromServer();
@@ -160,6 +173,16 @@ function ClassDashBoard() {
       setHomeWorkPostsFromServer([]);
     };
   }, []);
+  useEffect(() => {
+    requestHomeWorkFromServer();
+    requestStudyMaterialFromServer();
+    requestVideoMeetingFromServer();
+    return function clean() {
+      setStudyMaterialFromServer([]);
+      setVideoMeetingFromServer([]);
+      setHomeWorkPostsFromServer([]);
+    };
+  }, [state.currentSubject]);
   let width = window.innerWidth;
   if (width > 500) {
     return (
@@ -176,6 +199,8 @@ function ClassDashBoard() {
           handleChat={handleChat}
           teachersMailsNames={teacherNamesFromServer}
           schoolDataFromServer={schoolDataFromServer}
+          HandlesetLoadSearch={HandlesetLoadSearch}
+
         />
 
         <div className={styles.dash__header__container}>
@@ -227,14 +252,15 @@ function ClassDashBoard() {
             <TabPanel value={value} index={0} dir={theme.direction}>
               {loadChat ? (
                 <Chat />
-              ) : (
-                <VideoMetting videoMeetingPosts={videoMeetingFromServer} />
-              )}
+              ) : loadSearch ? (<Search />) :
+                (
+                  <VideoMetting videoMeetingPosts={videoMeetingFromServer} />
+                )}
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               {loadChat ? (
                 <Chat />
-              ) : (
+              ) : loadSearch ? (<Search />) : (
                 <StudyMaterial
                   studyMaterialPosts={studyMaterialFromServer}
                 />
@@ -243,7 +269,7 @@ function ClassDashBoard() {
             <TabPanel value={value} index={2} dir={theme.direction}>
               {loadChat ? (
                 <Chat />
-              ) : (
+              ) : loadSearch ? (<Search />) : (
                 <HomeWork
                   homeWorkPosts={homeWorkPostsFromServer}
                 />

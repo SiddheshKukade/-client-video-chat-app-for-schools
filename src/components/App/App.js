@@ -20,9 +20,10 @@ const App = () => {
   return (
     <Router>
       <Route path="/" exact>
+
         <Redirect
           to={{
-            pathname: "/dashboard",
+            pathname: "/create-account",
           }}
         />
       </Route>

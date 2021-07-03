@@ -67,7 +67,7 @@ const AddYourHWStudent = ({ hwCode, handleCloseParent }) => {
                     hwCode: hwCode
                 }).then(response => {
                     console.log(response)
-                    handleCloseLoad();
+                    setOpenLoad(false)
                     handleCloseParent();
 
                 }).catch((err) => {

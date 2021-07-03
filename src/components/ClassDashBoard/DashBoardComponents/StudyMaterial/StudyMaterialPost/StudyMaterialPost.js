@@ -87,7 +87,7 @@ function StudyMaterialPost({
             </svg>
           </div>
           <div className="second__wrapper">
-            <div className="post__title"> has posted {name} </div>
+            <div className="post__title">Teacher has posted {name}  </div>
             <div className="post__date">
               {/* 23.11.2021 */}
               {subject}

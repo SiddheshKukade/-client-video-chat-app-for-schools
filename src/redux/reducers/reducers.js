@@ -1,13 +1,13 @@
 const initialState = {
-  role: "Teacher",
-  email: "sample@gmail.com",
+  role: "",
+  email: "",
   password: "",
-  userName: "sid is user",
+  userName: "D. P. Nathe ",
   schoolName: "",
-  schoolRefCode: "ewewe",
+  schoolRefCode: "gpn1",
   teacherMails: [],
   stanardRange: [],
-  currentSubject: "sampleSubject",
+  currentSubject: "12",
   currentStandard: "",
   phoneNo: null,
   dob: null,
@@ -87,7 +87,7 @@ function rootReducer(state = initialState, action) {
     case "FETCH_DATA_AGAIN":
       return {
         ...state,
-        fetch_data_again: action.payload.fetch_data_again
+        currentSubject: action.payload.currentSubject
       }
     // case "TOGGLE_CHAT":
     //   return {
