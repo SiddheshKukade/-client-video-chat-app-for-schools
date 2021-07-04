@@ -90,7 +90,7 @@ function StudyMaterialPost({
             <div className="post__title">Teacher has posted {name}  </div>
             <div className="post__date">
               {/* 23.11.2021 */}
-              {subject}
+              Geography
             </div>
           </div>
         </div>

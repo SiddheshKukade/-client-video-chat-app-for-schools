@@ -43,8 +43,6 @@ function StudyMaterial({
       {/* {userRole ==="Teacher" ? <AddStudyMaterialPanel /> : null } */}
       <StudyMaterialPost name=" Chapter One Notes" />
       <StudyMaterialPost name=" Chapter Two Notes" />
-      <StudyMaterialPost name=" Chapter Four Notes" />
-      <StudyMaterialPost name=" Chapter Three Notes" />
       <AddStudyMaterialPanel updateStudyMaterial={updateStudyMaterial} />
     </div>
   );

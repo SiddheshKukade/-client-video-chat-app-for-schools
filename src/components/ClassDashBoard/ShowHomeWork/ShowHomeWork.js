@@ -117,8 +117,8 @@ const ShowHomeWork = ({ hwCode }) => {
                                 <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial("1625263836055--sample.pdf")}   > <FileCopyIcon /></TableCell>
                             </TableRow>
                             <TableRow key="2">
-                                <TableCell ></TableCell>
                                 <TableCell>Eshaan Patil</TableCell>
+                                <TableCell >patileshan@gmail.com</TableCell>
                                 <TableCell title="Download the Work of the Student" onClick={() => downloadMaterial("1625263836055--sample.pdf")}   > <FileCopyIcon /></TableCell>
                             </TableRow>
                         </TableBody>

@@ -1,5 +1,5 @@
 const initialState = {
-  role: "",
+  role: "Teacher",
   email: "",
   password: "",
   userName: "D. P. Nathe ",

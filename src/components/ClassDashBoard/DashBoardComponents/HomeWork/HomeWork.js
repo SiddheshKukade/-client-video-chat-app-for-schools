@@ -43,7 +43,7 @@ function HomeWork({ homeWorkPosts }) {
         />
 
       ))}
-      <HomeWorkPost title="samplke titel" marks={23} />
+      <HomeWorkPost title="Gerography HomeWork" marks={23} />
 
       {/* {userRole ==="Teacher" ? <AddHomeWorkPanel /> : null } */}
 
